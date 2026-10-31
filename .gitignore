@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+*/node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Next.js & Frontend builds
+.next/
+*/.next/
+out/
+*/out/
+build/
+*/build/
+dist/
+*/dist/
+
+# Testing & Coverage
+coverage/
+*/coverage/
+
+# Environment Variables (keeps .env.example trackable)
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+!*.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript & Vercel
+*.tsbuildinfo
+next-env.d.ts
+*/next-env.d.ts
+.vercel/
+*/.vercel/
+
+# Certificates & Keys
+*.pem
+*.key
+*.cert
+
