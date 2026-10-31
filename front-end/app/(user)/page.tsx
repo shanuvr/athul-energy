@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomeHero from "@/components/user/HomeHero";
+import HomeServices from "@/components/user/HomeServices";
 
 export const metadata: Metadata = {
   title: "Energy Audit Consultants in Kerala",
@@ -68,6 +69,68 @@ const structuredData = {
     "Thermal imaging survey",
     "Energy conservation",
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Energy audit and electrical safety services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Energy audit and BEE compliance",
+          areaServed: "Kerala",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Electrical safety audit",
+          areaServed: "Kerala",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Power quality and harmonics study",
+          areaServed: "Kerala",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Green and NAAC audit",
+          areaServed: "Kerala",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Thermal imaging survey",
+          areaServed: "Kerala",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Environment and carbon audit",
+          areaServed: "Kerala",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Measurement and verification",
+          areaServed: "Kerala",
+        },
+      },
+    ],
+  },
 };
 
 export default function HomePage() {
@@ -78,6 +141,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <HomeHero />
+      <HomeServices />
     </>
   );
 }

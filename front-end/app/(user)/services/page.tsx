@@ -9,7 +9,9 @@ export default function ServicesPage() {
           Services Page
         </h1>
         <p className="text-lg text-slate-600">
-          Energy Audits, Electrical Safety Audits, Harmonic Analysis, Thermography, and NAAC Green Audits.
+          Energy Audits, Electrical Safety Audits, Power Quality &amp; Harmonics,
+          Thermal Imaging, Green &amp; NAAC Audits, Environment &amp; Carbon
+          Audits, and Measurement &amp; Verification.
         </p>
       </div>
     </div>
