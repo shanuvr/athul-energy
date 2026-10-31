@@ -89,8 +89,10 @@ body {
   animation: hero-fade 1.2s ease-out both;
 }
 
-.hero-zoom {
-  animation: hero-zoom 22s ease-out both;
+@media (min-width: 1024px) {
+  .hero-zoom {
+    animation: hero-zoom 22s ease-out both;
+  }
 }
 
 .hero-pulse {
