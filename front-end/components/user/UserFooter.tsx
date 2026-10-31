@@ -52,13 +52,10 @@ export default function UserFooter() {
           {/* Contact Details */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-3">
-              Offices
+              Head Office
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-2">
-              <strong className="text-slate-200">Thrissur (HQ):</strong> Capital Legend Bldg, Round North, Kerala - 680020
-            </p>
             <p className="text-xs text-slate-400 leading-relaxed">
-              <strong className="text-slate-200">Ankleshwar:</strong> James Square, GIDC, Gujarat - 393002
+              <strong className="text-slate-200">Thrissur:</strong> Capital Legend Bldg, Round North, Kerala - 680020
             </p>
           </div>
         </div>

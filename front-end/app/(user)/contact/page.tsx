@@ -9,7 +9,7 @@ export default function ContactPage() {
           Contact Us Page
         </h1>
         <p className="text-lg text-slate-600">
-          Connect with our Thrissur Head Office or Ankleshwar Branch to schedule an audit or request a quote.
+          Connect with our Thrissur head office to schedule an audit or request a quote.
         </p>
       </div>
     </div>

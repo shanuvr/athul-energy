@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import HomeHero from "@/components/user/HomeHero";
 import HomeServices from "@/components/user/HomeServices";
+import HomeCredentials from "@/components/user/HomeCredentials";
 
 export const metadata: Metadata = {
-  title: "Energy Audit Consultants in Kerala",
+  title: "BEE-Accredited Energy Audit Consultants in Kerala",
   description:
     "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Energy Audit Consultants in Kerala",
+    title: "BEE-Accredited Energy Audit Consultants in Kerala",
     description:
       "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
     url: "/",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Energy Audit Consultants in Kerala",
+    title: "BEE-Accredited Energy Audit Consultants in Kerala",
     description:
       "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
     images: ["/hero-desk.png"],
@@ -48,6 +49,13 @@ const structuredData = {
   foundingDate: "2008",
   telephone: "+91-7356111990",
   email: "info@athulenergy.com",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+91-7356111990",
+    email: "info@athulenergy.com",
+    contactType: "customer service",
+    areaServed: "Kerala",
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress:
@@ -142,6 +150,7 @@ export default function HomePage() {
       />
       <HomeHero />
       <HomeServices />
+      <HomeCredentials />
     </>
   );
 }

@@ -80,56 +80,65 @@ export default function HomeServices() {
   const progressRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const wrapper = mobileRef.current;
-    const viewport = viewportRef.current;
-    const track = trackRef.current;
-    if (!wrapper || !viewport || !track) return;
-
     gsap.registerPlugin(ScrollTrigger);
 
-    const mm = gsap.matchMedia();
-    let cancelled = false;
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
 
-    mm.add("(max-width: 1023px)", () => {
-      const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-      if (distance() <= 0) return;
+      mm.add("(max-width: 1023px)", () => {
+        const wrapper = mobileRef.current;
+        const viewport = viewportRef.current;
+        const track = trackRef.current;
+        if (!wrapper || !viewport || !track) return;
 
-      const tween = gsap.to(track, {
-        x: () => -distance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "top top",
-          end: () => `+=${distance()}`,
-          pin: true,
-          scrub: 0.6,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (progressRef.current) {
-              gsap.set(progressRef.current, { scaleX: self.progress });
-            }
+        const getDistance = () => {
+          const scrollW = track.scrollWidth;
+          const clientW = viewport.clientWidth;
+          return Math.max(0, scrollW - clientW);
+        };
+
+        gsap.to(track, {
+          x: () => -getDistance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top top",
+            end: () => `+=${Math.max(getDistance() * 1.25, 1200)}`,
+            pin: true,
+            scrub: 0.6,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (progressRef.current) {
+                gsap.set(progressRef.current, { scaleX: self.progress });
+              }
+            },
           },
-        },
+        });
       });
+    }, mobileRef);
 
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-        gsap.set(track, { clearProps: "transform" });
-        if (progressRef.current) {
-          gsap.set(progressRef.current, { clearProps: "transform" });
-        }
-      };
+    const refreshTrigger = () => {
+      ScrollTrigger.refresh();
+    };
+
+    const rAF = requestAnimationFrame(() => {
+      refreshTrigger();
     });
 
-    document.fonts.ready.then(() => {
-      if (!cancelled) ScrollTrigger.refresh();
-    });
+    const timer = setTimeout(refreshTrigger, 200);
+
+    if (typeof document !== "undefined" && document.fonts) {
+      document.fonts.ready.then(refreshTrigger).catch(() => {});
+    }
+
+    window.addEventListener("resize", refreshTrigger);
 
     return () => {
-      cancelled = true;
-      mm.revert();
+      cancelAnimationFrame(rAF);
+      clearTimeout(timer);
+      window.removeEventListener("resize", refreshTrigger);
+      ctx.revert();
     };
   }, []);
 
@@ -188,6 +197,7 @@ export default function HomeServices() {
             <ul
               aria-label="Services"
               ref={trackRef}
+              style={{ width: "max-content" }}
               className="flex w-max gap-3 px-4 will-change-transform"
             >
               {services.map((service) => (
@@ -245,15 +255,18 @@ export default function HomeServices() {
             </ul>
           </div>
 
-          <div className="mt-3">
-            <div className="h-px w-full overflow-hidden bg-slate-200">
+          <div className="mt-4">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
               <span
                 ref={progressRef}
-                className="block h-full origin-left scale-x-0 bg-emerald-700"
+                className="block h-full origin-left scale-x-0 rounded-full bg-emerald-600"
               />
             </div>
-            <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500">
-              <span>Scroll to explore</span>
+            <div className="mt-2 flex items-center justify-between text-[10.5px] text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Scroll down to explore
+              </span>
               <span className="font-semibold text-emerald-700">01 — 07</span>
             </div>
           </div>
