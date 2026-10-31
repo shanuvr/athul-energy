@@ -79,6 +79,7 @@ export default function UserNavbar() {
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
   const isServicesActive = pathname.startsWith("/services");
+  const transparent = pathname === "/" && !scrolled && !mobileOpen;
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -112,7 +113,11 @@ export default function UserNavbar() {
   return (
     <header className="sticky top-0 z-50 w-full">
       {/* Utility strip */}
-      <div className="hidden border-b border-white/10 bg-slate-950 lg:block">
+      <div
+        className={`hidden border-b border-white/10 transition-colors duration-300 lg:block ${
+          transparent ? "bg-transparent" : "bg-slate-950"
+        }`}
+      >
         <div className="mx-auto flex h-11 max-w-7xl items-center justify-between gap-6 px-6 xl:px-8">
           <div className="flex min-w-0 items-center gap-3.5">
             <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-400/[0.08] px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.13em] text-emerald-300">
@@ -125,24 +130,24 @@ export default function UserNavbar() {
 
             <span className="h-3.5 w-px bg-white/10" aria-hidden="true" />
 
-            <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.02em] text-slate-300">
-              EMC Kerala <span className="px-0.5 text-slate-600">/</span> BEE{" "}
-              <span className="px-0.5 text-slate-600">/</span> GEDA
+            <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.02em] text-white">
+              EMC Kerala <span className="px-0.5 text-white/40">/</span> BEE{" "}
+              <span className="px-0.5 text-white/40">/</span> GEDA
             </span>
 
             <span className="hidden h-3.5 w-px bg-white/10 xl:block" aria-hidden="true" />
 
-            <span className="hidden whitespace-nowrap text-[11px] tracking-[0.02em] text-slate-500 xl:inline">
-              Energy <span className="text-slate-700">·</span> Safety{" "}
-              <span className="text-slate-700">·</span> Sustainability
-              <span className="ml-1.5 text-slate-600">since 2008</span>
+            <span className="hidden whitespace-nowrap text-[11px] tracking-[0.02em] text-white xl:inline">
+              Energy <span className="text-white/50">·</span> Safety{" "}
+              <span className="text-white/50">·</span> Sustainability
+              <span className="ml-1.5 text-white">since 2008</span>
             </span>
           </div>
 
           <div className="flex shrink-0 items-center gap-1">
             <a
               href="tel:+917356111990"
-              className="group flex items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-[11px] font-medium tracking-[0.02em] text-slate-300 transition-colors duration-200 hover:bg-white/5 hover:text-white"
+              className="group flex items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-[11px] font-medium tracking-[0.02em] text-white transition-colors duration-200 hover:bg-white/10 hover:text-white"
             >
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/5 text-emerald-400 transition-colors duration-200 group-hover:bg-emerald-500/15 group-hover:text-emerald-300">
                 <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
@@ -156,7 +161,7 @@ export default function UserNavbar() {
 
             <a
               href="mailto:info@athulenergy.com"
-              className="group flex items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-[11px] font-medium tracking-[0.02em] text-slate-400 transition-colors duration-200 hover:bg-white/5 hover:text-white"
+              className="group flex items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-[11px] font-medium tracking-[0.02em] text-white transition-colors duration-200 hover:bg-white/10 hover:text-white"
             >
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/5 text-emerald-400 transition-colors duration-200 group-hover:bg-emerald-500/15 group-hover:text-emerald-300">
                 <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
@@ -172,10 +177,14 @@ export default function UserNavbar() {
 
       {/* Main navigation */}
       <nav
-        className={`relative w-full border-b bg-white/95 backdrop-blur-md transition-shadow duration-300 ${
-          scrolled
-            ? "border-slate-200 shadow-[0_10px_30px_-18px_rgba(15,23,42,0.35)]"
-            : "border-slate-200/80"
+        className={`relative w-full border-b transition-all duration-300 ${
+          transparent
+            ? "border-transparent bg-transparent"
+            : `bg-white/95 backdrop-blur-md ${
+                scrolled
+                  ? "border-slate-200 shadow-[0_10px_30px_-18px_rgba(15,23,42,0.35)]"
+                  : "border-slate-200/80"
+              }`
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:h-[68px] xl:px-8">
@@ -193,8 +202,8 @@ export default function UserNavbar() {
 
           {/* Desktop links */}
           <div className="ml-auto hidden h-full items-center lg:flex">
-            <NavLink href="/" label="Home" active={pathname === "/"} />
-            <NavLink href="/about" label="About" active={isActive("/about")} />
+            <NavLink href="/" label="Home" active={pathname === "/"} transparent={transparent} />
+            <NavLink href="/about" label="About" active={isActive("/about")} transparent={transparent} />
 
             {/* Services dropdown */}
             <div
@@ -207,9 +216,13 @@ export default function UserNavbar() {
                 type="button"
                 onClick={() => setServicesOpen((prev) => !prev)}
                 className={`group relative inline-flex h-full items-center gap-1.5 px-3 text-[13px] font-medium tracking-[0.015em] transition-colors duration-200 focus-visible:outline-none ${
-                  isServicesActive || servicesOpen
-                    ? "text-slate-950"
-                    : "text-slate-500 hover:text-slate-950"
+                  transparent
+                    ? isServicesActive || servicesOpen
+                      ? "text-white"
+                      : "text-white hover:text-white"
+                    : isServicesActive || servicesOpen
+                      ? "text-slate-950"
+                      : "text-slate-500 hover:text-slate-950"
                 }`}
                 aria-expanded={servicesOpen}
                 aria-haspopup="true"
@@ -217,7 +230,13 @@ export default function UserNavbar() {
                 Services
                 <svg
                   className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                    servicesOpen ? "rotate-180 text-emerald-600" : "text-slate-400 group-hover:text-slate-600"
+                    servicesOpen
+                      ? transparent
+                        ? "rotate-180 text-emerald-300"
+                        : "rotate-180 text-emerald-600"
+                      : transparent
+                        ? "text-white group-hover:text-white"
+                        : "text-slate-400 group-hover:text-slate-600"
                   }`}
                   fill="none"
                   viewBox="0 0 24 24"
@@ -228,9 +247,9 @@ export default function UserNavbar() {
                 </svg>
                 <span
                   aria-hidden="true"
-                  className={`absolute inset-x-3 bottom-0 h-[2px] origin-left rounded-t-full bg-emerald-600 transition-transform duration-300 ease-out ${
-                    isServicesActive || servicesOpen ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                  }`}
+                  className={`absolute inset-x-3 bottom-0 h-[2px] origin-left rounded-t-full transition-transform duration-300 ease-out ${
+                    transparent ? "bg-emerald-400" : "bg-emerald-600"
+                  } ${isServicesActive || servicesOpen ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
                 />
               </button>
 
@@ -297,15 +316,19 @@ export default function UserNavbar() {
               </div>
             </div>
 
-            <NavLink href="/gallery" label="Gallery" active={isActive("/gallery")} />
-            <NavLink href="/blog" label="Blog" active={isActive("/blog")} />
-            <NavLink href="/contact" label="Contact" active={isActive("/contact")} />
+            <NavLink href="/gallery" label="Gallery" active={isActive("/gallery")} transparent={transparent} />
+            <NavLink href="/blog" label="Blog" active={isActive("/blog")} transparent={transparent} />
+            <NavLink href="/contact" label="Contact" active={isActive("/contact")} transparent={transparent} />
           </div>
 
           {/* Desktop CTA */}
           <Link
             href="/contact"
-            className="group hidden h-9 shrink-0 items-center gap-2 rounded-md bg-slate-900 px-4 text-[12.5px] font-semibold text-white transition-colors duration-200 hover:bg-emerald-700 lg:inline-flex"
+            className={`group hidden h-9 shrink-0 items-center gap-2 rounded-md px-4 text-[12.5px] font-semibold text-white transition-colors duration-200 lg:inline-flex ${
+              transparent
+                ? "bg-white/10 ring-1 ring-inset ring-white/25 backdrop-blur-sm hover:bg-white/20"
+                : "bg-slate-900 hover:bg-emerald-700"
+            }`}
           >
             Request an audit
             <svg
@@ -323,7 +346,9 @@ export default function UserNavbar() {
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 lg:hidden"
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 lg:hidden ${
+              transparent ? "text-white hover:bg-white/10" : "text-slate-700 hover:bg-slate-100"
+            }`}
             aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobileOpen}
           >
@@ -433,21 +458,37 @@ export default function UserNavbar() {
   );
 }
 
-function NavLink({ href, label, active }: { href: string; label: string; active: boolean }) {
+function NavLink({
+  href,
+  label,
+  active,
+  transparent,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+  transparent: boolean;
+}) {
   return (
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
       className={`group relative inline-flex h-full items-center px-3 text-[13px] font-medium tracking-[0.015em] transition-colors duration-200 ${
-        active ? "text-slate-950" : "text-slate-500 hover:text-slate-950"
+        transparent
+          ? active
+            ? "text-white"
+            : "text-white hover:text-white"
+          : active
+            ? "text-slate-950"
+            : "text-slate-500 hover:text-slate-950"
       }`}
     >
       {label}
       <span
         aria-hidden="true"
-        className={`absolute inset-x-3 bottom-0 h-[2px] origin-left rounded-t-full bg-emerald-600 transition-transform duration-300 ease-out ${
-          active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-        }`}
+        className={`absolute inset-x-3 bottom-0 h-[2px] origin-left rounded-t-full transition-transform duration-300 ease-out ${
+          transparent ? "bg-emerald-400" : "bg-emerald-600"
+        } ${active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
       />
     </Link>
   );

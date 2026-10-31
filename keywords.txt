@@ -1,0 +1,47 @@
+# Athul Energy Consultants - Home Page Keyword Targets
+# Scope: brand + primary commercial services + location (India / Kerala)
+# NOT for: service sub-pages, blog, downloads (those get their own keyword sets)
+# Note: search volume is an estimate; validate in Google Keyword Planner / Ahrefs.
+# One keyword per line.
+
+# --- Brand ---
+athul energy
+athul energy consultants
+athul energy consultants pvt ltd
+
+# --- Broad head terms (high volume, mixed/exam intent - use in title/H1 only) ---
+energy audit
+energy auditor
+
+# --- Core commercial (primary home-page targets) ---
+energy audit consultants
+energy audit services
+energy audit company
+energy audit companies in india
+energy audit firms in india
+industrial energy audit
+
+# --- Location ---
+energy audit kerala
+energy auditors in kerala
+energy audit companies in kerala
+energy audit consultants in kerala
+energy audit consultants in india
+
+# --- Electrical safety ---
+electrical safety audit
+electrical safety audit services
+electrical safety audit companies
+
+# --- Power quality & thermography ---
+power quality audit
+power quality audit services
+harmonics audit
+thermal imaging survey
+
+# --- Green & compliance ---
+green audit
+green audit for colleges
+naac green audit
+naac energy audit
+environment audit
