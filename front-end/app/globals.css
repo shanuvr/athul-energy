@@ -279,3 +279,29 @@ body {
 .animate-marquee-slow {
   animation: marquee-slow 40s linear infinite;
 }
+
+@keyframes clients-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes clients-marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-clients-left {
+  animation: clients-marquee-left 40s linear infinite;
+}
+
+.animate-clients-right {
+  animation: clients-marquee-right 42s linear infinite;
+}

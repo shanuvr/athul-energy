@@ -5,6 +5,7 @@ import HomeCredentials from "@/components/user/HomeCredentials";
 import HomeTestimonials from "@/components/user/HomeTestimonials";
 import HomeDownloads from "@/components/user/HomeDownloads";
 import HomeCertifications from "@/components/user/HomeCertifications";
+import HomeClients from "@/components/user/HomeClients";
 
 export const metadata: Metadata = {
   title: "BEE-Accredited Energy Audit Consultants in Kerala",
@@ -157,6 +158,7 @@ export default function HomePage() {
       <HomeTestimonials />
       <HomeDownloads />
       <HomeCertifications />
+      <HomeClients />
     </>
   );
 }
