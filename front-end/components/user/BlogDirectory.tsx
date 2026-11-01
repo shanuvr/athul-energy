@@ -13,6 +13,13 @@ import {
   Sparkles,
   Phone,
   ShieldCheck,
+  Layers,
+  Zap,
+  Flame,
+  Activity,
+  Gauge,
+  Leaf,
+  SlidersHorizontal,
 } from "lucide-react";
 import {
   BLOG_POSTS,
@@ -20,6 +27,25 @@ import {
   type BlogPost,
 } from "@/lib/blog-data";
 import BlogCard from "@/components/user/BlogCard";
+
+function getCategoryIcon(id: string) {
+  switch (id) {
+    case "energy-audits":
+      return Zap;
+    case "electrical-safety":
+      return ShieldCheck;
+    case "thermography":
+      return Flame;
+    case "power-quality":
+      return Activity;
+    case "thermal-utilities":
+      return Gauge;
+    case "sustainability":
+      return Leaf;
+    default:
+      return Layers;
+  }
+}
 
 export default function BlogDirectory() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
@@ -93,77 +119,118 @@ export default function BlogDirectory() {
         </div>
       </div>
 
-      {/* Category Tabs Bar - Sleek Horizontal Pills */}
-      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
-        {BLOG_CATEGORIES.map((cat) => {
-          const count =
-            cat.id === "all"
-              ? BLOG_POSTS.length
-              : BLOG_POSTS.filter((p) => p.category === cat.id).length;
+      {/* Category Tabs Bar - Modern Framed Track with Icons */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between px-1">
+          <div className="flex items-center gap-1.5">
+            <SlidersHorizontal className="h-3.5 w-3.5 text-emerald-600" />
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-600">
+              Browse by Discipline
+            </span>
+          </div>
+          <span className="text-[11px] font-medium text-slate-400">
+            {activeCategory === "all" ? (
+              <span>All <strong>{filteredPosts.length}</strong> guides</span>
+            ) : (
+              <span>Discipline Filter Active</span>
+            )}
+          </span>
+        </div>
 
-          const isActive = activeCategory === cat.id;
+        {/* Horizontal Track Container */}
+        <div className="relative">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto p-1.5 sm:p-2 rounded-2xl border border-slate-200/90 bg-slate-100/80 shadow-2xs scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-2">
+            {BLOG_CATEGORIES.map((cat) => {
+              const Icon = getCategoryIcon(cat.id);
+              const count =
+                cat.id === "all"
+                  ? BLOG_POSTS.length
+                  : BLOG_POSTS.filter((p) => p.category === cat.id).length;
 
-          return (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all ${
-                isActive
-                  ? "bg-[#053824] text-white shadow-2xs font-bold"
-                  : "bg-white border border-slate-200/90 text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-              }`}
-            >
-              <span>{cat.shortLabel}</span>
-              <span
-                className={`text-[10px] ${
-                  isActive ? "text-emerald-300 font-bold" : "text-slate-400"
-                }`}
-              >
-                ({count})
-              </span>
-            </button>
-          );
-        })}
+              const isActive = activeCategory === cat.id;
+
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`group shrink-0 inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 sm:py-2 text-xs font-semibold transition-all duration-200 ${
+                    isActive
+                      ? "bg-[#053824] text-white shadow-xs font-bold ring-1 ring-[#053824]"
+                      : "bg-white/80 hover:bg-white text-slate-700 hover:text-slate-950 border border-slate-200/70"
+                  }`}
+                >
+                  <Icon
+                    className={`h-3.5 w-3.5 shrink-0 transition-colors ${
+                      isActive
+                        ? "text-emerald-400"
+                        : "text-slate-400 group-hover:text-emerald-700"
+                    }`}
+                  />
+                  <span>{cat.shortLabel}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold transition-colors ${
+                      isActive
+                        ? "bg-emerald-400/20 text-emerald-300"
+                        : "bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* Featured Whitepaper Showcase */}
       {featuredPost && (
         <>
           {/* Mobile View: Compact Horizontal Featured Card (sm:hidden) */}
-          <div className="sm:hidden group relative flex flex-row items-center gap-3 p-3 rounded-2xl border-2 border-emerald-500/40 bg-emerald-50/25 shadow-xs hover:border-emerald-500 transition-all">
-            <div className="relative h-26 w-26 shrink-0 overflow-hidden rounded-xl bg-slate-900 shadow-2xs">
+          <div className="sm:hidden group relative flex flex-row items-center gap-3.5 p-3 rounded-2xl border border-emerald-400/60 bg-emerald-50/20 shadow-2xs hover:border-emerald-500 transition-all">
+            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-900 shadow-2xs">
               <Image
                 src={featuredPost.coverImage}
                 alt={featuredPost.title}
                 fill
                 priority
+                sizes="96px"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-1.5 inset-x-1.5">
-                <span className="block text-center rounded bg-emerald-500/90 text-slate-950 font-extrabold text-[8.5px] uppercase tracking-wider py-0.5">
+              
+              {/* Featured Badge Top-Left */}
+              <div className="absolute top-1.5 left-1.5">
+                <span className="inline-flex items-center gap-1 rounded bg-emerald-500 text-slate-950 font-black text-[8px] uppercase tracking-wider px-1.5 py-0.5 shadow-xs">
+                  <Sparkles className="h-2 w-2" />
                   Featured
                 </span>
               </div>
+
+              {/* Uniform Reading Time Bottom-Right */}
+              <div className="absolute bottom-1.5 right-1.5 flex items-center gap-1 rounded-md bg-black/75 backdrop-blur-xs px-1.5 py-0.5 text-[9.5px] font-semibold text-white shadow-xs">
+                <Clock className="h-2.5 w-2.5 text-emerald-400 shrink-0" />
+                <span className="whitespace-nowrap">{featuredPost.readTime}</span>
+              </div>
             </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5 text-[10px] text-slate-500 mb-1">
-                <span className="font-bold text-emerald-800 uppercase tracking-wider">
-                  {featuredPost.categoryLabel}
-                </span>
-                <span className="text-slate-300">•</span>
-                <span className="text-slate-400">{featuredPost.readTime}</span>
+            <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+              <div>
+                <div className="flex items-center mb-1">
+                  <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider truncate">
+                    {featuredPost.categoryLabel}
+                  </span>
+                </div>
+
+                <h2 className="text-[13px] font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-emerald-800 transition-colors">
+                  {featuredPost.title}
+                </h2>
               </div>
 
-              <h2 className="text-[13px] font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-emerald-800 transition-colors">
-                {featuredPost.title}
-              </h2>
-
-              <div className="flex items-center gap-1.5 text-[10.5px] text-slate-500 mt-1.5 truncate">
+              <div className="flex items-center gap-1.5 text-[10.5px] text-slate-500 mt-2 truncate">
                 <span className="font-medium text-slate-700 truncate">{featuredPost.author.name}</span>
-                <span>•</span>
-                <span>
+                <span className="text-slate-300">•</span>
+                <span className="shrink-0">
                   {new Date(featuredPost.publishedAt).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",

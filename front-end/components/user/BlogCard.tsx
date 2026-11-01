@@ -30,43 +30,40 @@ export default function BlogCard({ post, priority = false }: BlogCardProps) {
           </span>
         </div>
 
-        {/* Desktop-only Reading Time Overlay */}
-        <div className="hidden sm:flex absolute bottom-2.5 right-3 items-center gap-1 rounded-md bg-black/50 backdrop-blur-xs px-2 py-0.5 text-[10.5px] font-medium text-slate-200">
-          <Clock className="h-3 w-3 text-emerald-400" />
-          <span>{post.readTime}</span>
+        {/* Uniform Reading Time Overlay Pill (Bottom-right on both mobile and desktop) */}
+        <div className="absolute bottom-1.5 right-1.5 sm:bottom-2.5 sm:right-3 flex items-center gap-1 rounded-md bg-black/75 sm:bg-black/60 backdrop-blur-xs px-1.5 py-0.5 sm:px-2 text-[9.5px] sm:text-[10.5px] font-semibold text-white sm:text-slate-200 shadow-xs">
+          <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-400 shrink-0" />
+          <span className="whitespace-nowrap">{post.readTime}</span>
         </div>
       </div>
 
       {/* Content Body */}
-      <div className="flex-1 min-w-0 sm:p-5">
-        {/* Mobile Category & Read Time Line */}
-        <div className="flex sm:hidden items-center gap-1.5 text-[10px] text-slate-500 mb-1">
-          <span className="font-bold text-emerald-800 uppercase tracking-wider">
-            {post.categoryLabel}
-          </span>
-          <span className="text-slate-300">•</span>
-          <span className="flex items-center gap-0.5 text-slate-400">
-            <Clock className="h-2.5 w-2.5 text-emerald-600" />
-            {post.readTime}
-          </span>
-        </div>
+      <div className="flex-1 min-w-0 sm:p-5 flex flex-col justify-between py-0.5">
+        <div>
+          {/* Mobile Category Label alone (Single line, no wrapping, bold emerald) */}
+          <div className="flex sm:hidden items-center mb-1">
+            <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider truncate">
+              {post.categoryLabel}
+            </span>
+          </div>
 
-        {/* Desktop Date */}
-        <div className="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 mb-2">
-          <span className="inline-flex items-center gap-1">
-            <Calendar className="h-3 w-3 text-slate-400" />
-            {new Date(post.publishedAt).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </span>
-        </div>
+          {/* Desktop Date */}
+          <div className="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 mb-2">
+            <span className="inline-flex items-center gap-1">
+              <Calendar className="h-3 w-3 text-slate-400" />
+              {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
+          </div>
 
-        {/* Title */}
-        <h3 className="text-[13px] sm:text-base font-bold text-slate-900 group-hover:text-emerald-800 transition-colors line-clamp-2 leading-snug">
-          {post.title}
-        </h3>
+          {/* Title */}
+          <h3 className="text-[13px] sm:text-base font-bold text-slate-900 group-hover:text-emerald-800 transition-colors line-clamp-2 leading-snug">
+            {post.title}
+          </h3>
+        </div>
 
         {/* Excerpt (Desktop only to keep mobile cards compact) */}
         <p className="hidden sm:block mt-2 text-xs sm:text-[13px] leading-relaxed text-slate-600 line-clamp-3">
@@ -74,10 +71,10 @@ export default function BlogCard({ post, priority = false }: BlogCardProps) {
         </p>
 
         {/* Mobile Author & Date */}
-        <div className="flex sm:hidden items-center gap-1.5 text-[10.5px] text-slate-400 mt-1.5 truncate">
+        <div className="flex sm:hidden items-center gap-1.5 text-[10.5px] text-slate-400 mt-2 truncate">
           <span className="text-slate-600 font-medium truncate">{post.author.name}</span>
-          <span>•</span>
-          <span>
+          <span className="text-slate-300">•</span>
+          <span className="shrink-0">
             {new Date(post.publishedAt).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
