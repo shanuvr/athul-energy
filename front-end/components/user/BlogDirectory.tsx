@@ -63,9 +63,9 @@ export default function BlogDirectory() {
   }, [filteredPosts, featuredPost]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Search Bar & Filter Controls */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 shadow-2xs">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 rounded-2xl border border-slate-200 bg-white p-2.5 sm:p-4 shadow-2xs">
         {/* Search Input */}
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -73,13 +73,13 @@ export default function BlogDirectory() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search articles by topic, standard, or keyword (e.g. BEE, CEA, Harmonics, Boiler)..."
-            className="w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-10 pr-9 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors"
+            placeholder="Search articles by topic or standard (e.g. BEE, CEA, Harmonics)..."
+            className="w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-9 sm:pl-10 pr-8 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition-colors"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition-colors"
               title="Clear search"
             >
               <X className="h-3.5 w-3.5" />
@@ -88,13 +88,13 @@ export default function BlogDirectory() {
         </div>
 
         {/* Article Count Tag */}
-        <div className="shrink-0 text-xs font-semibold text-slate-500 self-center">
+        <div className="shrink-0 text-[11px] sm:text-xs font-semibold text-slate-500 self-center">
           Showing <strong className="text-slate-900">{filteredPosts.length}</strong> technical guides
         </div>
       </div>
 
-      {/* Category Tabs Bar */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+      {/* Category Tabs Bar - Sleek Horizontal Pills */}
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
         {BLOG_CATEGORIES.map((cat) => {
           const count =
             cat.id === "all"
@@ -107,33 +107,31 @@ export default function BlogDirectory() {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`shrink-0 inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition-all ${
+              className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all ${
                 isActive
-                  ? "bg-[#053824] text-white shadow-2xs"
-                  : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300"
+                  ? "bg-[#053824] text-white shadow-2xs font-bold"
+                  : "bg-white border border-slate-200/90 text-slate-600 hover:bg-slate-50 hover:text-slate-900"
               }`}
             >
               <span>{cat.shortLabel}</span>
               <span
-                className={`rounded-full px-1.5 py-0.2 text-[10px] font-semibold ${
-                  isActive
-                    ? "bg-emerald-500 text-slate-950"
-                    : "bg-slate-100 text-slate-500"
+                className={`text-[10px] ${
+                  isActive ? "text-emerald-300 font-bold" : "text-slate-400"
                 }`}
               >
-                {count}
+                ({count})
               </span>
             </button>
           );
         })}
       </div>
 
-      {/* Featured Whitepaper Hero Banner */}
+      {/* Featured Whitepaper Showcase */}
       {featuredPost && (
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:border-emerald-400 hover:shadow-md transition-all">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-            {/* Image on Left / Top */}
-            <div className="relative aspect-[16/9] lg:aspect-auto lg:col-span-7 overflow-hidden bg-slate-900 min-h-[260px] sm:min-h-[320px]">
+        <>
+          {/* Mobile View: Compact Horizontal Featured Card (sm:hidden) */}
+          <div className="sm:hidden group relative flex flex-row items-center gap-3 p-3 rounded-2xl border-2 border-emerald-500/40 bg-emerald-50/25 shadow-xs hover:border-emerald-500 transition-all">
+            <div className="relative h-26 w-26 shrink-0 overflow-hidden rounded-xl bg-slate-900 shadow-2xs">
               <Image
                 src={featuredPost.coverImage}
                 alt={featuredPost.title}
@@ -141,75 +139,128 @@ export default function BlogDirectory() {
                 priority
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
-              <div className="absolute top-4 left-4">
-                <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-500 px-3 py-1 text-[11px] font-extrabold text-slate-950 shadow-sm uppercase tracking-wider">
-                  <Sparkles className="h-3 w-3" />
-                  Featured Technical Whitepaper
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="absolute bottom-1.5 inset-x-1.5">
+                <span className="block text-center rounded bg-emerald-500/90 text-slate-950 font-extrabold text-[8.5px] uppercase tracking-wider py-0.5">
+                  Featured
                 </span>
               </div>
             </div>
 
-            {/* Content on Right */}
-            <div className="flex flex-col justify-between p-6 sm:p-8 lg:col-span-5 bg-white">
-              <div>
-                <div className="flex items-center gap-2 text-xs text-slate-500 mb-2.5">
-                  <span className="font-bold text-emerald-800">
-                    {featuredPost.categoryLabel}
-                  </span>
-                  <span>•</span>
-                  <span>{featuredPost.readTime}</span>
-                </div>
-
-                <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors leading-tight">
-                  {featuredPost.title}
-                </h2>
-
-                <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-3">
-                  {featuredPost.excerpt}
-                </p>
-
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {featuredPost.tags.slice(0, 3).map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="rounded-md bg-slate-100 px-2 py-0.5 text-[10.5px] font-medium text-slate-700"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5 text-[10px] text-slate-500 mb-1">
+                <span className="font-bold text-emerald-800 uppercase tracking-wider">
+                  {featuredPost.categoryLabel}
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="text-slate-400">{featuredPost.readTime}</span>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                <div>
-                  <span className="block text-xs font-bold text-slate-900">
-                    {featuredPost.author.name}
-                  </span>
-                  <span className="block text-[11px] text-slate-500">
-                    {featuredPost.author.role}
-                  </span>
-                </div>
+              <h2 className="text-[13px] font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-emerald-800 transition-colors">
+                {featuredPost.title}
+              </h2>
 
-                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 group-hover:translate-x-1 transition-transform">
-                  Read Full Guide
-                  <ArrowRight className="h-4 w-4" />
+              <div className="flex items-center gap-1.5 text-[10.5px] text-slate-500 mt-1.5 truncate">
+                <span className="font-medium text-slate-700 truncate">{featuredPost.author.name}</span>
+                <span>•</span>
+                <span>
+                  {new Date(featuredPost.publishedAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                  })}
                 </span>
               </div>
             </div>
+
+            <Link
+              href={`/blog/${featuredPost.slug}`}
+              className="absolute inset-0 z-0"
+              aria-label={`Read featured whitepaper: ${featuredPost.title}`}
+            />
           </div>
 
-          <Link
-            href={`/blog/${featuredPost.slug}`}
-            className="absolute inset-0 z-0"
-            aria-label={`Read featured whitepaper: ${featuredPost.title}`}
-          />
-        </div>
+          {/* Tablet & Desktop View: Large 2-Column Banner (hidden sm:block) */}
+          <div className="hidden sm:block group relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm hover:border-emerald-400 hover:shadow-md transition-all">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+              {/* Image on Left / Top */}
+              <div className="relative aspect-[16/9] lg:aspect-auto lg:col-span-7 overflow-hidden bg-slate-900 min-h-[300px]">
+                <Image
+                  src={featuredPost.coverImage}
+                  alt={featuredPost.title}
+                  fill
+                  priority
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
+                <div className="absolute top-4 left-4">
+                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-500 px-3 py-1 text-[11px] font-extrabold text-slate-950 shadow-sm uppercase tracking-wider">
+                    <Sparkles className="h-3 w-3" />
+                    Featured Technical Whitepaper
+                  </span>
+                </div>
+              </div>
+
+              {/* Content on Right */}
+              <div className="flex flex-col justify-between p-6 sm:p-8 lg:col-span-5 bg-white">
+                <div>
+                  <div className="flex items-center gap-2 text-xs text-slate-500 mb-2.5">
+                    <span className="font-bold text-emerald-800">
+                      {featuredPost.categoryLabel}
+                    </span>
+                    <span>•</span>
+                    <span>{featuredPost.readTime}</span>
+                  </div>
+
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors leading-tight">
+                    {featuredPost.title}
+                  </h2>
+
+                  <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-3">
+                    {featuredPost.excerpt}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {featuredPost.tags.slice(0, 3).map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="rounded-md bg-slate-100 px-2 py-0.5 text-[10.5px] font-medium text-slate-700"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <div>
+                    <span className="block text-xs font-bold text-slate-900">
+                      {featuredPost.author.name}
+                    </span>
+                    <span className="block text-[11px] text-slate-500">
+                      {featuredPost.author.role}
+                    </span>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 group-hover:translate-x-1 transition-transform">
+                    Read Full Guide
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <Link
+              href={`/blog/${featuredPost.slug}`}
+              className="absolute inset-0 z-0"
+              aria-label={`Read featured whitepaper: ${featuredPost.title}`}
+            />
+          </div>
+        </>
       )}
 
-      {/* Main Grid of Articles */}
+      {/* Main Feed of Articles */}
       {filteredPosts.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400 mb-3">
             <BookOpen className="h-6 w-6" />
           </div>
@@ -228,7 +279,7 @@ export default function BlogDirectory() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
           {gridPosts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
@@ -237,13 +288,13 @@ export default function BlogDirectory() {
 
       {/* Consultation Callout Banner */}
       <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-900 via-slate-950 to-emerald-950 p-6 sm:p-8 text-white shadow-md">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-5 sm:gap-6">
           <div className="max-w-2xl text-center lg:text-left">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 px-3 py-0.5 text-[11px] font-bold text-emerald-300 uppercase tracking-wider">
               <ShieldCheck className="h-3.5 w-3.5" />
               Statutory Engineering Assistance
             </span>
-            <h3 className="mt-2.5 text-xl sm:text-2xl font-bold tracking-tight">
+            <h3 className="mt-2 text-lg sm:text-2xl font-bold tracking-tight">
               Require a Plant Audit or Statutory Compliance Verification?
             </h3>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -251,20 +302,20 @@ export default function BlogDirectory() {
             </p>
           </div>
 
-          <div className="shrink-0 flex flex-col sm:flex-row gap-3">
+          <div className="shrink-0 flex flex-row sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-xs sm:text-sm font-bold text-slate-950 hover:bg-emerald-400 transition-colors shadow-sm"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl bg-emerald-500 px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-slate-950 hover:bg-emerald-400 transition-colors shadow-sm text-center"
             >
-              Request Plant Audit Scoping
-              <ArrowRight className="h-4 w-4" />
+              <span>Plant Audit Scoping</span>
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
             <a
               href="tel:+917356111990"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-xs px-5 py-3 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 transition-colors"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-xs px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 transition-colors text-center"
             >
               <Phone className="h-3.5 w-3.5 text-emerald-300" />
-              +91 73561 11990
+              <span>Call Team</span>
             </a>
           </div>
         </div>

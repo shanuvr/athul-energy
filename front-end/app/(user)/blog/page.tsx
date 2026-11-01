@@ -32,10 +32,10 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-slate-50/60 pb-16">
       {/* Hero Header Section */}
-      <section className="border-b border-slate-200/90 bg-white py-8 sm:py-12 shadow-2xs">
+      <section className="border-b border-slate-200/90 bg-white py-5 sm:py-10 shadow-2xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 mb-4 overflow-x-auto whitespace-nowrap scrollbar-none py-1">
+          <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 mb-3 sm:mb-4 overflow-x-auto whitespace-nowrap scrollbar-none py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0">
             <Link href="/" className="shrink-0 hover:text-emerald-700 transition-colors">
               Home
             </Link>
@@ -45,23 +45,23 @@ export default function BlogPage() {
             </span>
           </nav>
 
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6">
             <div className="max-w-3xl">
-              <div className="flex flex-wrap items-center gap-2 mb-2.5">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-0.5 text-[11px] font-bold text-emerald-800">
+              <div className="flex flex-wrap items-center gap-2 mb-2 sm:mb-2.5">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-0.5 text-[10.5px] sm:text-[11px] font-bold text-emerald-800">
                   <BookOpen className="h-3.5 w-3.5" />
                   Engineering Guides &amp; Whitepapers
                 </span>
-                <span className="rounded-md border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-700">
+                <span className="rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 text-[10.5px] sm:text-[11px] font-bold text-slate-700">
                   BEE Accredited Auditor Insights
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Technical Knowledge, Statutory Codes &amp; Energy Guides
               </h1>
 
-              <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600 max-w-2xl">
+              <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-slate-600 max-w-2xl">
                 Practical, field-tested guidance from our accredited energy auditors and electrical safety specialists. Covering BEE PAT scheme compliance, CEA regulations, FLIR thermography, and high-ROI energy conservation measures.
               </p>
             </div>

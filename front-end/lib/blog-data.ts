@@ -391,7 +391,7 @@ Athul Energy deploys NABL-calibrated Level-II FLIR cameras with high spatial res
     title: "Power Quality Harmonics & IEEE 519: Sizing Active Harmonic Filters to Avoid Utility Penalties",
     excerpt:
       "Understanding Total Harmonic Distortion (THD-V and THD-I), neutral overheating, capacitor bank resonance, and how to size Active Harmonic Filters (AHF) for clean power.",
-    coverImage: "/services/power-quality-audit.jpg",
+    coverImage: "/services/power-quality-harmonics-study.jpg",
     category: "power-quality",
     categoryLabel: "Power Quality & Harmonics",
     featured: false,
@@ -594,7 +594,7 @@ Athul Energy provides complete thermal audits, flue gas logging, and steam netwo
     title: "NAAC Criteria 7: Complete Green, Energy & Environmental Audit Guide for Universities & Colleges",
     excerpt:
       "A comprehensive compliance manual for educational institutions on preparing Energy, Green, Environmental, and Water audit reports for NAAC accreditation grade enhancement.",
-    coverImage: "/services/green-building-audit.jpg",
+    coverImage: "/services/green-audit-naac-accreditation.jpg",
     category: "sustainability",
     categoryLabel: "Green Building & NAAC",
     featured: false,
