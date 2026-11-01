@@ -21,7 +21,7 @@ const NEWS_EVENTS: NewsEventItem[] = [
       "Athul Energy led an intensive technical seminar on ISO 50001 energy management frameworks and thermal efficiency optimization for manufacturing plant heads in Kerala.",
     date: "Oct 28, 2026",
     meta: "Kochi, Kerala",
-    href: "/blog",
+    href: "/blog/complete-guide-to-bee-mandatory-energy-audits",
   },
   {
     id: "ne-2",
@@ -32,7 +32,7 @@ const NEWS_EVENTS: NewsEventItem[] = [
       "Our accredited auditing team successfully finalized deep-dive electrical and thermal assessments, projecting over 4.2 GWh in cumulative annual energy savings.",
     date: "Oct 14, 2026",
     meta: "Energy Auditing",
-    href: "/blog",
+    href: "/blog/industrial-boiler-steam-efficiency-ecms",
   },
   {
     id: "ne-3",
@@ -43,7 +43,7 @@ const NEWS_EVENTS: NewsEventItem[] = [
       "Specialized training module for electrical engineers covering IEEE 519 compliance, active harmonic filter sizing, and power factor penalty prevention.",
     date: "Sep 30, 2026",
     meta: "Technical Workshop",
-    href: "/blog",
+    href: "/blog/power-quality-harmonics-ieee-519-compliance",
   },
 ];
 
