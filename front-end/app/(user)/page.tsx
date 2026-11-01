@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import HomeHero from "@/components/user/HomeHero";
 import HomeServices from "@/components/user/HomeServices";
 import HomeCredentials from "@/components/user/HomeCredentials";
+import HomeTestimonials from "@/components/user/HomeTestimonials";
+import HomeDownloads from "@/components/user/HomeDownloads";
+import HomeCertifications from "@/components/user/HomeCertifications";
 
 export const metadata: Metadata = {
   title: "BEE-Accredited Energy Audit Consultants in Kerala",
@@ -151,6 +154,9 @@ export default function HomePage() {
       <HomeHero />
       <HomeServices />
       <HomeCredentials />
+      <HomeTestimonials />
+      <HomeDownloads />
+      <HomeCertifications />
     </>
   );
 }
