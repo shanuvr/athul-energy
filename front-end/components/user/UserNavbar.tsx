@@ -4,6 +4,14 @@ import { useState, useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import {
+  Zap,
+  ShieldCheck,
+  Flame,
+  FileCheck2,
+  GraduationCap,
+  LayoutGrid,
+} from "lucide-react";
 
 interface ServiceDropdownItem {
   title: string;
@@ -13,72 +21,45 @@ interface ServiceDropdownItem {
   isSpecial?: boolean;
 }
 
-const iconClass = "h-[18px] w-[18px]";
+const iconClass = "h-[18px] w-[18px] shrink-0";
 
 const serviceDropdownItems: ServiceDropdownItem[] = [
   {
     title: "Energy Audits",
     desc: "Detailed electrical, thermal, PAT M&V and mandatory BEE/EMC statutory assessments.",
     href: "/services?cat=energy-audits",
-    icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
+    icon: <Zap className={iconClass} strokeWidth={2} />,
   },
   {
     title: "Safety Audits",
     desc: "CEA regulation compliance, arc flash analysis, fire safety and IS 14489 hazard reviews.",
     href: "/services?cat=safety-audits",
-    icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7 3v5.4c0 4.3-2.9 7.6-7 9.6-4.1-2-7-5.3-7-9.6V6l7-3z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.25 12l1.9 1.9 3.6-3.8" />
-      </svg>
-    ),
+    icon: <ShieldCheck className={iconClass} strokeWidth={2} />,
   },
   {
     title: "Thermography & Surveys",
     desc: "FLIR Level-II thermal scanning, ultrasonic flow testing and IS 3043 earthing studies.",
     href: "/services?cat=surveys-thermography",
-    icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
+    icon: <Flame className={iconClass} strokeWidth={2} />,
   },
   {
     title: "Compliance & NAAC",
     desc: "GRIHA green building audits, NAAC criteria 7, NABH hospital safety and ISO 50001.",
     href: "/services?cat=compliance-studies",
-    icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+    icon: <FileCheck2 className={iconClass} strokeWidth={2} />,
   },
   {
     title: "Technical Training",
     desc: "BEE exam coaching, industrial electrical safety, LOTO protocols and engineer workshops.",
     href: "/services?cat=training",
-    icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-      </svg>
-    ),
+    icon: <GraduationCap className={iconClass} strokeWidth={2} />,
   },
   {
     title: "All 30+ Services Hub",
     desc: "Explore complete directory with live keyword search, standards and instrument specs.",
     href: "/services",
     isSpecial: true,
-    icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-      </svg>
-    ),
+    icon: <LayoutGrid className={iconClass} strokeWidth={2} />,
   },
 ];
 

@@ -1,6 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
+import {
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  Phone,
+  FileCheck2,
+  Wrench,
+  Factory,
+  Check,
+  Target,
+  Sparkles,
+  BarChart3,
+  Calendar,
+  Layers,
+  ChevronRight,
+  Lock,
+} from "lucide-react";
 import {
   SERVICES_DATA,
   getServiceBySlug,
@@ -54,63 +72,63 @@ export default async function ServiceDetailPage({ params }: Props) {
     .slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-20">
-      {/* Top Breadcrumb & Hero */}
-      <section className="border-b border-slate-200/80 bg-white py-10 lg:py-14">
+    <div className="min-h-screen bg-slate-50/60 pb-16">
+      {/* Top Breadcrumb & Compact Hero Section */}
+      <section className="border-b border-slate-200/90 bg-white py-6 sm:py-8 lg:py-10 shadow-2xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs text-slate-500 mb-6">
+          {/* Breadcrumb Navigation */}
+          <nav className="flex items-center gap-1.5 text-xs text-slate-500 mb-4 sm:mb-5">
             <Link href="/" className="hover:text-emerald-700 transition-colors">
               Home
             </Link>
-            <span>/</span>
+            <ChevronRight className="h-3 w-3 text-slate-400" />
             <Link href="/services" className="hover:text-emerald-700 transition-colors">
               Services
             </Link>
-            <span>/</span>
+            <ChevronRight className="h-3 w-3 text-slate-400" />
             <Link
               href={`/services?cat=${service.category}`}
               className="hover:text-emerald-700 transition-colors"
             >
               {categoryInfo?.shortTitle || service.categoryLabel}
             </Link>
-            <span>/</span>
-            <span className="font-medium text-slate-900 truncate max-w-[200px] sm:max-w-xs">
+            <ChevronRight className="h-3 w-3 text-slate-400" />
+            <span className="font-semibold text-slate-900 truncate max-w-[200px] sm:max-w-xs">
               {service.title}
             </span>
           </nav>
 
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
             <div className="max-w-3xl">
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-bold text-emerald-800">
+              <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-0.5 text-[11px] font-bold text-emerald-800">
                   {service.categoryLabel}
                 </span>
 
                 {service.badge && (
-                  <span className="inline-flex items-center rounded-md border border-slate-300 bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-800">
+                  <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-800">
                     {service.badge}
                   </span>
                 )}
               </div>
 
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 {service.title}
               </h1>
 
-              <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
+              <p className="mt-2.5 text-sm sm:text-base leading-relaxed text-slate-600 max-w-2xl">
                 {service.shortDesc}
               </p>
 
-              {/* Standard Badges */}
-              <div className="mt-5 flex flex-wrap items-center gap-2">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+              {/* Mandatory Standards Badges */}
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <span className="text-[10.5px] font-bold text-slate-400 uppercase tracking-wider">
                   Mandatory Standards:
                 </span>
                 {service.standards.map((std, idx) => (
                   <span
                     key={idx}
-                    className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-700"
+                    className="rounded-md border border-slate-200/90 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-700"
                   >
                     {std}
                   </span>
@@ -118,24 +136,20 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Quick Action Button */}
-            <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3">
+            {/* Quick Action Buttons */}
+            <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-2.5 pt-2 lg:pt-0">
               <Link
                 href={`/contact?service=${service.slug}`}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-emerald-700"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#053824] px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-2xs transition-colors hover:bg-emerald-800"
               >
                 Request Audit Proposal
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                <ArrowRight className="h-4 w-4 text-[#4ade80]" />
               </Link>
               <a
                 href="tel:+917356111990"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50"
               >
-                <svg className="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5.5A2.5 2.5 0 015.5 3h1.6c.5 0 .9.3 1 .8l.9 3a1 1 0 01-.3 1L7.5 9a12 12 0 007.5 7.5l1.2-1.2a1 1 0 011-.3l3 .9c.5.1.8.5.8 1v1.6a2.5 2.5 0 01-2.5 2.5C10.6 21 3 13.4 3 5.5z" />
-                </svg>
+                <Phone className="h-3.5 w-3.5 text-emerald-600" />
                 Speak with AEA Auditor
               </a>
             </div>
@@ -144,40 +158,173 @@ export default async function ServiceDetailPage({ params }: Props) {
       </section>
 
       {/* Main Technical Specifications Body */}
-      <div className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left 2 Columns: Detailed Specifications */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Detailed Scope */}
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
-                Scope of Work &amp; Technical Methodology
-              </h2>
-              <p className="mt-4 text-sm sm:text-base leading-relaxed text-slate-600">
-                {service.fullDesc}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                All measurements, calculations, and risk analyses adhere strictly to accredited
-                procedures formulated in accordance with the Bureau of Energy Efficiency (BEE),
-                Central Electricity Authority (CEA), and relevant Indian Standard (IS) codes.
-              </p>
+      <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Left 2 Columns: Detailed Technical Dossier */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Visual Service Photo Showcase */}
+            <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-900 shadow-sm">
+              <div className="relative aspect-[16/9] w-full overflow-hidden">
+                <Image
+                  src={`/services/${service.slug}.jpg`}
+                  alt={`${service.title} - Certified Engineering Service by Athul Energy`}
+                  fill
+                  priority
+                  className="object-cover transition-transform duration-500 hover:scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                <div className="absolute bottom-3.5 left-4 right-4 flex flex-wrap items-center justify-between gap-2 text-white">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-600 text-white shadow-sm">
+                      <ShieldCheck className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="text-xs font-semibold tracking-wide text-slate-100">
+                      BEE Accredited Field Engineering Protocol
+                    </span>
+                  </div>
+                  <span className="rounded-md bg-black/40 backdrop-blur-xs border border-white/20 px-2.5 py-0.5 text-[10.5px] font-bold text-emerald-300">
+                    NABL Calibrated Equipment
+                  </span>
+                </div>
+              </div>
             </div>
 
-            {/* Deliverables List */}
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
-                Tangible Deliverables &amp; Client Reports
-              </h2>
-              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Scope of Work & Comprehensive Technical Methodology */}
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3 mb-4">
+                <FileCheck2 className="h-5 w-5 text-[#15803d]" />
+                <h2 className="text-base sm:text-lg font-bold text-slate-900">
+                  Scope of Work &amp; Technical Methodology
+                </h2>
+              </div>
+
+              <p className="text-sm leading-relaxed text-slate-600">
+                {service.fullDesc}
+              </p>
+
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                Our accredited energy auditors deploy high-precision, NABL-calibrated instruments to capture true RMS electrical parameters, thermal gradients, and mass-flow metrics. All measurements adhere strictly to BEE protocols, CEA 2010 safety regulations, and applicable Indian Standards (IS).
+              </p>
+
+              {/* 4-Step Technical Audit Roadmap */}
+              <div className="mt-5 border-t border-slate-100 pt-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3.5">
+                  Standard 4-Phase Audit Workflow
+                </h3>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-3.5">
+                    <span className="inline-block rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 mb-1.5">
+                      Phase 1
+                    </span>
+                    <h4 className="text-xs font-bold text-slate-900">Pre-Audit Data &amp; Single-Line Review</h4>
+                    <p className="text-[11.5px] text-slate-500 mt-1 leading-relaxed">
+                      Verification of historical 12-month utility bills, single-line diagrams (SLD), connected load lists, and baseline operating hours.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-3.5">
+                    <span className="inline-block rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 mb-1.5">
+                      Phase 2
+                    </span>
+                    <h4 className="text-xs font-bold text-slate-900">On-Site Field Logging &amp; Measurement</h4>
+                    <p className="text-[11.5px] text-slate-500 mt-1 leading-relaxed">
+                      Deployment of Class-A power quality analyzers, infrared cameras, and flow sensors across transformers, panels, and motors.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-3.5">
+                    <span className="inline-block rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 mb-1.5">
+                      Phase 3
+                    </span>
+                    <h4 className="text-xs font-bold text-slate-900">Energy &amp; Mass Balance Modeling</h4>
+                    <p className="text-[11.5px] text-slate-500 mt-1 leading-relaxed">
+                      Calculation of Specific Energy Consumption (SEC), distribution line losses, boiler/chiller efficiencies, and harmonic distortions.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-3.5">
+                    <span className="inline-block rounded-md bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 mb-1.5">
+                      Phase 4
+                    </span>
+                    <h4 className="text-xs font-bold text-slate-900">Prioritized ECM &amp; Payback Roadmap</h4>
+                    <p className="text-[11.5px] text-slate-500 mt-1 leading-relaxed">
+                      Actionable Energy Conservation Measures categorized into Zero-Cost, Low-Cost, and High-ROI retrofits with verified payback schedules.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Core Audit Objectives & Financial Value */}
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3 mb-4">
+                <Target className="h-5 w-5 text-[#15803d]" />
+                <h2 className="text-base sm:text-lg font-bold text-slate-900">
+                  Core Audit Objectives &amp; Measurable Benefits
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs text-slate-600">
+                <div className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[#15803d]">
+                    <Check className="h-3 w-3 stroke-[3]" />
+                  </span>
+                  <div>
+                    <strong className="text-slate-900 block">Operating Cost Reduction:</strong>
+                    Identify tangible energy savings typically ranging between 8% to 22% of total plant power bills.
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[#15803d]">
+                    <Check className="h-3 w-3 stroke-[3]" />
+                  </span>
+                  <div>
+                    <strong className="text-slate-900 block">Statutory Compliance:</strong>
+                    Satisfy BEE, State Designated Agency (EMC Kerala), and CEA safety statutory filing requirements.
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[#15803d]">
+                    <Check className="h-3 w-3 stroke-[3]" />
+                  </span>
+                  <div>
+                    <strong className="text-slate-900 block">Asset Protection &amp; Reliability:</strong>
+                    Mitigate electrical hotspot degradation, arc flashes, and premature insulation breakdown.
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[#15803d]">
+                    <Check className="h-3 w-3 stroke-[3]" />
+                  </span>
+                  <div>
+                    <strong className="text-slate-900 block">Decarbonization &amp; ESG:</strong>
+                    Direct reduction of Specific Energy Consumption (SEC) and greenhouse gas (Scope 1 &amp; 2) footprints.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Tangible Deliverables List */}
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3 mb-4">
+                <BarChart3 className="h-5 w-5 text-[#15803d]" />
+                <h2 className="text-base sm:text-lg font-bold text-slate-900">
+                  Tangible Deliverables &amp; Client Reports
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {service.keyDeliverables.map((deliv, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50/80 p-4"
+                    className="flex items-start gap-2.5 rounded-xl border border-slate-100 bg-slate-50/80 p-3"
                   >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
-                      ✓
-                    </span>
-                    <span className="text-xs sm:text-sm font-medium text-slate-800 leading-snug">
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#15803d] mt-0.5" />
+                    <span className="text-xs font-semibold text-slate-800 leading-snug">
                       {deliv}
                     </span>
                   </div>
@@ -185,24 +332,24 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Precision Instruments Used */}
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
-                Testing Tools &amp; NABL Calibrated Equipment
-              </h2>
-              <p className="mt-3 text-xs text-slate-500">
-                Our engineering team deploys the following calibrated instruments for this service:
+            {/* Precision Calibrated Instruments */}
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3 mb-3">
+                <Wrench className="h-5 w-5 text-[#15803d]" />
+                <h2 className="text-base sm:text-lg font-bold text-slate-900">
+                  Testing Tools &amp; NABL Calibrated Equipment
+                </h2>
+              </div>
+              <p className="text-xs text-slate-500 mb-3">
+                Our engineering team deploys the following calibrated precision instruments during this service:
               </p>
-              <div className="mt-4 flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap gap-2">
                 {service.equipmentUsed.map((tool, idx) => (
                   <span
                     key={idx}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-800"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-800"
                   >
-                    <svg className="h-3.5 w-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                    <Sparkles className="h-3 w-3 text-emerald-600" />
                     {tool}
                   </span>
                 ))}
@@ -210,11 +357,14 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
 
             {/* Applicable Sectors */}
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
-                Target Sectors &amp; Industries
-              </h2>
-              <div className="mt-4 flex flex-wrap gap-2">
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3 mb-3">
+                <Factory className="h-5 w-5 text-[#15803d]" />
+                <h2 className="text-base sm:text-lg font-bold text-slate-900">
+                  Target Sectors &amp; Industries
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
                 {service.targetIndustries.map((ind, idx) => (
                   <span
                     key={idx}
@@ -228,28 +378,29 @@ export default async function ServiceDetailPage({ params }: Props) {
 
             {/* Related Services in Category */}
             {relatedServices.length > 0 && (
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs">
-                <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">
-                  Related Services in {categoryInfo?.shortTitle || "this Category"}
-                </h2>
-                <div className="mt-4 space-y-3">
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+                <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3 mb-3">
+                  <Layers className="h-5 w-5 text-[#15803d]" />
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900">
+                    Related Services in {categoryInfo?.shortTitle || "this Category"}
+                  </h2>
+                </div>
+                <div className="space-y-2.5">
                   {relatedServices.map((rel) => (
                     <Link
                       key={rel.slug}
                       href={`/services/${rel.slug}`}
-                      className="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/60 p-3.5 transition-colors hover:border-emerald-200 hover:bg-emerald-50/40"
+                      className="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/60 p-3 transition-colors hover:border-emerald-300 hover:bg-emerald-50/40"
                     >
                       <div>
-                        <h4 className="text-sm font-bold text-slate-800 group-hover:text-emerald-800 transition-colors">
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-emerald-800 transition-colors">
                           {rel.title}
                         </h4>
-                        <p className="text-[12px] text-slate-500 mt-0.5 line-clamp-1">
+                        <p className="text-[11.5px] text-slate-500 mt-0.5 line-clamp-1">
                           {rel.shortDesc}
                         </p>
                       </div>
-                      <span className="text-xs font-semibold text-emerald-700 group-hover:translate-x-1 transition-transform">
-                        &rarr;
-                      </span>
+                      <ChevronRight className="h-4 w-4 text-emerald-700 group-hover:translate-x-1 transition-transform shrink-0" />
                     </Link>
                   ))}
                 </div>
@@ -259,12 +410,12 @@ export default async function ServiceDetailPage({ params }: Props) {
 
           {/* Right Column: Sticky Consultation Box */}
           <div className="lg:col-span-1">
-            <div className="sticky top-20 rounded-2xl border border-slate-200 bg-white p-6 shadow-md space-y-6">
+            <div className="sticky top-20 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-md space-y-5">
               <div>
-                <span className="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10.5px] font-bold text-emerald-800 uppercase tracking-wider">
+                <span className="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
                   Accredited Service
                 </span>
-                <h3 className="mt-2 text-lg font-bold text-slate-900">
+                <h3 className="mt-2 text-base sm:text-lg font-bold text-slate-900 leading-snug">
                   Request an Audit for This Discipline
                 </h3>
                 <p className="mt-1.5 text-xs leading-relaxed text-slate-500">
@@ -272,7 +423,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </p>
               </div>
 
-              <div className="space-y-3 border-y border-slate-100 py-4 text-xs text-slate-600">
+              <div className="space-y-2.5 border-y border-slate-100 py-3.5 text-xs text-slate-600">
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Report Turnaround:</span>
                   <span className="font-semibold text-slate-900">7 – 14 business days</span>
@@ -283,15 +434,16 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Field Disruptions:</span>
-                  <span className="font-semibold text-emerald-700">Zero (Non-invasive testing)</span>
+                  <span className="font-semibold text-[#15803d]">Zero (Non-invasive testing)</span>
                 </div>
               </div>
 
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 <Link
                   href={`/contact?service=${service.slug}`}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-xs font-bold text-white transition-colors hover:bg-emerald-700"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#053824] py-3 text-xs font-bold text-white shadow-2xs transition-colors hover:bg-emerald-800"
                 >
+                  <Calendar className="h-3.5 w-3.5 text-[#4ade80]" />
                   Book Official Consultation
                 </Link>
 
@@ -299,16 +451,17 @@ export default async function ServiceDetailPage({ params }: Props) {
                   href="tel:+917356111990"
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 py-2.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50"
                 >
-                  <svg className="h-3.5 w-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5.5A2.5 2.5 0 015.5 3h1.6c.5 0 .9.3 1 .8l.9 3a1 1 0 01-.3 1L7.5 9a12 12 0 007.5 7.5l1.2-1.2a1 1 0 011-.3l3 .9c.5.1.8.5.8 1v1.6a2.5 2.5 0 01-2.5 2.5C10.6 21 3 13.4 3 5.5z" />
-                  </svg>
+                  <Phone className="h-3.5 w-3.5 text-emerald-600" />
                   +91 73561 11990
                 </a>
               </div>
 
-              <div className="rounded-xl bg-slate-50 p-3.5 text-[11px] text-slate-500 leading-relaxed border border-slate-100">
-                <span className="font-bold text-slate-700 block mb-1">Confidentiality Assured:</span>
-                All industrial electrical single line diagrams, load logs, and utility bills are handled under strict confidentiality agreements.
+              <div className="rounded-xl bg-slate-50 p-3 text-[11px] text-slate-500 leading-relaxed border border-slate-100 flex items-start gap-2">
+                <Lock className="h-3.5 w-3.5 text-slate-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-slate-700 block">Confidentiality Assured:</strong>
+                  All single-line diagrams, operating logs, and utility bills are handled under non-disclosure agreements.
+                </div>
               </div>
             </div>
           </div>
