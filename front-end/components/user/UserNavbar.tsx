@@ -13,7 +13,6 @@ import {
   LayoutGrid,
   Building2,
   Users2,
-  Award,
 } from "lucide-react";
 
 interface ServiceDropdownItem {
@@ -45,12 +44,6 @@ const aboutDropdownItems: AboutDropdownItem[] = [
     desc: "BEE Accredited Energy Auditors, CEA Safety Inspectors, FLIR Thermographers & Green specialists.",
     href: "/about/team",
     icon: <Users2 className={iconClass} strokeWidth={2} />,
-  },
-  {
-    title: "Accreditations & Empanelments",
-    desc: "Official statutory certifications from BEE, EMC Kerala, GEDA Gujarat & MEDA Maharashtra.",
-    href: "/about#accreditations",
-    icon: <Award className={iconClass} strokeWidth={2} />,
   },
 ];
 
