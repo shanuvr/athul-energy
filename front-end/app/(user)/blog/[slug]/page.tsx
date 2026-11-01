@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -74,7 +75,37 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default function BlogPostPage({ params }: Props) {
+  return (
+    <Suspense fallback={<BlogDetailSkeleton />}>
+      <BlogPostContent params={params} />
+    </Suspense>
+  );
+}
+
+function BlogDetailSkeleton() {
+  return (
+    <div className="min-h-screen bg-slate-50/60 pb-16 animate-pulse">
+      <div className="border-b border-slate-200/90 bg-white py-6 sm:py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="h-4 w-48 bg-slate-200 rounded mb-4" />
+          <div className="h-8 w-3/4 bg-slate-200 rounded mb-3" />
+          <div className="h-4 w-1/2 bg-slate-200 rounded" />
+        </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+        <div className="aspect-[16/9] w-full max-w-3xl bg-slate-200 rounded-2xl mb-6" />
+        <div className="space-y-3 max-w-3xl">
+          <div className="h-4 bg-slate-200 rounded w-full" />
+          <div className="h-4 bg-slate-200 rounded w-5/6" />
+          <div className="h-4 bg-slate-200 rounded w-4/6" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+async function BlogPostContent({ params }: Props) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
 
