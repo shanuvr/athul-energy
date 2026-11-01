@@ -5,55 +5,78 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-interface ServiceItem {
+interface ServiceDropdownItem {
   title: string;
   desc: string;
   href: string;
   icon: ReactNode;
+  isSpecial?: boolean;
 }
 
 const iconClass = "h-[18px] w-[18px]";
 
-const serviceItems: ServiceItem[] = [
+const serviceDropdownItems: ServiceDropdownItem[] = [
   {
     title: "Energy Audits",
-    desc: "Detailed electrical, thermal and mandatory BEE / EMC statutory assessments.",
-    href: "/services",
+    desc: "Detailed electrical, thermal, PAT M&V and mandatory BEE/EMC statutory assessments.",
+    href: "/services?cat=energy-audits",
     icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5h4.5l2.25-6 3.75 12 2.25-6H21" />
+      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
   },
   {
-    title: "Electrical Safety Audits",
-    desc: "CEA regulation compliance, hazard analysis and protection verification.",
-    href: "/services",
+    title: "Safety Audits",
+    desc: "CEA regulation compliance, arc flash analysis, fire safety and IS 14489 hazard reviews.",
+    href: "/services?cat=safety-audits",
     icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
+      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7 3v5.4c0 4.3-2.9 7.6-7 9.6-4.1-2-7-5.3-7-9.6V6l7-3z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.25 12l1.9 1.9 3.6-3.8" />
       </svg>
     ),
   },
   {
-    title: "Power Quality & Harmonics",
-    desc: "Harmonics study, filter sizing, ETAP simulation and thermal imaging.",
-    href: "/services",
+    title: "Thermography & Surveys",
+    desc: "FLIR Level-II thermal scanning, ultrasonic flow testing and IS 3043 earthing studies.",
+    href: "/services?cat=surveys-thermography",
     icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 3L5 13h5l-1 8 8-10h-5l1-8z" />
+      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
   },
   {
-    title: "Green & NAAC Audits",
-    desc: "Institutional green cover, carbon footprint calculation and water balancing.",
-    href: "/services",
+    title: "Compliance & NAAC",
+    desc: "GRIHA green building audits, NAAC criteria 7, NABH hospital safety and ISO 50001.",
+    href: "/services?cat=compliance-studies",
     icon: (
-      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20 4c-8 0-14 3.6-14 10a5 5 0 005 5c6.4 0 9-6 9-15z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4 21c2.5-6 6.5-9.5 12-11.5" />
+      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Technical Training",
+    desc: "BEE exam coaching, industrial electrical safety, LOTO protocols and engineer workshops.",
+    href: "/services?cat=training",
+    icon: (
+      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+      </svg>
+    ),
+  },
+  {
+    title: "All 30+ Services Hub",
+    desc: "Explore complete directory with live keyword search, standards and instrument specs.",
+    href: "/services",
+    isSpecial: true,
+    icon: (
+      <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
       </svg>
     ),
   },
@@ -205,16 +228,16 @@ export default function UserNavbar() {
             <NavLink href="/" label="Home" active={pathname === "/"} transparent={transparent} />
             <NavLink href="/about" label="About" active={isActive("/about")} transparent={transparent} />
 
-            {/* Services dropdown */}
+            {/* Services dropdown: 5 Categories + 1 Hub Card in 2 balanced columns (3 clean rows) */}
             <div
               className="relative flex h-full items-center"
               ref={dropdownRef}
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <button
-                type="button"
-                onClick={() => setServicesOpen((prev) => !prev)}
+              <Link
+                href="/services"
+                onClick={() => setServicesOpen(false)}
                 className={`group relative inline-flex h-full items-center gap-1.5 px-3 text-[13px] font-medium tracking-[0.015em] transition-colors duration-200 focus-visible:outline-none ${
                   transparent
                     ? isServicesActive || servicesOpen
@@ -251,10 +274,11 @@ export default function UserNavbar() {
                     transparent ? "bg-emerald-400" : "bg-emerald-600"
                   } ${isServicesActive || servicesOpen ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
                 />
-              </button>
+              </Link>
 
+              {/* 2-column x 3-row dropdown container */}
               <div
-                className={`absolute left-1/2 top-full z-50 w-[560px] -translate-x-1/2 pt-3 transition-all duration-200 ease-out ${
+                className={`absolute left-1/2 top-full z-50 w-[610px] -translate-x-1/2 pt-3 transition-all duration-200 ease-out ${
                   servicesOpen
                     ? "pointer-events-auto translate-y-0 opacity-100"
                     : "pointer-events-none -translate-y-1 opacity-0"
@@ -262,17 +286,34 @@ export default function UserNavbar() {
               >
                 <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.4)]">
                   <div className="grid grid-cols-2 gap-0.5 p-2.5">
-                    {serviceItems.map((item) => (
+                    {serviceDropdownItems.map((item) => (
                       <Link
                         key={item.title}
                         href={item.href}
-                        className="group/item flex gap-3 rounded-lg p-3 transition-colors duration-150 hover:bg-slate-50"
+                        onClick={() => setServicesOpen(false)}
+                        className={`group/item flex gap-3 rounded-lg p-3 transition-colors duration-150 ${
+                          item.isSpecial
+                            ? "bg-emerald-50/50 hover:bg-emerald-100/60"
+                            : "hover:bg-slate-50"
+                        }`}
                       >
-                        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-400 transition-colors duration-150 group-hover/item:border-emerald-200 group-hover/item:bg-emerald-50 group-hover/item:text-emerald-700">
+                        <span
+                          className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border transition-colors duration-150 ${
+                            item.isSpecial
+                              ? "border-emerald-300 bg-white text-emerald-700 group-hover/item:bg-emerald-600 group-hover/item:text-white"
+                              : "border-slate-200 bg-white text-slate-500 group-hover/item:border-emerald-200 group-hover/item:bg-emerald-50 group-hover/item:text-emerald-700"
+                          }`}
+                        >
                           {item.icon}
                         </span>
                         <span className="min-w-0">
-                          <span className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-800 transition-colors group-hover/item:text-emerald-800">
+                          <span
+                            className={`flex items-center gap-1.5 text-[13px] font-semibold transition-colors ${
+                              item.isSpecial
+                                ? "text-emerald-950 group-hover/item:text-emerald-800 font-bold"
+                                : "text-slate-800 group-hover/item:text-emerald-800"
+                            }`}
+                          >
                             {item.title}
                             <svg
                               className="h-3 w-3 -translate-x-1 text-emerald-600 opacity-0 transition-all duration-150 group-hover/item:translate-x-0 group-hover/item:opacity-100"
@@ -284,7 +325,7 @@ export default function UserNavbar() {
                               <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M8 7h9v9" />
                             </svg>
                           </span>
-                          <span className="mt-1 block text-[11.5px] leading-relaxed text-slate-500">
+                          <span className="mt-0.5 block text-[11.5px] leading-relaxed text-slate-500">
                             {item.desc}
                           </span>
                         </span>
@@ -294,13 +335,14 @@ export default function UserNavbar() {
 
                   <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50/70 px-4 py-2.5">
                     <span className="text-[10.5px] font-medium uppercase tracking-[0.12em] text-slate-400">
-                      Field-tested methodology
+                      30+ Disciplines · BEE Accredited &amp; EMC Empanelled
                     </span>
                     <Link
                       href="/services"
+                      onClick={() => setServicesOpen(false)}
                       className="group/all inline-flex items-center gap-1 text-[11.5px] font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
                     >
-                      All services
+                      Browse full directory
                       <svg
                         className="h-3 w-3 transition-transform duration-150 group-hover/all:translate-x-0.5"
                         fill="none"
@@ -375,54 +417,56 @@ export default function UserNavbar() {
               <MobileLink href="/" label="Home" active={pathname === "/"} />
               <MobileLink href="/about" label="About" active={isActive("/about")} />
 
-              <button
-                type="button"
-                onClick={() => setMobileServicesOpen((prev) => !prev)}
-                className={`flex items-center justify-between rounded-lg px-3 py-3 text-[14px] font-medium transition-colors ${
-                  isServicesActive ? "text-slate-950" : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
-                }`}
-                aria-expanded={mobileServicesOpen}
-              >
-                Services
-                <svg
-                  className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${
-                    mobileServicesOpen ? "rotate-180 text-emerald-600" : ""
+              {/* Mobile Services Accordion */}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setMobileServicesOpen((prev) => !prev)}
+                  className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-[14px] font-medium transition-colors ${
+                    isServicesActive ? "text-slate-950 font-semibold" : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
                   }`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+                  aria-expanded={mobileServicesOpen}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-                </svg>
-              </button>
+                  <span className="flex items-center gap-2">
+                    Services
+                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800">
+                      30+ Disciplines
+                    </span>
+                  </span>
+                  <svg
+                    className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${
+                      mobileServicesOpen ? "rotate-180 text-emerald-600" : ""
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
 
-              <div
-                className={`grid transition-all duration-300 ease-out ${
-                  mobileServicesOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                }`}
-              >
-                <div className="overflow-hidden">
+                {mobileServicesOpen && (
                   <div className="mb-2 ml-3 space-y-0.5 border-l border-slate-200 pl-3">
-                    {serviceItems.map((item) => (
+                    {serviceDropdownItems.map((item) => (
                       <Link
                         key={item.title}
                         href={item.href}
-                        className="flex items-center gap-2.5 rounded-md px-2 py-2 text-[13px] text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center gap-2.5 rounded-md px-2 py-2 text-[13px] transition-colors ${
+                          item.isSpecial
+                            ? "font-semibold text-emerald-800 bg-emerald-50/50"
+                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                        }`}
                       >
-                        <span className="text-slate-400">{item.icon}</span>
+                        <span className={item.isSpecial ? "text-emerald-700" : "text-slate-400"}>
+                          {item.icon}
+                        </span>
                         {item.title}
                       </Link>
                     ))}
-                    <Link
-                      href="/services"
-                      className="inline-flex items-center gap-1 px-2 py-2 text-[12px] font-semibold text-emerald-700"
-                    >
-                      View all services
-                      <span aria-hidden="true">&rarr;</span>
-                    </Link>
                   </div>
-                </div>
+                )}
               </div>
 
               <MobileLink href="/gallery" label="Gallery" active={isActive("/gallery")} />
@@ -442,15 +486,12 @@ export default function UserNavbar() {
               </a>
               <Link
                 href="/contact"
+                onClick={() => setMobileOpen(false)}
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-3 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-emerald-700"
               >
                 Request an audit
               </Link>
             </div>
-
-            <p className="mt-3 text-center text-[10.5px] font-medium uppercase tracking-[0.12em] text-slate-400">
-              EMC Kerala · BEE · GEDA accredited
-            </p>
           </div>
         </div>
       </nav>
