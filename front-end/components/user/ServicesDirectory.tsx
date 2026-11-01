@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -18,6 +19,7 @@ import {
   Check,
   Calendar,
   ArrowRight,
+  ArrowUpRight,
   Factory,
   Building2,
   Award,
@@ -35,7 +37,6 @@ import {
   SERVICE_CATEGORIES,
   SERVICES_DATA,
   type ServiceCategoryId,
-  type ServiceDetail,
 } from "@/lib/services-data";
 
 // Professional Lucide category icons with strictly enforced size classes
@@ -474,43 +475,69 @@ export default function ServicesDirectory() {
             {filteredServices.map((service) => (
               <div
                 key={service.slug}
-                className="group relative rounded-2xl border border-slate-200/90 bg-white p-3.5 sm:p-5 shadow-2xs transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-md cursor-pointer"
+                className="group relative cursor-pointer overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-b from-white to-slate-50/70 p-4 transition-all duration-200 hover:border-slate-300 hover:shadow-[0_10px_30px_-16px_rgba(15,23,42,0.25)] sm:p-5"
               >
+                {/* Subtle top accent revealed on hover */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-emerald-500 to-teal-400 transition-transform duration-300 group-hover:scale-x-100"
+                />
+
                 {/* Full-card stretched link (makes entire card navigate to service detail page) */}
                 <Link
                   href={`/services/${service.slug}`}
-                  className="absolute inset-0 z-0 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/40"
+                  className="absolute inset-0 z-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                   aria-label={`View full specifications and methodology for ${service.title}`}
                 />
 
                 {/* Top Row: Left Thumbnail + Details */}
                 <div className="relative z-1 pointer-events-none flex items-start gap-3 sm:gap-4 min-w-0">
-                  {/* Visual Emblem Thumbnail with hover scale effect */}
-                  <div className="flex h-11 w-11 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl bg-[#ecfdf5] border border-emerald-100 text-[#15803d] shadow-2xs group-hover:scale-105 group-hover:bg-emerald-100/70 group-hover:border-emerald-300 transition-all duration-200">
-                    <ServiceVisualEmblem slug={service.slug} />
+                  {/* Real service photo thumbnail */}
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 sm:h-20 sm:w-20">
+                    <Image
+                      src={`/services/${service.slug}.jpg`}
+                      alt=""
+                      fill
+                      sizes="(min-width: 640px) 80px, 64px"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <span className="absolute inset-0 ring-1 ring-inset ring-black/5" />
+                    <span className="absolute bottom-1 left-1 flex h-5 w-5 items-center justify-center rounded-md bg-white/95 text-emerald-700 shadow-sm ring-1 ring-black/5 backdrop-blur-sm">
+                      <ServiceVisualEmblem
+                        slug={service.slug}
+                        className="h-3 w-3"
+                      />
+                    </span>
                   </div>
 
                   {/* Text Details */}
                   <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center justify-between gap-1.5">
-                      <h3 className="text-[13px] sm:text-[15.5px] font-bold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug flex items-center gap-1.5">
-                        <span>{service.title}</span>
-                        <ChevronRight className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all shrink-0" strokeWidth={2.5} />
-                      </h3>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <span className="block text-[9px] font-semibold uppercase tracking-[0.14em] text-emerald-700">
+                          {service.categoryLabel}
+                        </span>
+                        <h3 className="mt-0.5 text-[13px] font-semibold leading-snug text-slate-900 transition-colors group-hover:text-emerald-800 sm:text-[15px]">
+                          {service.title}
+                        </h3>
+                      </div>
 
-                      <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="flex shrink-0 items-center gap-1.5">
                         {service.badge && (
-                          <span className="inline-flex items-center rounded-full bg-[#dcfce7] px-2 py-0.5 text-[9.5px] sm:text-[10px] font-bold text-[#15803d]">
+                          <span className="inline-flex items-center rounded-md border border-slate-200 bg-white px-2 py-0.5 text-[9.5px] font-semibold text-slate-500 sm:text-[10px]">
                             {service.badge}
                           </span>
                         )}
-                        <span className="hidden sm:inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-700 transition-colors">
-                          Full Scope ↗
+                        <span
+                          aria-hidden="true"
+                          className="hidden h-6 w-6 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-colors duration-200 group-hover:border-slate-900 group-hover:bg-slate-900 group-hover:text-white sm:inline-flex"
+                        >
+                          <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
                         </span>
                       </div>
                     </div>
 
-                    <p className="mt-1 text-[11px] sm:text-[12.5px] leading-relaxed text-slate-600 line-clamp-2">
+                    <p className="mt-1.5 text-[11px] sm:text-[12.5px] leading-relaxed text-slate-600 line-clamp-2">
                       {service.shortDesc}
                     </p>
                   </div>
@@ -520,25 +547,28 @@ export default function ServicesDirectory() {
                 <div className="relative z-1 pointer-events-none mt-2.5 pt-2 border-t border-slate-100/80 flex flex-wrap items-center gap-x-4 gap-y-1 text-[10.5px] sm:text-[11.5px] text-slate-700 font-medium">
                   {service.keyDeliverables.slice(0, 2).map((deliv, idx) => (
                     <span key={idx} className="inline-flex items-center gap-1.5">
-                      <Check className="h-3.5 w-3.5 text-[#15803d] shrink-0" strokeWidth={3} />
+                      <Check className="h-3.5 w-3.5 shrink-0 text-emerald-600" strokeWidth={2.5} />
                       <span className="line-clamp-1">{deliv}</span>
                     </span>
                   ))}
                 </div>
 
-                {/* Bottom Action Bar: Prominent 'Explore Scope & Specs' button on left, 'Book Audit' button on right */}
-                <div className="relative z-1 mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200/90 bg-emerald-50/70 px-3 py-1.5 text-[11px] sm:text-xs font-bold text-emerald-800 shadow-2xs group-hover:bg-[#053824] group-hover:text-white group-hover:border-[#053824] transition-all duration-200">
-                    <span>Explore Scope &amp; Specs</span>
-                    <ArrowRight className="h-3 w-3 text-emerald-600 group-hover:text-[#4ade80] group-hover:translate-x-0.5 transition-all" strokeWidth={2.5} />
-                  </span>
+                {/* Bottom Action Bar: primary view-details button + secondary book-audit button */}
+                <div className="pointer-events-none relative z-1 mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3">
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="pointer-events-auto relative z-10 inline-flex items-center gap-1.5 rounded-md bg-slate-900 px-3.5 py-2 text-[11px] font-semibold text-white transition-colors hover:bg-slate-800 sm:text-xs"
+                  >
+                    <span>View details</span>
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} />
+                  </Link>
 
                   <Link
                     href={`/contact?service=${service.slug}`}
-                    className="relative z-10 inline-flex items-center gap-1.5 rounded-lg sm:rounded-xl bg-[#053824] px-3.5 py-1.5 sm:px-4 sm:py-2 text-[11px] sm:text-xs font-bold text-white shadow-2xs transition-all hover:bg-emerald-800 hover:scale-[1.02] active:scale-95"
+                    className="pointer-events-auto relative z-10 inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3.5 py-2 text-[11px] font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 sm:text-xs"
                   >
-                    <Calendar className="h-3.5 w-3.5 text-[#4ade80]" strokeWidth={2.2} />
-                    Book Audit
+                    <Calendar className="h-3.5 w-3.5 text-slate-500" strokeWidth={2} />
+                    Book audit
                   </Link>
                 </div>
               </div>

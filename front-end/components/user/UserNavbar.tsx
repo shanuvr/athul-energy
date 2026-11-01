@@ -11,6 +11,9 @@ import {
   FileCheck2,
   GraduationCap,
   LayoutGrid,
+  Building2,
+  Users2,
+  Award,
 } from "lucide-react";
 
 interface ServiceDropdownItem {
@@ -21,7 +24,35 @@ interface ServiceDropdownItem {
   isSpecial?: boolean;
 }
 
+interface AboutDropdownItem {
+  title: string;
+  desc: string;
+  href: string;
+  icon: ReactNode;
+}
+
 const iconClass = "h-[18px] w-[18px] shrink-0";
+
+const aboutDropdownItems: AboutDropdownItem[] = [
+  {
+    title: "Company Profile & Story",
+    desc: "Who we are, BEE & EMC empanelments, and 15+ years of audit history since 2008.",
+    href: "/about",
+    icon: <Building2 className={iconClass} strokeWidth={2} />,
+  },
+  {
+    title: "Our Engineering Team",
+    desc: "BEE Accredited Energy Auditors, CEA Safety Inspectors, FLIR Thermographers & Green specialists.",
+    href: "/about/team",
+    icon: <Users2 className={iconClass} strokeWidth={2} />,
+  },
+  {
+    title: "Accreditations & Empanelments",
+    desc: "Official statutory certifications from BEE, EMC Kerala, GEDA Gujarat & MEDA Maharashtra.",
+    href: "/about#accreditations",
+    icon: <Award className={iconClass} strokeWidth={2} />,
+  },
+];
 
 const serviceDropdownItems: ServiceDropdownItem[] = [
   {
@@ -66,23 +97,29 @@ const serviceDropdownItems: ServiceDropdownItem[] = [
 export default function UserNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const [lastPathname, setLastPathname] = useState(pathname);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const aboutDropdownRef = useRef<HTMLDivElement>(null);
 
   if (pathname !== lastPathname) {
     setLastPathname(pathname);
     setMobileOpen(false);
     setMobileServicesOpen(false);
+    setMobileAboutOpen(false);
     setServicesOpen(false);
+    setAboutOpen(false);
   }
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
   const isServicesActive = pathname.startsWith("/services");
+  const isAboutActive = pathname === "/about" || pathname.startsWith("/about/");
   const transparent = pathname === "/" && !scrolled && !mobileOpen;
 
   useEffect(() => {
@@ -90,11 +127,15 @@ export default function UserNavbar() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setServicesOpen(false);
       }
+      if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target as Node)) {
+        setAboutOpen(false);
+      }
     }
 
     function handleEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setServicesOpen(false);
+        setAboutOpen(false);
         setMobileOpen(false);
       }
     }
@@ -207,7 +248,86 @@ export default function UserNavbar() {
           {/* Desktop links */}
           <div className="ml-auto hidden h-full items-center lg:flex">
             <NavLink href="/" label="Home" active={pathname === "/"} transparent={transparent} />
-            <NavLink href="/about" label="About" active={isActive("/about")} transparent={transparent} />
+            {/* About dropdown */}
+            <div
+              className="relative flex h-full items-center"
+              ref={aboutDropdownRef}
+              onMouseEnter={() => setAboutOpen(true)}
+              onMouseLeave={() => setAboutOpen(false)}
+            >
+              <Link
+                href="/about"
+                onClick={() => setAboutOpen(false)}
+                className={`group relative inline-flex h-full items-center gap-1.5 px-3 text-[13px] font-medium tracking-[0.015em] transition-colors duration-200 focus-visible:outline-none ${
+                  transparent
+                    ? isAboutActive || aboutOpen
+                      ? "text-white"
+                      : "text-white hover:text-white"
+                    : isAboutActive || aboutOpen
+                      ? "text-slate-950"
+                      : "text-slate-500 hover:text-slate-950"
+                }`}
+                aria-expanded={aboutOpen}
+                aria-haspopup="true"
+              >
+                About
+                <svg
+                  className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                    aboutOpen
+                      ? transparent
+                        ? "rotate-180 text-emerald-300"
+                        : "rotate-180 text-emerald-600"
+                      : transparent
+                        ? "text-white group-hover:text-white"
+                        : "text-slate-400 group-hover:text-slate-600"
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                </svg>
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-x-3 bottom-0 h-[2px] origin-left rounded-t-full transition-transform duration-300 ease-out ${
+                    transparent ? "bg-emerald-400" : "bg-emerald-600"
+                  } ${isAboutActive || aboutOpen ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
+                />
+              </Link>
+
+              {/* About dropdown container */}
+              <div
+                className={`absolute left-0 top-full z-50 w-[360px] pt-3 transition-all duration-200 ease-out ${
+                  aboutOpen
+                    ? "pointer-events-auto translate-y-0 opacity-100"
+                    : "pointer-events-none -translate-y-1 opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.4)]">
+                  {aboutDropdownItems.map((item) => (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      onClick={() => setAboutOpen(false)}
+                      className="group/item flex gap-3 rounded-lg p-2.5 transition-colors duration-150 hover:bg-slate-50"
+                    >
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 group-hover/item:border-emerald-200 group-hover/item:bg-emerald-50 group-hover/item:text-emerald-700 transition-colors duration-150">
+                        {item.icon}
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-[13px] font-semibold text-slate-800 group-hover/item:text-emerald-800 transition-colors">
+                          {item.title}
+                        </span>
+                        <span className="mt-0.5 block text-[11px] leading-relaxed text-slate-500">
+                          {item.desc}
+                        </span>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             {/* Services dropdown: 5 Categories + 1 Hub Card in 2 balanced columns (3 clean rows) */}
             <div
@@ -396,7 +516,51 @@ export default function UserNavbar() {
           <div className="mx-auto max-w-7xl px-4 pb-6 pt-3 sm:px-6">
             <nav className="flex flex-col">
               <MobileLink href="/" label="Home" active={pathname === "/"} />
-              <MobileLink href="/about" label="About" active={isActive("/about")} />
+              {/* Mobile About Accordion */}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setMobileAboutOpen((prev) => !prev)}
+                  className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-[14px] font-medium transition-colors ${
+                    isAboutActive ? "text-slate-950 font-semibold" : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+                  }`}
+                  aria-expanded={mobileAboutOpen}
+                >
+                  <span className="flex items-center gap-2">
+                    About
+                    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800">
+                      Team &amp; Profile
+                    </span>
+                  </span>
+                  <svg
+                    className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${
+                      mobileAboutOpen ? "rotate-180 text-emerald-600" : ""
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+
+                {mobileAboutOpen && (
+                  <div className="mb-2 ml-3 space-y-0.5 border-l border-slate-200 pl-3">
+                    {aboutDropdownItems.map((item) => (
+                      <Link
+                        key={item.title}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center gap-2.5 rounded-md px-2 py-2 text-[13px] text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                      >
+                        <span className="text-slate-400">{item.icon}</span>
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* Mobile Services Accordion */}
               <div>
