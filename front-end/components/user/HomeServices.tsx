@@ -20,7 +20,7 @@ const services: ServiceItem[] = [
     category: "Industrial & commercial",
     description:
       "Electrical and thermal audits, SEC analysis and statutory reporting for BEE and EMC Kerala requirements.",
-    imageSrc: "/hero-desk.png",
+    imageSrc: "/hero-desk.webp",
     imagePosition: "18% 55%",
   },
   {
@@ -28,7 +28,7 @@ const services: ServiceItem[] = [
     category: "Safety & compliance",
     description:
       "Protection coordination, earthing, hazard review and thermal imaging to verify site safety and CEA compliance.",
-    imageSrc: "/hero-desk.png",
+    imageSrc: "/hero-desk.webp",
     imagePosition: "78% 42%",
   },
   {
@@ -36,7 +36,7 @@ const services: ServiceItem[] = [
     category: "Supply reliability",
     description:
       "Harmonic and power-factor studies, ETAP simulation and filter sizing to reduce losses and equipment stress.",
-    imageSrc: "/hero-desk.png",
+    imageSrc: "/hero-desk.webp",
     imagePosition: "48% 22%",
   },
   {
@@ -44,7 +44,7 @@ const services: ServiceItem[] = [
     category: "Institutional",
     description:
       "Green, environment and NAAC audits with carbon and water-balance assessments for campuses and institutions.",
-    imageSrc: "/hero-mobile.png",
+    imageSrc: "/hero-mobile.webp",
     imagePosition: "70% 30%",
   },
   {
@@ -52,7 +52,7 @@ const services: ServiceItem[] = [
     category: "Predictive maintenance",
     description:
       "Infrared scans of panels, motors and distribution equipment to locate hot spots before failure.",
-    imageSrc: "/hero-desk.png",
+    imageSrc: "/hero-desk.webp",
     imagePosition: "30% 18%",
   },
   {
@@ -60,7 +60,7 @@ const services: ServiceItem[] = [
     category: "Sustainability",
     description:
       "Environment audits, carbon footprint analysis and resource reviews for compliance and reporting.",
-    imageSrc: "/hero-mobile.png",
+    imageSrc: "/hero-mobile.webp",
     imagePosition: "30% 70%",
   },
   {
@@ -68,7 +68,7 @@ const services: ServiceItem[] = [
     category: "Implementation support",
     description:
       "Baseline development, payback analysis and measurement & verification after audit recommendations.",
-    imageSrc: "/hero-desk.png",
+    imageSrc: "/hero-desk.webp",
     imagePosition: "90% 58%",
   },
 ];

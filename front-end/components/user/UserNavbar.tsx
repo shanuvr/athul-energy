@@ -227,9 +227,9 @@ export default function UserNavbar() {
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:h-[68px] xl:px-8">
           {/* Brand */}
-          <Link href="/" className="flex shrink-0 items-center" aria-label="Athul Energy Consultants — home">
+          <Link prefetch={false} href="/" className="flex shrink-0 items-center" aria-label="Athul Energy Consultants — home">
             <Image
-              src="/athul-logo.png"
+              src="/athul-logo.webp"
               alt="Athul Energy Consultants"
               width={190}
               height={63}
@@ -248,7 +248,7 @@ export default function UserNavbar() {
               onMouseEnter={() => setAboutOpen(true)}
               onMouseLeave={() => setAboutOpen(false)}
             >
-              <Link
+              <Link prefetch={false}
                 href="/about"
                 onClick={() => setAboutOpen(false)}
                 className={`group relative inline-flex h-full items-center gap-1.5 px-3 text-[13px] font-medium tracking-[0.015em] transition-colors duration-200 focus-visible:outline-none ${
@@ -299,7 +299,7 @@ export default function UserNavbar() {
               >
                 <div className="overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.4)]">
                   {aboutDropdownItems.map((item) => (
-                    <Link
+                    <Link prefetch={false}
                       key={item.title}
                       href={item.href}
                       onClick={() => setAboutOpen(false)}
@@ -329,7 +329,7 @@ export default function UserNavbar() {
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <Link
+              <Link prefetch={false}
                 href="/services"
                 onClick={() => setServicesOpen(false)}
                 className={`group relative inline-flex h-full items-center gap-1.5 px-3 text-[13px] font-medium tracking-[0.015em] transition-colors duration-200 focus-visible:outline-none ${
@@ -381,7 +381,7 @@ export default function UserNavbar() {
                 <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_24px_60px_-24px_rgba(15,23,42,0.4)]">
                   <div className="grid grid-cols-2 gap-0.5 p-2.5">
                     {serviceDropdownItems.map((item) => (
-                      <Link
+                      <Link prefetch={false}
                         key={item.title}
                         href={item.href}
                         onClick={() => setServicesOpen(false)}
@@ -431,7 +431,7 @@ export default function UserNavbar() {
                     <span className="text-[10.5px] font-medium uppercase tracking-[0.12em] text-slate-400">
                       30+ Disciplines · BEE Accredited &amp; EMC Empanelled
                     </span>
-                    <Link
+                    <Link prefetch={false}
                       href="/services"
                       onClick={() => setServicesOpen(false)}
                       className="group/all inline-flex items-center gap-1 text-[11.5px] font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
@@ -458,7 +458,7 @@ export default function UserNavbar() {
           </div>
 
           {/* Desktop CTA */}
-          <Link
+          <Link prefetch={false}
             href="/contact"
             className={`group hidden h-9 shrink-0 items-center gap-2 rounded-md px-4 text-[12.5px] font-semibold text-white transition-colors duration-200 lg:inline-flex ${
               transparent
@@ -541,7 +541,7 @@ export default function UserNavbar() {
                 {mobileAboutOpen && (
                   <div className="mb-2 ml-3 space-y-0.5 border-l border-slate-200 pl-3">
                     {aboutDropdownItems.map((item) => (
-                      <Link
+                      <Link prefetch={false}
                         key={item.title}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
@@ -587,7 +587,7 @@ export default function UserNavbar() {
                 {mobileServicesOpen && (
                   <div className="mb-2 ml-3 space-y-0.5 border-l border-slate-200 pl-3">
                     {serviceDropdownItems.map((item) => (
-                      <Link
+                      <Link prefetch={false}
                         key={item.title}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
@@ -622,7 +622,7 @@ export default function UserNavbar() {
                 </svg>
                 Call us
               </a>
-              <Link
+              <Link prefetch={false}
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-3 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-emerald-700"
@@ -649,7 +649,7 @@ function NavLink({
   transparent: boolean;
 }) {
   return (
-    <Link
+    <Link prefetch={false}
       href={href}
       aria-current={active ? "page" : undefined}
       className={`group relative inline-flex h-full items-center px-3 text-[13px] font-medium tracking-[0.015em] transition-colors duration-200 ${
@@ -675,7 +675,7 @@ function NavLink({
 
 function MobileLink({ href, label, active }: { href: string; label: string; active: boolean }) {
   return (
-    <Link
+    <Link prefetch={false}
       href={href}
       aria-current={active ? "page" : undefined}
       className={`flex items-center justify-between rounded-lg px-3 py-3 text-[14px] font-medium transition-colors ${

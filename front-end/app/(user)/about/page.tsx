@@ -46,7 +46,7 @@ export default function AboutPage() {
       <section className="relative isolate overflow-hidden bg-slate-950 text-white">
         <div className="absolute inset-0">
           <Image
-            src="/hero-desk.png"
+            src="/hero-desk.webp"
             alt="Energy audit engineers inspecting industrial electrical equipment"
             fill
             priority
@@ -167,7 +167,7 @@ export default function AboutPage() {
               <figure className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
                 <div className="relative aspect-[16/9] w-full">
                   <Image
-                    src="/services/infrared-thermal-imaging-survey.jpg"
+                    src="/services/infrared-thermal-imaging-survey.webp"
                     alt="Thermal imaging survey of an industrial electrical distribution board"
                     fill
                     sizes="(max-width: 1023px) 100vw, 55vw"

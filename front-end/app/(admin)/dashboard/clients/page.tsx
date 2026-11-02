@@ -11,7 +11,7 @@ import {
 interface ClientItem {
   id: string;
   name: string;
-  category: "Chemical" | "Manufacturing" | "Automotive" | "Healthcare" | "Textile" | "Institutions";
+  category: "Chemical" | "Manufacturing" | "Automotive" | "Healthcare" | "Textile" | "Institutions" | "Commercial";
   logo: string;
   auditsCompleted: number;
 }
@@ -23,6 +23,11 @@ const INITIAL_CLIENTS: ClientItem[] = [
   { id: "synthite", name: "Synthite Industries Pvt. Ltd.", category: "Chemical", logo: "/clients/synthite.webp", auditsCompleted: 6 },
   { id: "sud-chemie", name: "Süd-Chemie India Pvt. Ltd.", category: "Chemical", logo: "/clients/sud-chemie.webp", auditsCompleted: 4 },
   { id: "ksca", name: "Karnataka State Cricket Association (KSCA)", category: "Institutions", logo: "/clients/karnataka-cricket-association.webp", auditsCompleted: 2 },
+  { id: "andhra-bank", name: "Andhra Bank", category: "Commercial", logo: "/clients/andhra-bank.webp", auditsCompleted: 3 },
+  { id: "central-bank", name: "Central Bank of India", category: "Commercial", logo: "/clients/central-bank-of-india.webp", auditsCompleted: 4 },
+  { id: "pnb", name: "Punjab National Bank", category: "Commercial", logo: "/clients/punjab-national-bank.webp", auditsCompleted: 3 },
+  { id: "syndicate-bank", name: "Syndicate Bank", category: "Commercial", logo: "/clients/syndicate-bank.webp", auditsCompleted: 2 },
+  { id: "union-bank", name: "Union Bank of India", category: "Commercial", logo: "/clients/union-bank-of-india.webp", auditsCompleted: 5 },
 ];
 
 export default function AdminClientsPage() {

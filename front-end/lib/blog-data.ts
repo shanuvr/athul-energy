@@ -65,7 +65,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Complete Guide to Mandatory BEE Energy Audits for Designated Consumers (PAT Scheme)",
     excerpt:
       "A technical walkthrough for plant managers and electrical heads on compliance under the Energy Conservation Act 2001, Form 1 filings, SEC baseline benchmarking, and ESCerts trading.",
-    coverImage: "/services/detailed-energy-audit.jpg",
+    coverImage: "/services/detailed-energy-audit.webp",
     category: "energy-audits",
     categoryLabel: "BEE Energy Audits",
     featured: true,
@@ -199,7 +199,7 @@ Athul Energy Consultants Pvt. Ltd. is an empanelled Class-A Accredited Energy Au
     title: "CEA Regulations 2010: Complete Electrical Safety Audit Checklist for HT & LT Plants",
     excerpt:
       "A deep dive into mandatory Central Electricity Authority safety standards, relay coordination, arc flash boundaries, transformer clearance, and IS 3043 earthing pit impedance.",
-    coverImage: "/services/electrical-safety-audit.jpg",
+    coverImage: "/services/electrical-safety-audit.webp",
     category: "electrical-safety",
     categoryLabel: "Electrical Safety (CEA)",
     featured: false,
@@ -299,7 +299,7 @@ Ensure your plant is protected against legal liabilities and hazardous downtime.
     title: "Infrared Thermography in Predictive Maintenance: Detecting Busbar & Bearing Hotspots Early",
     excerpt:
       "How non-contact thermal scanning with calibrated FLIR cameras prevents catastrophic switchgear failures, transformer bushing degradation, and motor bearing burnouts.",
-    coverImage: "/services/infrared-thermal-imaging-survey.jpg",
+    coverImage: "/services/infrared-thermal-imaging-survey.webp",
     category: "thermography",
     categoryLabel: "Infrared Thermography",
     featured: false,
@@ -391,7 +391,7 @@ Athul Energy deploys NABL-calibrated Level-II FLIR cameras with high spatial res
     title: "Power Quality Harmonics & IEEE 519: Sizing Active Harmonic Filters to Avoid Utility Penalties",
     excerpt:
       "Understanding Total Harmonic Distortion (THD-V and THD-I), neutral overheating, capacitor bank resonance, and how to size Active Harmonic Filters (AHF) for clean power.",
-    coverImage: "/services/power-quality-harmonics-study.jpg",
+    coverImage: "/services/power-quality-harmonics-study.webp",
     category: "power-quality",
     categoryLabel: "Power Quality & Harmonics",
     featured: false,
@@ -487,7 +487,7 @@ Athul Energy provides complete Class-A power quality logging and third-party ver
     title: "Industrial Boiler & Steam System Efficiency: 5 High-ROI Energy Conservation Measures (ECMs)",
     excerpt:
       "A thermal engineering guide to maximizing boiler direct/indirect efficiency, excess air tuning, blowdown waste heat recovery, and steam trap population surveys.",
-    coverImage: "/services/thermal-energy-audit-service.jpg",
+    coverImage: "/services/thermal-energy-audit-service.webp",
     category: "thermal-utilities",
     categoryLabel: "Boiler & Steam Systems",
     featured: false,
@@ -594,7 +594,7 @@ Athul Energy provides complete thermal audits, flue gas logging, and steam netwo
     title: "NAAC Criteria 7: Complete Green, Energy & Environmental Audit Guide for Universities & Colleges",
     excerpt:
       "A comprehensive compliance manual for educational institutions on preparing Energy, Green, Environmental, and Water audit reports for NAAC accreditation grade enhancement.",
-    coverImage: "/services/green-audit-naac-accreditation.jpg",
+    coverImage: "/services/green-audit-naac-accreditation.webp",
     category: "sustainability",
     categoryLabel: "Green Building & NAAC",
     featured: false,

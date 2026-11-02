@@ -46,13 +46,13 @@ export default function UserFooter() {
         <div className="grid gap-10 py-12 sm:py-14 lg:grid-cols-12 lg:gap-8 lg:py-16">
           {/* Brand */}
           <div className="lg:col-span-4">
-            <Link
+            <Link prefetch={false}
               href="/"
               aria-label="Athul Energy Consultants — home"
               className="inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
             >
               <Image
-                src="/athul-logo.png"
+                src="/athul-logo.webp"
                 alt="Athul Energy Consultants"
                 width={190}
                 height={63}
@@ -104,7 +104,7 @@ export default function UserFooter() {
               <ul className="mt-4 space-y-2.5">
                 {companyLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className={linkClass}>
+                    <Link prefetch={false} href={link.href} className={linkClass}>
                       {link.label}
                     </Link>
                   </li>
@@ -119,7 +119,7 @@ export default function UserFooter() {
               <ul className="mt-4 space-y-2.5">
                 {SERVICE_CATEGORIES.map((category) => (
                   <li key={category.id}>
-                    <Link
+                    <Link prefetch={false}
                       href={`/services?cat=${category.id}`}
                       className={linkClass}
                     >
@@ -128,7 +128,7 @@ export default function UserFooter() {
                   </li>
                 ))}
                 <li>
-                  <Link
+                  <Link prefetch={false}
                     href="/services"
                     className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-emerald-400 transition-colors duration-200 hover:text-emerald-300"
                   >
@@ -185,7 +185,7 @@ export default function UserFooter() {
             <span className="uppercase tracking-[0.14em]">
               BEE accredited · Est. 2008
             </span>
-            <Link
+            <Link prefetch={false}
               href="/contact"
               className="group inline-flex items-center gap-1 font-semibold text-slate-300 transition-colors duration-200 hover:text-emerald-300"
             >

@@ -194,7 +194,7 @@ async function ServiceDetailContent({ params }: Props) {
             <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-900 shadow-sm">
               <div className="relative aspect-[16/9] w-full overflow-hidden">
                 <Image
-                  src={`/services/${service.slug}.jpg`}
+                  src={`/services/${service.slug}.webp`}
                   alt={`${service.title} - Certified Engineering Service by Athul Energy`}
                   fill
                   priority

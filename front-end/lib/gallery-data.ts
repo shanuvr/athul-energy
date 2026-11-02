@@ -9,7 +9,7 @@ export interface GalleryImage {
 
 export const GALLERY_IMAGES: GalleryImage[] = [
   {
-    src: "/services/detailed-energy-audit.jpg",
+    src: "/services/detailed-energy-audit.webp",
     alt: "Engineers conducting a detailed plant energy audit",
     caption: "Plant-wide detailed energy audit",
     category: "Energy audits",
@@ -17,7 +17,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/energy-auditor-training-service.jpg",
+    src: "/services/energy-auditor-training-service.webp",
     alt: "BEE energy auditor training session",
     caption: "BEE energy auditor training",
     category: "Training",
@@ -25,7 +25,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 1376,
   },
   {
-    src: "/services/infrared-thermal-imaging-survey.jpg",
+    src: "/services/infrared-thermal-imaging-survey.webp",
     alt: "Thermal imaging survey of an electrical distribution board",
     caption: "Thermal scan of a distribution board",
     category: "Thermography",
@@ -33,7 +33,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/electrical-safety-audit.jpg",
+    src: "/services/electrical-safety-audit.webp",
     alt: "Electrical safety inspection at an industrial site",
     caption: "Electrical safety inspection",
     category: "Safety audits",
@@ -41,7 +41,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/energy-conservation-efficiency-workshop.jpg",
+    src: "/services/energy-conservation-efficiency-workshop.webp",
     alt: "Energy conservation and efficiency workshop",
     caption: "Energy conservation workshop",
     category: "Training",
@@ -49,7 +49,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 1376,
   },
   {
-    src: "/services/commercial-building-energy-audit.jpg",
+    src: "/services/commercial-building-energy-audit.webp",
     alt: "Commercial building energy audit in progress",
     caption: "Commercial building energy audit",
     category: "Energy audits",
@@ -57,7 +57,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/green-audit-naac-accreditation.jpg",
+    src: "/services/green-audit-naac-accreditation.webp",
     alt: "Campus green audit for NAAC accreditation",
     caption: "NAAC green audit",
     category: "Compliance",
@@ -65,7 +65,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/college-faculty-student-skill-workshops.jpg",
+    src: "/services/college-faculty-student-skill-workshops.webp",
     alt: "Faculty and student skill workshop session",
     caption: "Faculty and student workshops",
     category: "Training",
@@ -73,7 +73,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 1376,
   },
   {
-    src: "/services/ultrasonic-flow-measurement-services.jpg",
+    src: "/services/ultrasonic-flow-measurement-services.webp",
     alt: "Ultrasonic flow measurement on site",
     caption: "Ultrasonic flow measurement",
     category: "Surveys",
@@ -81,7 +81,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/power-quality-harmonics-study.jpg",
+    src: "/services/power-quality-harmonics-study.webp",
     alt: "Power quality and harmonics analysis",
     caption: "Power quality and harmonics study",
     category: "Energy audits",
@@ -89,7 +89,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/fire-safety-audit.jpg",
+    src: "/services/fire-safety-audit.webp",
     alt: "Fire safety audit of an industrial facility",
     caption: "Fire safety audit",
     category: "Safety audits",
@@ -97,7 +97,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/griha-energy-audit.jpg",
+    src: "/services/griha-energy-audit.webp",
     alt: "GRIHA green building audit",
     caption: "GRIHA green building audit",
     category: "Compliance",
@@ -105,7 +105,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/construction-site-safety-audit.jpg",
+    src: "/services/construction-site-safety-audit.webp",
     alt: "Construction site safety audit",
     caption: "Construction site safety audit",
     category: "Safety audits",
@@ -113,7 +113,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/industrial-electrical-safety-training.jpg",
+    src: "/services/industrial-electrical-safety-training.webp",
     alt: "Industrial electrical safety training programme",
     caption: "Industrial electrical safety training",
     category: "Training",
@@ -121,7 +121,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 1376,
   },
   {
-    src: "/services/earth-pit-resistance-testing.jpg",
+    src: "/services/earth-pit-resistance-testing.webp",
     alt: "Earth pit resistance testing with calibrated instruments",
     caption: "Earth pit resistance testing",
     category: "Surveys",
@@ -129,7 +129,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/thermal-energy-audit-service.jpg",
+    src: "/services/thermal-energy-audit-service.webp",
     alt: "Thermal energy audit of a boiler and steam system",
     caption: "Thermal energy audit",
     category: "Energy audits",
@@ -137,7 +137,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/water-audit-balancing.jpg",
+    src: "/services/water-audit-balancing.webp",
     alt: "Water balance audit at an industrial facility",
     caption: "Water balance audit",
     category: "Compliance",
@@ -145,7 +145,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/process-safety-hazop-study.jpg",
+    src: "/services/process-safety-hazop-study.webp",
     alt: "Process safety HAZOP study session",
     caption: "Process safety HAZOP study",
     category: "Safety audits",
@@ -153,7 +153,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/nabh-nqas-hospital-safety-audit.jpg",
+    src: "/services/nabh-nqas-hospital-safety-audit.webp",
     alt: "Hospital electrical safety audit for NABH compliance",
     caption: "Hospital NABH safety audit",
     category: "Compliance",
@@ -161,7 +161,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     height: 768,
   },
   {
-    src: "/services/mandatory-bee-emc-audit.jpg",
+    src: "/services/mandatory-bee-emc-audit.webp",
     alt: "Statutory BEE and EMC Kerala energy audit",
     caption: "BEE / EMC statutory audit",
     category: "Energy audits",

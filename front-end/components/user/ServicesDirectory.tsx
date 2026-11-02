@@ -498,6 +498,7 @@ export default function ServicesDirectory() {
 
                 {/* Full-card stretched link (makes entire card navigate to service detail page) */}
                 <Link
+                  prefetch={false}
                   href={`/services/${service.slug}`}
                   className="absolute inset-0 z-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                   aria-label={`View full specifications and methodology for ${service.title}`}
@@ -508,7 +509,7 @@ export default function ServicesDirectory() {
                   {/* Real service photo thumbnail */}
                   <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 sm:h-20 sm:w-20">
                     <Image
-                      src={`/services/${service.slug}.jpg`}
+                      src={`/services/${service.slug}.webp`}
                       alt=""
                       fill
                       sizes="(min-width: 640px) 80px, 64px"

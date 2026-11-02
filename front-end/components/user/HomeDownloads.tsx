@@ -1,6 +1,6 @@
 import Image from "next/image";
-import desktopBg from "@/public/new-download-bg.png";
-import mobileBg from "@/public/downloads-mobile-bg-v2.png";
+import desktopBg from "@/public/new-download-bg.webp";
+import mobileBg from "@/public/downloads-mobile-bg-v2.webp";
 import HomeDownloadsClient, {
   DocumentItem,
 } from "./HomeDownloadsClient";
@@ -98,8 +98,7 @@ export default function HomeDownloads() {
           alt="Athul Energy Documents Background"
           fill
           priority
-          quality={100}
-          sizes="(min-width: 1024px) 100vw, 0px"
+                    sizes="(min-width: 1024px) 100vw, 0px"
           className="object-cover object-left-center"
         />
       </div>

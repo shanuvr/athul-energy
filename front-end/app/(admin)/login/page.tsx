@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
           <Link href="/" aria-label="Athul Energy home" className="inline-flex">
             <div className="rounded-xl bg-white/95 px-3 py-2 shadow-md">
               <Image
-                src="/athul-logo.png"
+                src="/athul-logo.webp"
                 alt="Athul Energy Consultants"
                 width={140}
                 height={44}
@@ -98,7 +98,7 @@ export default function AdminLoginPage() {
         <div className="relative z-10 lg:hidden shrink-0 flex items-center justify-center pt-4">
           <div className="inline-flex flex-col items-center gap-1.5">
             <div className="rounded-xl bg-white p-2 shadow-sm border border-slate-200">
-              <Image src="/athul-logo.png" alt="Athul Energy Consultants Logo" width={120} height={38} className="h-7 w-auto object-contain" priority />
+              <Image src="/athul-logo.webp" alt="Athul Energy Consultants Logo" width={120} height={38} className="h-7 w-auto object-contain" priority />
             </div>
             <span className="text-[10.5px] font-bold uppercase tracking-wider text-emerald-800">Administrative Portal</span>
           </div>

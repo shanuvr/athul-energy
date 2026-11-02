@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/hero-desk.png",
+        url: "/hero-desk.webp",
         width: 1672,
         height: 941,
         alt: "Athul Energy engineer inspecting an industrial electrical panel with a thermal imaging camera",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "BEE-Accredited Energy Audit Consultants in Kerala",
     description:
       "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
-    images: ["/hero-desk.png"],
+    images: ["/hero-desk.webp"],
   },
 };
 
@@ -48,8 +48,8 @@ const structuredData = {
   "@id": "https://www.athulenergy.com/#organization",
   name: "Athul Energy Consultants Pvt. Ltd.",
   url: "https://www.athulenergy.com",
-  logo: "https://www.athulenergy.com/athul-logo.png",
-  image: "https://www.athulenergy.com/hero-desk.png",
+  logo: "https://www.athulenergy.com/athul-logo.webp",
+  image: "https://www.athulenergy.com/hero-desk.webp",
   description:
     "BEE, EMC Kerala, GEDA and MEDA accredited energy audit, electrical safety, power quality and green audit consultants based in Thrissur, Kerala, since 2008.",
   foundingDate: "2008",

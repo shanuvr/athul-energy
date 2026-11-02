@@ -1,29 +1,7 @@
 import Link from "next/link";
-import { getImageProps } from "next/image";
 
 const heroAlt =
   "Athul Energy engineer inspecting an industrial electrical panel with a thermal imaging camera during an energy audit";
-
-const commonImageProps = {
-  alt: heroAlt,
-  sizes: "100vw",
-};
-
-const { props: desktopImage } = getImageProps({
-  ...commonImageProps,
-  src: "/hero-desk.png",
-  width: 1672,
-  height: 941,
-  quality: 85,
-});
-
-const { props: mobileImage } = getImageProps({
-  ...commonImageProps,
-  src: "/hero-mobile.png",
-  width: 768,
-  height: 1376,
-  quality: 85,
-});
 
 export default function HomeHero() {
   return (
@@ -34,17 +12,17 @@ export default function HomeHero() {
       <picture className="absolute inset-0">
         <source
           media="(max-width: 1023px)"
-          srcSet={mobileImage.srcSet}
-          sizes={mobileImage.sizes}
+          srcSet="/hero-mobile.webp"
         />
         <source
           media="(min-width: 1024px)"
-          srcSet={desktopImage.srcSet}
-          sizes={desktopImage.sizes}
+          srcSet="/hero-desk.webp"
         />
         <img
-          {...mobileImage}
+          src="/hero-desk.webp"
           alt={heroAlt}
+          width={1672}
+          height={941}
           fetchPriority="high"
           loading="eager"
           decoding="async"
@@ -119,6 +97,7 @@ export default function HomeHero() {
 
           <div className="hero-ctas hero-rise hero-delay-4 mt-5 flex flex-row items-center gap-2.5 sm:mt-9 sm:gap-3">
             <Link
+              prefetch={false}
               href="/contact"
               className="group inline-flex h-12 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-emerald-500 px-3.5 text-sm font-semibold text-slate-950 shadow-[0_16px_50px_-16px_rgba(16,185,129,0.9)] transition-all duration-200 hover:bg-emerald-400 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:h-12 sm:flex-none sm:gap-2 sm:px-6"
             >
@@ -141,6 +120,7 @@ export default function HomeHero() {
             </Link>
 
             <Link
+              prefetch={false}
               href="/services"
               className="group inline-flex h-12 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-white/20 bg-white/10 px-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-200 hover:border-white/40 hover:bg-white/15 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:h-12 sm:flex-none sm:gap-2 sm:px-6"
             >

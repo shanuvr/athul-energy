@@ -36,7 +36,7 @@ export default function AdminGalleryPage() {
     if (!newCaption.trim()) return;
 
     const newImg: GalleryImage = {
-      src: "/services/detailed-energy-audit.jpg",
+      src: "/services/detailed-energy-audit.webp",
       alt: newCaption,
       caption: newCaption,
       category: newCat,

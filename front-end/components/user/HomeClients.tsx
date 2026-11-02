@@ -12,17 +12,16 @@ const rowOne: ClientLogo[] = [
   { id: "aai", name: "Airports Authority of India (AAI)", logo: "/clients/airports-authority-of-india.webp" },
   { id: "petronet", name: "Petronet LNG Limited", logo: "/clients/petronet-lng.webp" },
   { id: "synthite", name: "Synthite Industries Pvt. Ltd.", logo: "/clients/synthite.webp" },
-  { id: "sud-chemie", name: "Süd-Chemie India Pvt. Ltd.", logo: "/clients/sud-chemie.webp" },
-  { id: "ksca", name: "Karnataka State Cricket Association (KSCA)", logo: "/clients/karnataka-cricket-association.webp" },
+  { id: "andhra-bank", name: "Andhra Bank", logo: "/clients/andhra-bank.webp" },
+  { id: "central-bank", name: "Central Bank of India", logo: "/clients/central-bank-of-india.webp" },
 ];
 
 const rowTwo: ClientLogo[] = [
-  { id: "ksca-2", name: "Karnataka State Cricket Association (KSCA)", logo: "/clients/karnataka-cricket-association.webp" },
-  { id: "synthite-2", name: "Synthite Industries Pvt. Ltd.", logo: "/clients/synthite.webp" },
-  { id: "sud-chemie-2", name: "Süd-Chemie India Pvt. Ltd.", logo: "/clients/sud-chemie.webp" },
-  { id: "telk-2", name: "Transformers and Electricals Kerala Ltd. (TELK)", logo: "/clients/telk.webp" },
-  { id: "petronet-2", name: "Petronet LNG Limited", logo: "/clients/petronet-lng.webp" },
-  { id: "aai-2", name: "Airports Authority of India (AAI)", logo: "/clients/airports-authority-of-india.webp" },
+  { id: "pnb", name: "Punjab National Bank", logo: "/clients/punjab-national-bank.webp" },
+  { id: "syndicate-bank", name: "Syndicate Bank", logo: "/clients/syndicate-bank.webp" },
+  { id: "union-bank", name: "Union Bank of India", logo: "/clients/union-bank-of-india.webp" },
+  { id: "sud-chemie", name: "Süd-Chemie India Pvt. Ltd.", logo: "/clients/sud-chemie.webp" },
+  { id: "ksca", name: "Karnataka State Cricket Association (KSCA)", logo: "/clients/karnataka-cricket-association.webp" },
 ];
 
 function LogoMarqueeRow({
@@ -111,6 +110,7 @@ export default function HomeClients() {
         {/* View All Clients Action Button */}
         <div className="mt-8 sm:mt-10 flex justify-center">
           <Link
+            prefetch={false}
             href="/contact"
             className="group inline-flex items-center gap-2 rounded-full border border-emerald-600 bg-white px-7 py-2.5 text-xs sm:text-sm font-semibold text-emerald-700 shadow-sm transition-all duration-200 hover:bg-emerald-50 hover:border-emerald-700 hover:scale-[1.02] active:scale-98"
           >
