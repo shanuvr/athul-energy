@@ -17,18 +17,12 @@ interface ClientItem {
 }
 
 const INITIAL_CLIENTS: ClientItem[] = [
-  { id: "c1", name: "Sud-Chemie India Pvt. Ltd.", category: "Chemical", logo: "https://placehold.co/220x90/053824/38ef7d?text=SUD-CHEMIE&font=inter", auditsCompleted: 4 },
-  { id: "c2", name: "FCI OEN Connectors Ltd.", category: "Manufacturing", logo: "https://placehold.co/220x90/053824/38ef7d?text=FCI+OEN&font=inter", auditsCompleted: 3 },
-  { id: "c3", name: "Carborundum Universal Ltd.", category: "Manufacturing", logo: "https://placehold.co/220x90/053824/38ef7d?text=CARBORUNDUM&font=inter", auditsCompleted: 5 },
-  { id: "c4", name: "Apollo Tyres Ltd.", category: "Automotive", logo: "https://placehold.co/220x90/053824/38ef7d?text=APOLLO+TYRES&font=inter", auditsCompleted: 2 },
-  { id: "c5", name: "Synthite Industries Pvt. Ltd.", category: "Chemical", logo: "https://placehold.co/220x90/053824/38ef7d?text=SYNTHITE&font=inter", auditsCompleted: 6 },
-  { id: "c6", name: "Arjuna Natural Pvt. Ltd.", category: "Chemical", logo: "https://placehold.co/220x90/053824/38ef7d?text=ARJUNA+NATURAL&font=inter", auditsCompleted: 3 },
-  { id: "c7", name: "Aster Medcity Healthcare", category: "Healthcare", logo: "https://placehold.co/220x90/053824/38ef7d?text=ASTER+MEDCITY&font=inter", auditsCompleted: 4 },
-  { id: "c8", name: "Kitex Garments Ltd.", category: "Textile", logo: "https://placehold.co/220x90/053824/38ef7d?text=KITEX&font=inter", auditsCompleted: 3 },
-  { id: "c9", name: "St. Thomas College Autonomous", category: "Institutions", logo: "https://placehold.co/220x90/053824/38ef7d?text=ST+THOMAS&font=inter", auditsCompleted: 2 },
-  { id: "c10", name: "Nitta Gelatin India Ltd.", category: "Chemical", logo: "https://placehold.co/220x90/053824/38ef7d?text=NITTA+GELATIN&font=inter", auditsCompleted: 4 },
-  { id: "c11", name: "Western India Plywoods Ltd.", category: "Manufacturing", logo: "https://placehold.co/220x90/053824/38ef7d?text=WIP+PLYWOODS&font=inter", auditsCompleted: 3 },
-  { id: "c12", name: "GTCS Engineering Systems", category: "Manufacturing", logo: "https://placehold.co/220x90/053824/38ef7d?text=GTCS+SYSTEMS&font=inter", auditsCompleted: 2 },
+  { id: "telk", name: "Transformers and Electricals Kerala Ltd. (TELK)", category: "Manufacturing", logo: "/clients/telk.webp", auditsCompleted: 5 },
+  { id: "aai", name: "Airports Authority of India (AAI)", category: "Institutions", logo: "/clients/airports-authority-of-india.webp", auditsCompleted: 3 },
+  { id: "petronet", name: "Petronet LNG Limited", category: "Manufacturing", logo: "/clients/petronet-lng.webp", auditsCompleted: 4 },
+  { id: "synthite", name: "Synthite Industries Pvt. Ltd.", category: "Chemical", logo: "/clients/synthite.webp", auditsCompleted: 6 },
+  { id: "sud-chemie", name: "Süd-Chemie India Pvt. Ltd.", category: "Chemical", logo: "/clients/sud-chemie.webp", auditsCompleted: 4 },
+  { id: "ksca", name: "Karnataka State Cricket Association (KSCA)", category: "Institutions", logo: "/clients/karnataka-cricket-association.webp", auditsCompleted: 2 },
 ];
 
 export default function AdminClientsPage() {

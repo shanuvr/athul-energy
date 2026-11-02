@@ -8,21 +8,21 @@ interface ClientLogo {
 }
 
 const rowOne: ClientLogo[] = [
-  { id: "c1", name: "Client 1", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+01&font=inter" },
-  { id: "c2", name: "Client 2", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+02&font=inter" },
-  { id: "c3", name: "Client 3", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+03&font=inter" },
-  { id: "c4", name: "Client 4", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+04&font=inter" },
-  { id: "c5", name: "Client 5", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+05&font=inter" },
-  { id: "c6", name: "Client 6", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+06&font=inter" },
+  { id: "telk", name: "Transformers and Electricals Kerala Ltd. (TELK)", logo: "/clients/telk.webp" },
+  { id: "aai", name: "Airports Authority of India (AAI)", logo: "/clients/airports-authority-of-india.webp" },
+  { id: "petronet", name: "Petronet LNG Limited", logo: "/clients/petronet-lng.webp" },
+  { id: "synthite", name: "Synthite Industries Pvt. Ltd.", logo: "/clients/synthite.webp" },
+  { id: "sud-chemie", name: "Süd-Chemie India Pvt. Ltd.", logo: "/clients/sud-chemie.webp" },
+  { id: "ksca", name: "Karnataka State Cricket Association (KSCA)", logo: "/clients/karnataka-cricket-association.webp" },
 ];
 
 const rowTwo: ClientLogo[] = [
-  { id: "c7", name: "Client 7", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+07&font=inter" },
-  { id: "c8", name: "Client 8", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+08&font=inter" },
-  { id: "c9", name: "Client 9", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+09&font=inter" },
-  { id: "c10", name: "Client 10", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+10&font=inter" },
-  { id: "c11", name: "Client 11", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+11&font=inter" },
-  { id: "c12", name: "Client 12", logo: "https://placehold.co/220x90/f8fafc/475569?text=CLIENT+12&font=inter" },
+  { id: "ksca-2", name: "Karnataka State Cricket Association (KSCA)", logo: "/clients/karnataka-cricket-association.webp" },
+  { id: "synthite-2", name: "Synthite Industries Pvt. Ltd.", logo: "/clients/synthite.webp" },
+  { id: "sud-chemie-2", name: "Süd-Chemie India Pvt. Ltd.", logo: "/clients/sud-chemie.webp" },
+  { id: "telk-2", name: "Transformers and Electricals Kerala Ltd. (TELK)", logo: "/clients/telk.webp" },
+  { id: "petronet-2", name: "Petronet LNG Limited", logo: "/clients/petronet-lng.webp" },
+  { id: "aai-2", name: "Airports Authority of India (AAI)", logo: "/clients/airports-authority-of-india.webp" },
 ];
 
 function LogoMarqueeRow({
@@ -44,17 +44,17 @@ function LogoMarqueeRow({
         {items.map((client, index) => (
           <div
             key={`${client.id}-${index}`}
-            className="flex h-16 w-[180px] sm:h-20 sm:w-[210px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white px-3 shadow-sm transition-all duration-300 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 shrink-0"
+            className="flex h-20 w-[200px] sm:h-24 sm:w-[230px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white p-2 shadow-2xs transition-all duration-300 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 shrink-0"
             aria-label={client.name}
           >
             <Image
               src={client.logo}
               alt={client.name}
-              width={180}
-              height={70}
+              width={220}
+              height={90}
               loading="lazy"
               unoptimized
-              className="h-10 w-auto max-w-full object-contain grayscale opacity-85 transition-all duration-300 hover:grayscale-0 hover:opacity-100 sm:h-12"
+              className="h-16 sm:h-20 w-auto max-w-[94%] max-h-[90%] object-contain transition-all duration-300"
             />
           </div>
         ))}
