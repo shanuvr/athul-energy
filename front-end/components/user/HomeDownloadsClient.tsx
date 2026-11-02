@@ -6,7 +6,7 @@ import Link from "next/link";
 export interface DocumentItem {
   id: string;
   title: string;
-  category: "Company Profile" | "Project Documents" | "Policies" | "Certificates";
+  category: "Books" | "Government Orders" | "Standards" | string;
   format: "PDF";
   size: string;
   downloadUrl: string;
@@ -17,11 +17,10 @@ interface HomeDownloadsClientProps {
 }
 
 const CATEGORIES = [
-  "All Documents",
-  "Company Profile",
-  "Project Documents",
-  "Policies",
-  "Certificates",
+  "All",
+  "Books",
+  "Government Orders",
+  "Standards",
 ] as const;
 
 function PdfIcon({ className = "h-9 w-9 shrink-0" }: { className?: string }) {
@@ -105,13 +104,13 @@ function SearchIcon({ className = "h-4 w-4" }: { className?: string }) {
 export default function HomeDownloadsClient({
   documents,
 }: HomeDownloadsClientProps) {
-  const [activeCategory, setActiveCategory] = useState<string>("All Documents");
+  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const filtered = useMemo(() => {
     return documents.filter((doc) => {
       const matchesCategory =
-        activeCategory === "All Documents" || doc.category === activeCategory;
+        activeCategory === "All" || doc.category === activeCategory;
       const q = searchQuery.trim().toLowerCase();
       const matchesSearch =
         q === "" ||
@@ -158,7 +157,7 @@ export default function HomeDownloadsClient({
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveCategory(category)}
-                className={`shrink-0 rounded-full px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold transition-all duration-200 ${
+                className={`shrink-0 rounded-full px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold transition-all duration-200 cursor-pointer ${
                   isActive
                     ? "bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400/80"
                     : "bg-[#062c26]/90 text-slate-300 border border-emerald-800/60 hover:bg-[#0c4037] hover:text-white"
@@ -196,7 +195,7 @@ export default function HomeDownloadsClient({
                 href={doc.downloadUrl}
                 download
                 aria-label={`Download ${doc.title}`}
-                className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white shadow-sm transition-all duration-200 hover:bg-emerald-500 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2"
+                className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white shadow-sm transition-all duration-200 hover:bg-emerald-500 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 cursor-pointer"
               >
                 <DownloadIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </a>
@@ -212,9 +211,9 @@ export default function HomeDownloadsClient({
             type="button"
             onClick={() => {
               setSearchQuery("");
-              setActiveCategory("All Documents");
+              setActiveCategory("All");
             }}
-            className="mt-3 text-xs font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
+            className="mt-3 text-xs font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-4 cursor-pointer"
           >
             Clear filters
           </button>

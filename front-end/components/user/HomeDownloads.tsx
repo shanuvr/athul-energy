@@ -8,67 +8,51 @@ import HomeDownloadsClient, {
 const documents: DocumentItem[] = [
   {
     id: "1",
-    title: "Company Profile",
-    category: "Company Profile",
+    title: "BEE Guide Book 1: General Energy Management & Auditing",
+    category: "Books",
     format: "PDF",
-    size: "2.4 MB",
-    downloadUrl: "#download",
+    size: "8.4 MB",
+    downloadUrl: "/downloads#book-1",
   },
   {
     id: "2",
-    title: "Environmental Policy",
-    category: "Policies",
+    title: "Kerala State Energy Conservation Building Code (ECBC Gazette)",
+    category: "Government Orders",
     format: "PDF",
-    size: "1.1 MB",
-    downloadUrl: "#download",
+    size: "4.1 MB",
+    downloadUrl: "/downloads#go-1",
   },
   {
     id: "3",
-    title: "Project Brochure",
-    category: "Project Documents",
+    title: "CEA Regulations on Power Quality & Grid Harmonics",
+    category: "Standards",
     format: "PDF",
     size: "1.8 MB",
-    downloadUrl: "#download",
+    downloadUrl: "/downloads#std-1",
   },
   {
     id: "4",
-    title: "Quality Policy",
-    category: "Policies",
+    title: "Electricity Act 2003 (Statutory Energy Auditing Provisions)",
+    category: "Government Orders",
     format: "PDF",
-    size: "900 KB",
-    downloadUrl: "#download",
+    size: "3.2 MB",
+    downloadUrl: "/downloads#go-2",
   },
   {
     id: "5",
-    title: "Safety Guidelines",
-    category: "Policies",
+    title: "BEE Guide Book 2: Thermal Utilities & Boiler Systems",
+    category: "Books",
     format: "PDF",
-    size: "1.2 MB",
-    downloadUrl: "#download",
+    size: "9.2 MB",
+    downloadUrl: "/downloads#book-2",
   },
   {
     id: "6",
-    title: "Corporate Presentation",
-    category: "Company Profile",
+    title: "CEA Safety and Electric Supply Regulations 2010",
+    category: "Standards",
     format: "PDF",
-    size: "3.5 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "7",
-    title: "BEE Energy Auditor Accreditation",
-    category: "Certificates",
-    format: "PDF",
-    size: "1.5 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "8",
-    title: "EMC Kerala Empanelment Certificate",
-    category: "Certificates",
-    format: "PDF",
-    size: "1.3 MB",
-    downloadUrl: "#download",
+    size: "3.4 MB",
+    downloadUrl: "/downloads#std-2",
   },
 ];
 
@@ -98,7 +82,7 @@ export default function HomeDownloads() {
           alt="Athul Energy Documents Background"
           fill
           priority
-                    sizes="(min-width: 1024px) 100vw, 0px"
+          sizes="(min-width: 1024px) 100vw, 0px"
           className="object-cover object-left-center"
         />
       </div>

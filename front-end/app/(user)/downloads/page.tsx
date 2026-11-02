@@ -1,130 +1,81 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import HomeDownloadsClient, {
-  DocumentItem,
-} from "@/components/user/HomeDownloadsClient";
+import { ChevronRight } from "lucide-react";
+import DownloadsPageClient from "@/components/user/DownloadsPageClient";
 
 export const metadata: Metadata = {
-  title: "Downloads & Important Documents | Athul Energy Consultants",
+  title: "Statutory Downloads, Government Orders & Standards | Athul Energy Consultants",
   description:
-    "Download Athul Energy company profile, project brochures, environmental and safety policies, and official BEE and EMC Kerala accreditation certificates.",
+    "Official regulatory gazettes, Bureau of Energy Efficiency (BEE) guidebooks, Central Electricity Authority (CEA) safety standards, K-ECBC orders, and energy auditing study manuals.",
+  keywords: [
+    "BEE Guide Books PDF",
+    "CEA Regulations 2010 Gazette",
+    "K-ECBC Kerala Gazette",
+    "Energy Conservation Act amended",
+    "Electricity Act 2003 statutory audit",
+    "NAAC Criteria 7 Green Audit Manual",
+    "Athul Energy Downloads",
+  ],
   alternates: {
     canonical: "/downloads",
   },
-  openGraph: {
-    title: "Downloads & Important Documents | Athul Energy Consultants",
-    description:
-      "Download Athul Energy company profile, project brochures, environmental and safety policies, and official BEE and EMC Kerala accreditation certificates.",
-    url: "/downloads",
-    siteName: "Athul Energy Consultants",
-    locale: "en_IN",
-    type: "website",
-  },
 };
-
-const allDocuments: DocumentItem[] = [
-  {
-    id: "1",
-    title: "Company Profile",
-    category: "Company Profile",
-    format: "PDF",
-    size: "2.4 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "2",
-    title: "Environmental Policy",
-    category: "Policies",
-    format: "PDF",
-    size: "1.1 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "3",
-    title: "Project Brochure",
-    category: "Project Documents",
-    format: "PDF",
-    size: "1.8 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "4",
-    title: "Quality Policy",
-    category: "Policies",
-    format: "PDF",
-    size: "900 KB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "5",
-    title: "Safety Guidelines",
-    category: "Policies",
-    format: "PDF",
-    size: "1.2 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "6",
-    title: "Corporate Presentation",
-    category: "Company Profile",
-    format: "PDF",
-    size: "3.5 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "7",
-    title: "BEE Energy Auditor Accreditation",
-    category: "Certificates",
-    format: "PDF",
-    size: "1.5 MB",
-    downloadUrl: "#download",
-  },
-  {
-    id: "8",
-    title: "EMC Kerala Empanelment Certificate",
-    category: "Certificates",
-    format: "PDF",
-    size: "1.3 MB",
-    downloadUrl: "#download",
-  },
-];
 
 export default function DownloadsPage() {
   return (
-    <div className="bg-slate-50 pt-[calc(var(--header-h)+1.5rem)] pb-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="mb-6">
-          <ol className="flex items-center gap-2 text-xs text-slate-500">
-            <li>
-              <Link href="/" className="hover:text-emerald-700 transition-colors">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li className="font-medium text-slate-900">Downloads</li>
-          </ol>
-        </nav>
+    <div className="min-h-screen bg-slate-50/60 pb-20">
+      {/* Top Hero Section */}
+      <section className="border-b border-slate-200 bg-white py-10 sm:py-14 shadow-2xs">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs text-slate-500">
+            <Link href="/" className="hover:text-emerald-700 transition-colors">
+              Home
+            </Link>
+            <ChevronRight className="h-3 w-3 text-slate-300" />
+            <span className="font-semibold text-slate-900">Downloads &amp; Knowledge Base</span>
+          </nav>
 
-        {/* Page Header */}
-        <div className="mb-10 max-w-2xl">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
-            Resource Center
-          </span>
-          <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-            Downloads &amp; Key Documentation
-          </h1>
-          <p className="mt-3 text-sm sm:text-base leading-relaxed text-slate-600">
-            Access and download our verified credentials, corporate presentations,
-            quality management policies, and project brochures.
-          </p>
-        </div>
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full">
+                Statutory Regulatory Knowledge Base
+              </span>
+            </div>
 
-        {/* Documents Container */}
-        <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 lg:p-10 shadow-sm">
-          <HomeDownloadsClient documents={allDocuments} />
+            <h1 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+              Technical Standards, Government Orders &amp; Reference Books
+            </h1>
+
+            <p className="mt-3 text-pretty text-sm sm:text-base leading-relaxed text-slate-600">
+              Access and download official Central &amp; State Government Gazette orders,
+              Bureau of Energy Efficiency (BEE) study books, Central Electricity Authority (CEA)
+              safety regulations, and environmental compliance standards.
+            </p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-500">
+              <span className="flex items-center gap-1.5 text-emerald-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                Verified Gazette Copies
+              </span>
+              <span className="flex items-center gap-1.5 text-slate-600">
+                <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+                Official BEE Guidebooks
+              </span>
+              <span className="flex items-center gap-1.5 text-slate-600">
+                <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+                CEA Safety Codes 2010
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Main Downloads Container */}
+      <main className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+        <DownloadsPageClient />
+      </main>
     </div>
   );
 }
