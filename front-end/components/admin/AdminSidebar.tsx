@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { logoutAdmin } from "@/lib/api";
 import { usePathname } from "next/navigation";
 import {
   Building2,
@@ -210,22 +211,24 @@ export default function AdminSidebar({
       {/* ── Bottom Section: Logout Only ── */}
       <div className="shrink-0 border-t border-slate-100 p-3">
         {!collapsed ? (
-          <Link
-            href="/admin/login"
-            className="group flex items-center gap-2.5 w-full rounded-xl px-3 py-2.5 text-xs font-bold text-slate-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+          <button
+            type="button"
+            onClick={() => logoutAdmin()}
+            className="group flex items-center gap-2.5 w-full rounded-xl px-3 py-2.5 text-xs font-bold text-slate-600 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
             title="Logout of portal"
           >
             <LogOut className="h-4 w-4 shrink-0 text-slate-400 group-hover:text-red-600 transition-colors" />
             <span>Logout</span>
-          </Link>
+          </button>
         ) : (
-          <Link
-            href="/admin/login"
-            className="group flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors mx-auto"
+          <button
+            type="button"
+            onClick={() => logoutAdmin()}
+            className="group flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors mx-auto cursor-pointer"
             title="Logout"
           >
             <LogOut className="h-4 w-4" />
-          </Link>
+          </button>
         )}
       </div>
     </div>

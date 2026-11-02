@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   Lock,
@@ -11,10 +11,10 @@ import {
   ArrowRight,
   CheckCircle2,
   AlertCircle,
-  KeyRound,
-  Sparkles,
-  HelpCircle,
+  Loader2,
+  Clock,
 } from "lucide-react";
+import { api, AUTH_TOKEN_KEY } from "@/lib/api";
 
 export default function AdminLoginForm() {
   const router = useRouter();
@@ -25,13 +25,21 @@ export default function AdminLoginForm() {
   const [isPending, startTransition] = useTransition();
   const [authSuccess, setAuthSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [showHelpModal, setShowHelpModal] = useState(false);
+  const [expiredNotice, setExpiredNotice] = useState(false);
+  const [redirectPath, setRedirectPath] = useState("/dashboard");
 
-  const handleAutoFillDemo = () => {
-    setEmail("admin@athulenergy.com");
-    setPassword("Athul@Audit2026");
-    if (errorMessage) setErrorMessage("");
-  };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("expired") === "true") {
+        setExpiredNotice(true);
+      }
+      const redirect = params.get("redirect");
+      if (redirect && redirect.startsWith("/dashboard")) {
+        setRedirectPath(redirect);
+      }
+    }
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,220 +54,210 @@ export default function AdminLoginForm() {
     }
 
     setErrorMessage("");
+    setExpiredNotice(false);
 
     startTransition(async () => {
-      await new Promise((res) => setTimeout(res, 900));
-      if (password.length < 4) {
-        setErrorMessage("Invalid credentials. Password must be at least 4 characters.");
-        return;
+      try {
+        const res = await api.post("/auth/login", {
+          email: email.trim(),
+          password,
+        });
+
+        const token = res.data?.accessToken || res.data?.token;
+
+        if (res.data?.success && token) {
+          // Save JWT Access Token and admin info in localStorage
+          if (typeof window !== "undefined") {
+            localStorage.setItem(AUTH_TOKEN_KEY, token);
+            if (res.data.admin) {
+              localStorage.setItem(
+                "athul_admin_user",
+                JSON.stringify(res.data.admin)
+              );
+            }
+          }
+
+          setAuthSuccess(true);
+
+          setTimeout(() => {
+            router.push(redirectPath);
+          }, 600);
+        }
+      } catch (err: unknown) {
+        const msg =
+          (err as { response?: { data?: { message?: string } } })?.response
+            ?.data?.message ||
+          "Authentication failed. Please check server connection.";
+        setErrorMessage(msg);
       }
-      setAuthSuccess(true);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 800);
     });
   };
 
   return (
     <div className="w-full max-w-md mx-auto">
-
-      {/* Demo credentials pill */}
-      <div className="mb-4 rounded-xl border border-emerald-200/80 bg-emerald-50/70 px-3.5 py-2.5 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-[11px] text-emerald-950 font-medium">
-          <Sparkles className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-          <span>Developer / Quick Demo Access</span>
+      {/* Session Expired Notice */}
+      {expiredNotice && (
+        <div className="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-3.5 flex items-start gap-3">
+          <Clock className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+          <div className="text-xs text-amber-900">
+            <p className="font-bold">Session Expired</p>
+            <p className="text-amber-700 mt-0.5">
+              Your previous session has timed out. Please sign in again to access the admin dashboard.
+            </p>
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={handleAutoFillDemo}
-          className="shrink-0 rounded-lg bg-emerald-600 hover:bg-emerald-700 px-2.5 py-1 text-[10.5px] font-bold text-white transition-colors cursor-pointer"
-        >
-          Auto-fill
-        </button>
-      </div>
+      )}
 
       {/* Main card */}
       <div className="relative rounded-2xl border border-slate-200/90 bg-white shadow-lg shadow-slate-200/50 ring-1 ring-slate-900/5 overflow-hidden">
         {/* Accent strip */}
         <div className="h-1 bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400" />
 
-        <div className="px-6 py-5 sm:px-7">
-          {/* Header */}
-          <div className="mb-4">
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-700 uppercase tracking-wider">
-                <ShieldCheck className="h-3 w-3 text-emerald-600" />
-                Restricted Staff Portal
-              </span>
-            </div>
-            <h2 className="text-xl font-black text-slate-900 tracking-tight font-display leading-tight">
-              Administrative Login
+        <div className="p-7 sm:p-9 text-slate-900">
+          <div className="mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+              Sign in to portal
             </h2>
-            <p className="mt-1 text-[11.5px] text-slate-500 leading-relaxed">
-              Enter your accredited credentials to access the audit &amp; operations command.
+            <p className="mt-1 text-xs text-slate-500 leading-relaxed">
+              Enter your credentials to access the management dashboard.
             </p>
           </div>
 
-          {/* Error */}
+          {/* Feedback messages */}
           {errorMessage && (
-            <div className="mb-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-xs text-red-800 animate-in fade-in">
-              <AlertCircle className="h-3.5 w-3.5 shrink-0 text-red-600" />
-              <span>{errorMessage}</span>
+            <div className="mb-5 rounded-xl border border-red-200 bg-red-50/90 p-3.5 text-xs text-red-700 flex items-start gap-2.5 animate-in fade-in">
+              <AlertCircle className="h-4 w-4 shrink-0 text-red-600 mt-0.5" />
+              <div className="leading-relaxed">{errorMessage}</div>
             </div>
           )}
 
-          {/* Success */}
           {authSuccess && (
-            <div className="mb-4 flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-xs text-emerald-900 animate-in fade-in">
-              <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-600" />
-              <span className="font-bold">Access Granted. Redirecting to Dashboard...</span>
+            <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-xs text-emerald-800 flex items-center gap-2.5 animate-in fade-in">
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+              <div className="font-medium">
+                Authentication verified. Redirecting to dashboard...
+              </div>
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-3.5">
-            {/* Email */}
+          <form onSubmit={handleLogin} className="space-y-4">
+            {/* Email input */}
             <div>
-              <label htmlFor="admin-email" className="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">
-                Work Email / Auditor ID
+              <label
+                htmlFor="email"
+                className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5"
+              >
+                Work Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <Mail className="h-4 w-4" />
+                </div>
                 <input
-                  id="admin-email"
+                  id="email"
                   type="email"
                   required
                   autoComplete="email"
                   value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errorMessage) setErrorMessage("");
-                  }}
-                  placeholder="name@athulenergy.com"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-9 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-600/10 transition-all"
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@athulenergy.com"
+                  disabled={isPending || authSuccess}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-3.5 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all disabled:opacity-60"
                 />
               </div>
             </div>
 
-            {/* Password */}
+            {/* Password input */}
             <div>
-              <div className="flex items-center justify-between mb-1">
-                <label htmlFor="admin-password" className="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700">
+              <div className="flex items-center justify-between mb-1.5">
+                <label
+                  htmlFor="password"
+                  className="block text-[11px] font-bold uppercase tracking-wider text-slate-700"
+                >
                   Password
                 </label>
-                <button
-                  type="button"
-                  onClick={() => setShowHelpModal(true)}
-                  className="text-[10.5px] font-semibold text-emerald-700 hover:text-emerald-800 transition-colors cursor-pointer"
-                >
-                  Forgot Password?
-                </button>
               </div>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <Lock className="h-4 w-4" />
+                </div>
                 <input
-                  id="admin-password"
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   required
                   autoComplete="current-password"
                   value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (errorMessage) setErrorMessage("");
-                  }}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-9 pr-9 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-600/10 transition-all"
+                  disabled={isPending || authSuccess}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-10 py-2.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all disabled:opacity-60"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 rounded cursor-pointer"
-                  title={showPassword ? "Hide password" : "Show password"}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
             </div>
 
-            {/* Remember + TLS badge */}
-            <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
+            {/* Remember Me */}
+            <div className="flex items-center justify-between pt-1">
+              <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-3.5 w-3.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                  className="h-3.5 w-3.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 accent-emerald-600 cursor-pointer"
                 />
-                <span className="text-[11px] text-slate-600 font-medium">Remember session</span>
+                <span>Remember this device</span>
               </label>
-              <span className="inline-flex items-center gap-1 text-[10.5px] font-medium text-slate-400">
-                <KeyRound className="h-3 w-3 text-emerald-600" />
-                256-Bit TLS
-              </span>
             </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={isPending || authSuccess}
-              className="w-full inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-[#053824] px-5 text-sm font-bold text-white shadow-md shadow-emerald-950/20 hover:bg-emerald-900 hover:shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 disabled:opacity-60 cursor-pointer"
-            >
-              {isPending ? (
-                <>
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  <span>Verifying Credentials...</span>
-                </>
-              ) : authSuccess ? (
-                <>
-                  <CheckCircle2 className="h-4 w-4 text-emerald-300" />
-                  <span>Entering Dashboard...</span>
-                </>
-              ) : (
-                <>
-                  <span>Sign In to Dashboard</span>
-                  <ArrowRight className="h-4 w-4 text-emerald-400" />
-                </>
-              )}
-            </button>
+            {/* Submit button */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isPending || authSuccess}
+                className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-[#053824] hover:bg-emerald-900 px-4 py-3 text-xs sm:text-sm font-bold text-white shadow-md shadow-emerald-950/15 transition-all duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin text-emerald-300" />
+                    <span>Verifying Credentials...</span>
+                  </>
+                ) : authSuccess ? (
+                  <>
+                    <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                    <span>Verified!</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Sign In to Dashboard</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </>
+                )}
+              </button>
+            </div>
           </form>
 
-          {/* Footer */}
-          <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[10.5px] text-slate-400">
-            <span className="flex items-center gap-1">
-              <ShieldCheck className="h-3 w-3 text-emerald-600" />
-              Statutory Audit Operations
+          {/* Security badge footer */}
+          <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+              <span>JWT Signed Session</span>
             </span>
-            <span>v2.4 Enterprise</span>
+            <span className="text-slate-300">·</span>
+            <span>256-bit SSL</span>
           </div>
         </div>
       </div>
-
-      {/* Forgot Password Modal */}
-      {showHelpModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in">
-          <div className="relative w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 mb-3">
-              <HelpCircle className="h-4.5 w-4.5" />
-            </div>
-            <h3 className="text-base font-bold text-slate-900">Password Reset Assistance</h3>
-            <p className="mt-2 text-xs leading-relaxed text-slate-600">
-              Administrative passwords are reset by the System Administrator for security compliance with statutory client audits (BEE / EMC).
-            </p>
-            <div className="mt-3 rounded-xl bg-slate-50 p-3 border border-slate-100 text-xs text-slate-700 space-y-1">
-              <p><strong>Desk Email:</strong> admin@athulenergy.com</p>
-              <p><strong>Helpline:</strong> +91 73561 11990 / 11991</p>
-            </div>
-            <div className="mt-4 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setShowHelpModal(false)}
-                className="rounded-xl bg-[#053824] px-4 py-2 text-xs font-bold text-white hover:bg-emerald-900 transition-colors cursor-pointer"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
