@@ -84,7 +84,10 @@ export default function AdminSidebar({
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
-  const isActive = (href: string) => pathname.startsWith(href);
+  const isActive = (href: string) =>
+    pathname.startsWith(href) ||
+    (href === "/dashboard/inquiries" &&
+      (pathname === "/dashboard" || pathname === "/dashboard/"));
 
   const sidebarContent = (
     <div
@@ -95,7 +98,7 @@ export default function AdminSidebar({
       {/* ── Logo bar ── */}
       <div className="flex h-16 shrink-0 items-center justify-between px-4 border-b border-slate-100">
         <Link
-          href="/dashboard"
+          href="/dashboard/inquiries"
           onClick={onMobileClose}
           className="flex items-center gap-2.5 overflow-hidden focus-visible:outline-none group"
         >

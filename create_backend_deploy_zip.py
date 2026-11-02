@@ -8,7 +8,7 @@ def create_backend_zip():
     print(f"Creating {output_zip} from {base_dir}...")
     
     exclude_dirs = {"node_modules", ".git"}
-    exclude_files = {".env"} # keep .env out of zip for security; template is included
+    exclude_files = {".env", "package-lock.json"} # Linux cPanel generates its own fresh lockfile
     
     count = 0
     with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:

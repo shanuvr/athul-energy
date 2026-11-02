@@ -1,22 +1,23 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import api, { getMediaUrl } from "@/lib/api";
 
 interface ClientLogo {
-  id: string;
+  id: string | number;
   name: string;
   logo: string;
 }
 
-const rowOne: ClientLogo[] = [
+const DEFAULT_CLIENTS: ClientLogo[] = [
   { id: "telk", name: "Transformers and Electricals Kerala Ltd. (TELK)", logo: "/clients/telk.webp" },
   { id: "aai", name: "Airports Authority of India (AAI)", logo: "/clients/airports-authority-of-india.webp" },
   { id: "petronet", name: "Petronet LNG Limited", logo: "/clients/petronet-lng.webp" },
   { id: "synthite", name: "Synthite Industries Pvt. Ltd.", logo: "/clients/synthite.webp" },
   { id: "andhra-bank", name: "Andhra Bank", logo: "/clients/andhra-bank.webp" },
   { id: "central-bank", name: "Central Bank of India", logo: "/clients/central-bank-of-india.webp" },
-];
-
-const rowTwo: ClientLogo[] = [
   { id: "pnb", name: "Punjab National Bank", logo: "/clients/punjab-national-bank.webp" },
   { id: "syndicate-bank", name: "Syndicate Bank", logo: "/clients/syndicate-bank.webp" },
   { id: "union-bank", name: "Union Bank of India", logo: "/clients/union-bank-of-india.webp" },
@@ -31,7 +32,10 @@ function LogoMarqueeRow({
   logos: ClientLogo[];
   direction: "left" | "right";
 }) {
-  const items = [...logos, ...logos];
+  if (!logos || logos.length === 0) return null;
+
+  // Duplicate items for continuous scrolling loop
+  const items = logos.length < 5 ? [...logos, ...logos, ...logos, ...logos] : [...logos, ...logos];
 
   return (
     <div className="relative overflow-hidden w-full group/marquee">
@@ -66,6 +70,38 @@ function LogoMarqueeRow({
 }
 
 export default function HomeClients() {
+  const [clients, setClients] = useState<ClientLogo[]>(DEFAULT_CLIENTS);
+
+  useEffect(() => {
+    let isMounted = true;
+    api
+      .get("/clients")
+      .then((res) => {
+        if (!isMounted) return;
+        const data = res.data?.data || (Array.isArray(res.data) ? res.data : null);
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped: ClientLogo[] = data.map((item: { id: number | string; name: string; logoUrl: string }) => ({
+            id: item.id,
+            name: item.name,
+            logo: getMediaUrl(item.logoUrl),
+          }));
+          setClients(mapped);
+        }
+      })
+      .catch((err) => {
+        // Silently keep default fallback client list on error
+        console.debug("Using fallback static client list:", err?.message);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Split into rowOne and rowTwo for smooth bidirectional movement
+  const rowOne = clients.filter((_, idx) => idx % 2 === 0);
+  const rowTwo = clients.filter((_, idx) => idx % 2 === 1);
+
   return (
     <section
       id="clients"
@@ -103,8 +139,8 @@ export default function HomeClients() {
 
         {/* 2-Row Animated Logo Marquee */}
         <div className="mt-8 sm:mt-10 flex flex-col gap-4 sm:gap-5">
-          <LogoMarqueeRow logos={rowOne} direction="left" />
-          <LogoMarqueeRow logos={rowTwo} direction="right" />
+          <LogoMarqueeRow logos={rowOne.length > 0 ? rowOne : clients} direction="left" />
+          <LogoMarqueeRow logos={rowTwo.length > 0 ? rowTwo : clients} direction="right" />
         </div>
 
         {/* View All Clients Action Button */}

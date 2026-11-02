@@ -15,6 +15,7 @@ import { connectDB } from "./config/db.js";
 import { initDB } from "./config/initDB.js";
 import galleryRoutes from "./routes/galleryRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import clientRoutes from "./routes/clientRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -65,8 +66,16 @@ app.get("/", (req, res) => {
   res.json({
     name: "Athul Energy Consultants API",
     status: "online",
-    environment: process.env.NODE_ENV || "development",
+    environment: process.env.NODE_ENV || "production",
     version: "1.0.0",
+  });
+});
+
+app.get("/health", (req, res) => {
+  res.json({
+    status: "healthy",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -78,9 +87,15 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// API Routes
+// API Routes (supports both direct and Passenger /api base URI)
 app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
+
 app.use("/api/gallery", galleryRoutes);
+app.use("/gallery", galleryRoutes);
+
+app.use("/api/clients", clientRoutes);
+app.use("/clients", clientRoutes);
 
 // 404 Fallback Handler
 app.use((req, res, next) => {
@@ -104,18 +119,26 @@ async function startServer() {
   try {
     await connectDB();
     await initDB();
-
-    app.listen(PORT, () => {
-      console.log(`===============================================`);
-      console.log(`🚀 Athul Energy API Server running on port ${PORT} [ESM]`);
-      console.log(`🌐 Base URL: http://localhost:${PORT}`);
-      console.log(`📁 Static Media: http://localhost:${PORT}/media`);
-      console.log(`===============================================`);
-    });
+    console.log("Database connected and initialized successfully.");
   } catch (error) {
-    console.error("Failed to start server due to database error:", error.message);
-    process.exit(1);
+    console.error("Database connection warning:", error.message);
+    try {
+      const fs = await import("fs");
+      fs.appendFileSync(
+        path.join(__dirname, "startup-error.log"),
+        `[${new Date().toISOString()}] ${error.stack || error.message}\n`
+      );
+    } catch {}
   }
+
+  // Always listen so Passenger/LiteSpeed gets HTTP response (prevents 503)
+  app.listen(PORT, () => {
+    console.log(`===============================================`);
+    console.log(`🚀 Athul Energy API Server running on port ${PORT} [ESM]`);
+    console.log(`🌐 Base URL: http://localhost:${PORT}`);
+    console.log(`📁 Static Media: http://localhost:${PORT}/media`);
+    console.log(`===============================================`);
+  });
 }
 
 startServer();

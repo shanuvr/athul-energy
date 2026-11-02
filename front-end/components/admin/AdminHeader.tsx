@@ -19,8 +19,7 @@ function getBreadcrumbTitle(pathname: string) {
   if (pathname.includes("/blog/create")) return "Create Article";
   if (pathname.includes("/blog")) return "Technical Blog";
   if (pathname.includes("/gallery")) return "Photo Gallery";
-  if (pathname.includes("/inquiries")) return "Audit Inquiries";
-  return "Dashboard";
+  return "Audit Inquiries";
 }
 
 export default function AdminHeader({ onMenuToggle }: AdminHeaderProps) {
@@ -43,10 +42,10 @@ export default function AdminHeader({ onMenuToggle }: AdminHeaderProps) {
 
         <nav aria-label="Breadcrumbs" className="flex items-center gap-1.5 text-sm">
           <Link
-            href="/dashboard"
+            href="/dashboard/inquiries"
             className="hidden sm:inline text-slate-400 hover:text-emerald-700 font-medium transition-colors text-[13px]"
           >
-            Dashboard
+            Admin
           </Link>
           <ChevronRight className="h-3.5 w-3.5 text-slate-300 hidden sm:inline" />
           <span className="font-bold text-slate-800 text-[13px]">{title}</span>

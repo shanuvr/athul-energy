@@ -26,7 +26,7 @@ export default function AdminLoginForm() {
   const [authSuccess, setAuthSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [expiredNotice, setExpiredNotice] = useState(false);
-  const [redirectPath, setRedirectPath] = useState("/dashboard");
+  const [redirectPath, setRedirectPath] = useState("/dashboard/inquiries");
 
   useEffect(() => {
     if (typeof window !== "undefined") {

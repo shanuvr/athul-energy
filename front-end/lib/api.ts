@@ -154,6 +154,14 @@ export function getMediaUrl(path?: string | null): string {
   if (path.startsWith("http://") || path.startsWith("https://")) {
     return path;
   }
+  // Public static assets served from Next.js /public folder directly
+  if (
+    path.startsWith("/clients/") ||
+    path.startsWith("/icons/") ||
+    path.startsWith("/images/")
+  ) {
+    return path;
+  }
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
   if (!MEDIA_BASE_URL) {
     return cleanPath;
