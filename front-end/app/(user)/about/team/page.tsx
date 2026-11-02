@@ -6,14 +6,14 @@ import TeamDirectory from "@/components/user/TeamDirectory";
 export const metadata: Metadata = {
   title: "Engineering Team & Leadership | Athul Energy Consultants",
   description:
-    "Meet our multidisciplinary team of BEE Accredited Energy Auditors, CEA Electrical Safety Inspectors, FLIR Level-II Thermographers, and GRIHA Green Building specialists.",
+    "Meet our multidisciplinary team of BEE Accredited Energy Auditors, Certified Energy Managers, and BEE Empaneled Sector Experts for Refineries, Thermal Power, DISCOMs, and Buildings.",
   keywords: [
     "Athul Energy Team",
     "BEE Accredited Energy Auditor Kerala",
     "Santhosh A Energy Auditor",
+    "Ashok KMP Energy Auditor",
     "Electrical Safety Auditor",
-    "FLIR Thermographer Kerala",
-    "GRIHA Consultant",
+    "BEE Sector Empaneled Experts",
     "Energy Auditing Specialists",
   ],
 };
@@ -49,15 +49,15 @@ export default function TeamPage() {
             </h1>
 
             <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
-              Led by BEE Accredited Energy Auditors with over 25 years of
-              industry experience. Our engineers bring accredited
-              qualifications, certified instrumentation, and rigorous field
-              testing across electrical, thermal, safety, and green building
-              domains.
+              Led by BEE Accredited Energy Auditors with over 20 years of
+              industry experience. Our engineers and empaneled specialists bring
+              accredited statutory qualifications, certified instrumentation, and
+              rigorous field testing across industrial plants, refineries, power
+              stations, and commercial facilities.
             </p>
 
             <p className="mt-5 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-              15+ specialists · Thrissur, Kerala
+              12 Accredited Specialists &amp; Empaneled Experts · Thrissur, Kerala
             </p>
           </div>
         </div>

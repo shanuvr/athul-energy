@@ -16,6 +16,7 @@ export default function LeadershipCard({ member, priority = false }: LeadershipC
   const showImage = Boolean(member.image) && !imageError;
 
   const initials = member.name
+    .replace(/^Er\.\s+|^Mr\.\s+|^Ms\.\s+|^Mrs\.\s+/, "")
     .split(" ")
     .map((part) => part[0])
     .filter(Boolean)
@@ -33,7 +34,7 @@ export default function LeadershipCard({ member, priority = false }: LeadershipC
             fill
             sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
             priority={priority}
-            className="object-cover grayscale transition-all duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+            className="object-cover transition-all duration-500 group-hover:scale-[1.03]"
             onError={() => setImageError(true)}
           />
         ) : (
@@ -80,7 +81,7 @@ export default function LeadershipCard({ member, priority = false }: LeadershipC
           </span>
         </div>
 
-        <p className="mt-4 line-clamp-2 text-[12.5px] leading-relaxed text-slate-500">
+        <p className="mt-4 line-clamp-3 text-[12.5px] leading-relaxed text-slate-500">
           {member.function}
         </p>
 

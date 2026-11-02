@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   ],
 };
 
-const leaderIds = ["santhosh-a", "babu-t-v", "gayatri-r-nair"];
+const leaderIds = ["santhosh-a", "ashok-kmp", "gayathri-nair-r"];
 
 export default function AboutPage() {
   const leaders = leaderIds

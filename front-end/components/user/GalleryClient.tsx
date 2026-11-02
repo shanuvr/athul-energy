@@ -146,13 +146,13 @@ export default function GalleryClient() {
           </div>
         )}
 
-        {/* Live Masonry Grid */}
+        {/* Live Grid */}
         {!loading && filtered.length > 0 && (
-          <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((image, index) => (
               <figure
                 key={image.id}
-                className="group relative mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-xs hover:shadow-md transition-shadow"
+                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-xs hover:shadow-md transition-shadow"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
                   <Image
