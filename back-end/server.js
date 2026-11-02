@@ -12,6 +12,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, ".env") });
 
 import { connectDB } from "./config/db.js";
+import { initDB } from "./config/initDB.js";
 import galleryRoutes from "./routes/galleryRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
@@ -28,6 +29,8 @@ app.use(
 // CORS configuration (allow requests from Next.js front-end)
 const allowedOrigins = [
   "http://localhost:3000",
+  "https://new.athulenergy.com",
+  "https://athulenergy.com",
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
@@ -96,10 +99,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start Server after connecting to Database
+// Start Server after connecting to Database & Auto-seeding
 async function startServer() {
   try {
     await connectDB();
+    await initDB();
 
     app.listen(PORT, () => {
       console.log(`===============================================`);

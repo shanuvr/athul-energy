@@ -1,10 +1,14 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
 
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  process.env.NEXT_PUBLIC_API_URL !== undefined
+    ? process.env.NEXT_PUBLIC_API_URL
+    : "http://localhost:5000/api";
 
 export const MEDIA_BASE_URL =
-  process.env.NEXT_PUBLIC_MEDIA_URL || "http://localhost:5000";
+  process.env.NEXT_PUBLIC_MEDIA_URL !== undefined
+    ? process.env.NEXT_PUBLIC_MEDIA_URL
+    : "http://localhost:5000";
 
 export const AUTH_TOKEN_KEY = "athul_admin_token";
 
@@ -151,6 +155,9 @@ export function getMediaUrl(path?: string | null): string {
     return path;
   }
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  if (!MEDIA_BASE_URL) {
+    return cleanPath;
+  }
   return `${MEDIA_BASE_URL}${cleanPath}`;
 }
 

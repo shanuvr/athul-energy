@@ -29,16 +29,22 @@ export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
  */
 export async function connectDB() {
   try {
-    // 1. Create database if it doesn't exist
-    const connection = await mysql.createConnection({
-      host: DB_HOST,
-      port: DB_PORT,
-      user: DB_USER,
-      password: DB_PASSWORD,
-    });
+    // 1. Try to create database if it doesn't exist (Local dev)
+    // On cPanel, databases are created in cPanel UI so CREATE DATABASE may be restricted;
+    // we catch and proceed to connect to the existing database.
+    try {
+      const connection = await mysql.createConnection({
+        host: DB_HOST,
+        port: DB_PORT,
+        user: DB_USER,
+        password: DB_PASSWORD,
+      });
 
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;`);
-    await connection.end();
+      await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;`);
+      await connection.end();
+    } catch {
+      // Proceed to authenticate with the existing cPanel database
+    }
 
     // 2. Authenticate Sequelize connection
     await sequelize.authenticate();
