@@ -5,11 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   Menu,
   Bell,
-  Search,
-  ExternalLink,
-  ShieldCheck,
   ChevronRight,
-  Sparkles,
 } from "lucide-react";
 
 interface AdminHeaderProps {
@@ -20,11 +16,11 @@ function getBreadcrumbTitle(pathname: string) {
   if (pathname.includes("/clients")) return "Our Clients";
   if (pathname.includes("/news-events")) return "News & Events";
   if (pathname.includes("/downloads")) return "Downloads Library";
-  if (pathname.includes("/blog")) return "Technical Blog & Whitepapers";
-  if (pathname.includes("/gallery")) return "Photo Gallery Archive";
-  if (pathname.includes("/inquiries")) return "Audit Inquiries & Leads";
-  if (pathname.includes("/settings")) return "Portal Settings";
-  return "Overview & Command";
+  if (pathname.includes("/blog/create")) return "Create Article";
+  if (pathname.includes("/blog")) return "Technical Blog";
+  if (pathname.includes("/gallery")) return "Photo Gallery";
+  if (pathname.includes("/inquiries")) return "Audit Inquiries";
+  return "Dashboard";
 }
 
 export default function AdminHeader({ onMenuToggle }: AdminHeaderProps) {
@@ -32,73 +28,62 @@ export default function AdminHeader({ onMenuToggle }: AdminHeaderProps) {
   const title = getBreadcrumbTitle(pathname);
 
   return (
-    <header className="sticky top-0 z-20 h-16 border-b border-white/10 bg-slate-900/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-      {/* Left: Mobile Toggle & Breadcrumbs */}
+    <header className="sticky top-0 z-20 h-16 shrink-0 border-b border-slate-200 bg-white/95 backdrop-blur-sm px-4 sm:px-6 flex items-center justify-between gap-4">
+
+      {/* Left: mobile toggle + breadcrumbs */}
       <div className="flex items-center gap-3">
-        {/* Mobile Hamburger Toggle */}
         <button
           type="button"
           onClick={onMenuToggle}
-          className="lg:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-          aria-label="Open mobile navigation sidebar"
+          className="lg:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors cursor-pointer"
+          aria-label="Open navigation sidebar"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="h-4.5 w-4.5" />
         </button>
 
-        {/* Breadcrumb Path */}
-        <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs">
+        <nav aria-label="Breadcrumbs" className="flex items-center gap-1.5 text-sm">
           <Link
             href="/dashboard"
-            className="text-slate-400 hover:text-emerald-300 transition-colors font-medium hidden sm:inline"
+            className="hidden sm:inline text-slate-400 hover:text-emerald-700 font-medium transition-colors text-[13px]"
           >
             Dashboard
           </Link>
-          <ChevronRight className="h-3 w-3 text-slate-600 hidden sm:inline" />
-          <span className="text-sm font-bold text-white tracking-tight">
-            {title}
-          </span>
+          <ChevronRight className="h-3.5 w-3.5 text-slate-300 hidden sm:inline" />
+          <span className="font-bold text-slate-800 text-[13px]">{title}</span>
         </nav>
       </div>
 
-      {/* Right: Search, Live Status, Public Link, User */}
-      <div className="flex items-center gap-3">
-        {/* Live Accreditation Badge */}
-        <div className="hidden sm:flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300 font-medium">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-bold">BEE AEA-0275 Online</span>
+      {/* Right: Live badge + notifications + avatar */}
+      <div className="flex items-center gap-2 sm:gap-3">
+
+        {/* BEE live status pill */}
+        <div className="hidden md:flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-700">
+          <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          BEE AEA-0275 Live
         </div>
 
-        {/* View Public Website */}
-        <Link
-          href="/"
-          target="_blank"
-          className="hidden md:inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-        >
-          <span>View Site</span>
-          <ExternalLink className="h-3 w-3 opacity-60" />
-        </Link>
-
-        {/* Notifications Icon with Indicator */}
+        {/* Notifications */}
         <button
           type="button"
-          className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+          className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors"
           title="6 unread audit inquiries"
         >
           <Bell className="h-4 w-4" />
-          <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
+          <span className="absolute top-2 right-2 flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
         </button>
 
-        {/* User Avatar */}
-        <div className="flex items-center gap-2 border-l border-white/10 pl-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#053824] border border-emerald-500/40 text-emerald-300 font-bold text-xs shadow-xs">
+        {/* Avatar */}
+        <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#053824] text-emerald-300 font-bold text-[11px] shadow-xs">
             SA
           </div>
-          <span className="hidden xl:inline text-xs font-bold text-white">
-            Er. Santhosh A.
-          </span>
+          <div className="hidden xl:block leading-tight">
+            <p className="text-[12px] font-bold text-slate-800">Er. Santhosh A.</p>
+            <p className="text-[10px] text-emerald-700 font-medium">Lead Auditor</p>
+          </div>
         </div>
       </div>
     </header>

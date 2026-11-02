@@ -2,14 +2,10 @@
 
 import { useState } from "react";
 import {
-  FileDown,
   Plus,
   Trash2,
-  Upload,
   Search,
-  ExternalLink,
   FileText,
-  CheckCircle2,
 } from "lucide-react";
 
 interface DownloadItem {
@@ -51,6 +47,10 @@ export default function AdminDownloadsPage() {
     return matchesSearch && matchesCat;
   });
 
+  const handleDelete = (id: string) => {
+    setDocs(docs.filter((d) => d.id !== id));
+  };
+
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTitle.trim()) return;
@@ -69,60 +69,56 @@ export default function AdminDownloadsPage() {
     setShowModal(false);
   };
 
-  const handleDelete = (id: string) => {
-    setDocs(docs.filter((d) => d.id !== id));
-  };
-
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-              Technical Resources &amp; Regulations
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full">
+              Gazette &amp; Standards Archive
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white font-display">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-display">
             Downloads Library Management
           </h1>
-          <p className="mt-1 text-xs sm:text-sm text-slate-400">
-            Upload and organize regulatory PDF gazettes, BEE guidebooks, and compliance standards.
+          <p className="mt-1 text-xs sm:text-sm text-slate-500">
+            Publish government orders, statutory gazette notifications, and BEE study textbooks.
           </p>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="inline-flex items-center gap-2 rounded-xl bg-[#053824] hover:bg-emerald-900 px-4 py-2.5 text-xs font-bold text-white shadow-md transition-all cursor-pointer self-start sm:self-auto"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#053824] hover:bg-emerald-900 px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-colors cursor-pointer self-start sm:self-auto"
         >
-          <Plus className="h-4 w-4 text-emerald-400" />
-          <span>Upload Document</span>
+          <Plus className="h-4 w-4 text-emerald-300" />
+          <span>Upload PDF Document</span>
         </button>
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 rounded-2xl border border-white/10 bg-slate-900/60 p-3 shadow-xs">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xs">
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search regulations, BEE codes, or KSERC orders..."
-            className="w-full rounded-xl border border-white/10 bg-slate-950/70 pl-10 pr-4 py-2 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none"
+            placeholder="Search regulations, building codes, or government orders..."
+            className="w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-10 pr-4 py-2 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all"
           />
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto">
-          {["All", "Regulations", "Government Orders", "Standards", "Books"].map((cat) => (
+        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
+          {["All", "Government Orders", "Standards", "Regulations", "Books"].map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCat(cat)}
-              className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
+              className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedCat === cat
-                  ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40"
-                  : "bg-white/5 text-slate-400 hover:text-white"
+                  ? "bg-[#053824] text-white shadow-xs"
+                  : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
               }`}
             >
               {cat}
@@ -132,46 +128,50 @@ export default function AdminDownloadsPage() {
       </div>
 
       {/* Documents Table */}
-      <div className="rounded-3xl border border-white/10 bg-slate-900/60 shadow-sm overflow-hidden">
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/10 text-[10.5px] uppercase font-bold text-slate-400 tracking-wider bg-slate-950/50">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-[10.5px] uppercase font-bold text-slate-500 tracking-wider">
               <tr>
-                <th className="py-3.5 px-4">Document Title</th>
-                <th className="py-3.5 px-4">Category</th>
-                <th className="py-3.5 px-4">Format</th>
-                <th className="py-3.5 px-4">File Size</th>
-                <th className="py-3.5 px-4">Upload Date</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+                <th className="py-3 px-5">Document Title</th>
+                <th className="py-3 px-5">Category</th>
+                <th className="py-3 px-5">Format</th>
+                <th className="py-3 px-5">File Size</th>
+                <th className="py-3 px-5">Gazette Date</th>
+                <th className="py-3 px-5 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-slate-300">
+            <tbody className="divide-y divide-slate-100 text-slate-700">
               {filtered.map((doc) => (
-                <tr key={doc.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-3.5 px-4 font-semibold text-white max-w-md">
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 font-bold text-[10px]">
-                        PDF
-                      </div>
-                      <span className="truncate">{doc.title}</span>
+                <tr key={doc.id} className="hover:bg-slate-50/70 transition-colors">
+                  <td className="py-3.5 px-5 font-bold text-slate-900 max-w-md">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-emerald-700 shrink-0" />
+                      <span className="line-clamp-1">{doc.title}</span>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4">
-                    <span className="rounded-md bg-white/5 px-2 py-0.5 text-[10.5px] font-medium text-slate-300">
+                  <td className="py-3.5 px-5 whitespace-nowrap">
+                    <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">
                       {doc.category}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 text-slate-400 font-mono">{doc.format}</td>
-                  <td className="py-3.5 px-4 text-slate-400">{doc.size}</td>
-                  <td className="py-3.5 px-4 text-slate-500">{doc.date}</td>
-                  <td className="py-3.5 px-4 text-right">
+                  <td className="py-3.5 px-5 font-mono font-bold text-slate-600">
+                    {doc.format}
+                  </td>
+                  <td className="py-3.5 px-5 text-slate-500 whitespace-nowrap">
+                    {doc.size}
+                  </td>
+                  <td className="py-3.5 px-5 text-slate-500 whitespace-nowrap">
+                    {doc.date}
+                  </td>
+                  <td className="py-3.5 px-5 text-right whitespace-nowrap">
                     <button
                       type="button"
                       onClick={() => handleDelete(doc.id)}
-                      className="p-1.5 rounded-lg hover:bg-red-500/20 hover:text-red-400 text-slate-500 transition-colors"
-                      title="Remove document"
+                      className="text-[11px] font-semibold text-slate-400 hover:text-red-600 transition-colors cursor-pointer inline-flex items-center gap-1"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-3.5 w-3.5" />
+                      <span>Remove</span>
                     </button>
                   </td>
                 </tr>
@@ -181,71 +181,59 @@ export default function AdminDownloadsPage() {
         </div>
       </div>
 
-      {/* Upload Modal */}
+      {/* Add Document Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4 animate-in fade-in">
-          <div className="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
-            <h2 className="text-lg font-bold text-white">Upload Technical Document</h2>
-            <p className="mt-1 text-xs text-slate-400">
-              Add a regulation or guidebook to the public downloads section.
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 animate-in fade-in">
+          <div className="relative w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-2xl text-slate-900 animate-in zoom-in-95">
+            <h3 className="text-lg font-bold text-slate-900 mb-1">Add Document</h3>
+            <p className="text-xs text-slate-500 mb-4">
+              Add new PDF guidelines or statutory rules to the public downloads section.
             </p>
 
-            <form onSubmit={handleAdd} className="mt-5 space-y-4">
+            <form onSubmit={handleAdd} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
-                  Document Title *
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                  Document Title
                 </label>
                 <input
                   type="text"
                   required
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="e.g. KSERC Net Metering Guidelines 2026"
-                  className="w-full rounded-xl border border-white/10 bg-slate-950 p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                  placeholder="e.g. Kerala ECBC Implementation Rules 2026"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/10"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
-                  Category Type
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                  Category
                 </label>
                 <select
                   value={newCat}
-                  onChange={(e) =>
-                    setNewCat(e.target.value as DownloadItem["category"])
-                  }
-                  className="w-full rounded-xl border border-white/10 bg-slate-950 p-2.5 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                  onChange={(e) => setNewCat(e.target.value as DownloadItem["category"])}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/10"
                 >
-                  <option value="Regulations">Regulations &amp; Acts</option>
                   <option value="Government Orders">Government Orders</option>
+                  <option value="Regulations">Regulations &amp; Gazettes</option>
                   <option value="Standards">Standards &amp; Codes</option>
-                  <option value="Books">BEE Books &amp; Textbooks</option>
+                  <option value="Books">BEE Guide Books</option>
                 </select>
               </div>
 
-              <div className="rounded-xl border border-dashed border-white/20 bg-slate-950/60 p-4 text-center">
-                <Upload className="mx-auto h-6 w-6 text-slate-400 mb-1" />
-                <span className="block text-xs font-semibold text-slate-300">
-                  Select PDF Document
-                </span>
-                <span className="text-[10px] text-slate-500">
-                  Max file size: 25 MB
-                </span>
-              </div>
-
-              <div className="flex items-center justify-end gap-2.5 pt-2">
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="rounded-xl px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white"
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#053824] hover:bg-emerald-900 px-4 py-2 text-xs font-bold text-white shadow-sm"
+                  className="rounded-xl bg-[#053824] hover:bg-emerald-900 px-5 py-2 text-xs font-bold text-white shadow-xs transition-colors"
                 >
-                  Save &amp; Publish
+                  Save Entry
                 </button>
               </div>
             </form>

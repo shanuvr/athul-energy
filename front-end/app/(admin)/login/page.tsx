@@ -1,18 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ShieldCheck,
-  Zap,
-  Lock,
-  ArrowLeft,
-  Activity,
-  FileCheck2,
-  Award,
-  Sparkles,
-  Layers,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import AdminLoginForm from "@/components/admin/AdminLoginForm";
+import TypewriterHero from "@/components/admin/TypewriterHero";
 
 export const metadata: Metadata = {
   title: "Admin Portal Sign In | Athul Energy Consultants",
@@ -26,185 +17,102 @@ export const metadata: Metadata = {
 
 export default function AdminLoginPage() {
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-slate-950 text-slate-100">
-      {/* Left Column: Command & Security Brand Showcase (Desktop) */}
-      <section className="relative hidden lg:flex lg:w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-slate-950 via-[#053824] to-slate-900 p-12 xl:p-16 text-white border-r border-white/10">
-        {/* Subtle Geometric Ambient Grid */}
+    <div className="h-screen overflow-hidden flex flex-col lg:flex-row bg-slate-950 text-slate-100">
+
+      {/* ── Left Panel ── */}
+      <section className="relative hidden lg:flex lg:w-[45%] xl:w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-slate-950 via-[#053824] to-slate-900 px-12 xl:px-16 py-10 text-white border-r border-white/10">
+
+        {/* Grid bg */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.06]"
+          className="pointer-events-none absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage:
-              "linear-gradient(to right, rgba(255,255,255,0.18) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.18) 1px, transparent 1px)",
+              "linear-gradient(to right, rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.2) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
-            maskImage: "radial-gradient(ellipse at center, black, transparent 80%)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse at center, black, transparent 80%)",
+            maskImage: "radial-gradient(ellipse at 40% 50%, black 30%, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(ellipse at 40% 50%, black 30%, transparent 80%)",
           }}
         />
+        {/* Glow orbs */}
+        <div aria-hidden="true" className="pointer-events-none absolute -left-24 top-1/3 h-[28rem] w-[28rem] rounded-full bg-emerald-500/20 blur-[120px]" />
+        <div aria-hidden="true" className="pointer-events-none absolute right-0 bottom-0 h-72 w-72 rounded-full bg-teal-400/10 blur-[100px]" />
 
-        {/* Ambient Radial Glowing Orbs */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-20 top-1/4 h-[30rem] w-[30rem] rounded-full bg-emerald-500/15 blur-[140px]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-0 bottom-10 h-[24rem] w-[24rem] rounded-full bg-teal-500/10 blur-[130px]"
-        />
-
-        {/* Brand Header */}
+        {/* Logo */}
         <div className="relative z-10">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-3 group focus-visible:outline-none"
-            aria-label="Athul Energy Consultants Home"
-          >
-            <div className="rounded-2xl bg-white p-2.5 shadow-md">
+          <Link href="/" aria-label="Athul Energy home" className="inline-flex">
+            <div className="rounded-xl bg-white/95 px-3 py-2 shadow-md">
               <Image
                 src="/athul-logo.png"
-                alt="Athul Energy Consultants Logo"
-                width={160}
-                height={50}
-                className="h-9 w-auto object-contain"
+                alt="Athul Energy Consultants"
+                width={140}
+                height={44}
+                className="h-8 w-auto object-contain"
                 priority
               />
             </div>
           </Link>
-
-          <div className="mt-6 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 px-3 py-1 text-xs font-bold text-emerald-300 uppercase tracking-wider">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              BEE Accredited AEA-0275
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-300">
-              Operations Command
-            </span>
-          </div>
         </div>
 
-        {/* Central Display Message */}
-        <div className="relative z-10 my-10 max-w-xl">
-          <h1 className="font-display text-3xl xl:text-4xl font-extrabold tracking-tight text-white leading-tight">
-            Centralized Industrial Energy &amp; Operations Command
-          </h1>
-          <p className="mt-4 text-sm xl:text-base leading-relaxed text-slate-300">
-            Internal administration portal for managing statutory energy audits,
-            electrical safety compliance reviews, engineering downloads, and
-            certified baseline SEC documentation.
-          </p>
+        {/* Typewriter hero — centred vertically */}
+        <TypewriterHero />
 
-          {/* Feature Highlights Grid */}
-          <div className="mt-8 space-y-3.5">
-            <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xs p-3.5 transition-all hover:bg-white/10">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
-                <FileCheck2 className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Statutory Audit Repositories
-                </h2>
-                <p className="mt-0.5 text-xs text-slate-300 leading-snug">
-                  Manage Form-A/B compliance filings for Designated Consumers (BEE &amp; EMC Kerala).
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xs p-3.5 transition-all hover:bg-white/10">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-500/20 text-teal-400">
-                <Activity className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Instrumentation &amp; Field Analytics
-                </h2>
-                <p className="mt-0.5 text-xs text-slate-300 leading-snug">
-                  Access Class-A power quality logs, FLIR thermal scans, and boiler test measurements.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xs p-3.5 transition-all hover:bg-white/10">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400">
-                <Lock className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Strict Confidentiality &amp; NDA
-                </h2>
-                <p className="mt-0.5 text-xs text-slate-300 leading-snug">
-                  Role-based access controls for accredited lead auditors and field engineering staff.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Security & Regulatory Footer */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-y-2 border-t border-white/10 pt-6 text-[11px] text-slate-400">
+        {/* Footer */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-y-1 border-t border-white/10 pt-5 text-[10.5px] text-slate-500">
           <span>© 2026 Athul Energy Consultants Pvt. Ltd.</span>
-          <span className="flex items-center gap-1 text-emerald-400 font-semibold">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            System Status: All Services Operational
+          <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            All Services Operational
           </span>
         </div>
       </section>
 
-      {/* Right Column: Authentication Panel */}
-      <section className="relative flex flex-1 flex-col justify-between overflow-y-auto bg-slate-100/80 p-6 sm:p-10 lg:p-16">
-        {/* Subtle architectural dot pattern */}
+      {/* ── Right Panel ── */}
+      <section className="relative flex flex-1 flex-col overflow-hidden bg-slate-100/80">
+
+        {/* Dot pattern */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.4]"
+          className="pointer-events-none absolute inset-0 opacity-30"
           style={{
             backgroundImage: "radial-gradient(#cbd5e1 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
+            backgroundSize: "22px 22px",
           }}
         />
 
-        {/* Top Header Navigation */}
-        <div className="relative z-10 flex items-center justify-between mb-8">
+        {/* Top bar */}
+        <div className="relative z-10 flex items-center justify-between shrink-0 px-6 sm:px-10 py-4 border-b border-slate-200/60">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 rounded-xl border border-slate-200/90 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900 transition-colors"
+            className="group inline-flex items-center gap-2 rounded-xl border border-slate-200/90 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900 transition-colors"
           >
-            <ArrowLeft className="h-3.5 w-3.5 text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
-            <span>Return to Public Website</span>
+            <ArrowLeft className="h-3 w-3 text-slate-400 group-hover:-translate-x-0.5 transition-transform" />
+            Return to Website
           </Link>
-
-          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+          <span className="text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
             Internal Auth v2.4
           </span>
         </div>
 
-        {/* Mobile-Only Brand Header */}
-        <div className="relative z-10 lg:hidden mb-6 text-center">
-          <div className="inline-block rounded-2xl bg-white p-3 shadow-sm border border-slate-200 mb-3">
-            <Image
-              src="/athul-logo.png"
-              alt="Athul Energy Consultants Logo"
-              width={160}
-              height={50}
-              className="h-8 w-auto object-contain mx-auto"
-              priority
-            />
+        {/* Mobile logo */}
+        <div className="relative z-10 lg:hidden shrink-0 flex items-center justify-center pt-4">
+          <div className="inline-flex flex-col items-center gap-1.5">
+            <div className="rounded-xl bg-white p-2 shadow-sm border border-slate-200">
+              <Image src="/athul-logo.png" alt="Athul Energy Consultants Logo" width={120} height={38} className="h-7 w-auto object-contain" priority />
+            </div>
+            <span className="text-[10.5px] font-bold uppercase tracking-wider text-emerald-800">Administrative Portal</span>
           </div>
-          <span className="block text-xs font-bold uppercase tracking-wider text-emerald-800">
-            Administrative Portal
-          </span>
         </div>
 
-        {/* Form Container */}
-        <div className="relative z-10 my-auto py-4">
+        {/* Form */}
+        <div className="relative z-10 flex flex-1 items-center justify-center px-5 sm:px-8 py-4 overflow-hidden">
           <AdminLoginForm />
         </div>
 
-        {/* Bottom Help Note */}
-        <div className="relative z-10 mt-8 text-center text-xs text-slate-500">
-          <p>
-            Authorized personnel only. All access attempts are logged and monitored under statutory guidelines.
-          </p>
-        </div>
+        {/* Bottom note */}
+        <p className="relative z-10 shrink-0 text-center text-[10.5px] text-slate-400 px-6 py-3 border-t border-slate-200/60">
+          Authorized personnel only. All access attempts are logged under statutory guidelines.
+        </p>
       </section>
     </div>
   );

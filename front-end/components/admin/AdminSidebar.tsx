@@ -2,32 +2,25 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard,
   Building2,
   Calendar,
   FileDown,
   BookOpen,
   Image as ImageIcon,
   Inbox,
-  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
-  ShieldCheck,
-  ExternalLink,
-  Sparkles,
   X,
+  Zap,
 } from "lucide-react";
 
 interface NavItem {
   label: string;
   href: string;
   icon: React.ElementType;
-  badge?: string;
-  badgeColor?: string;
 }
 
 interface NavSection {
@@ -37,69 +30,42 @@ interface NavSection {
 
 const NAV_SECTIONS: NavSection[] = [
   {
-    title: "Core Operations",
+    title: "Operations",
     items: [
-      {
-        label: "Overview",
-        href: "/dashboard",
-        icon: LayoutDashboard,
-      },
       {
         label: "Audit Inquiries",
         href: "/dashboard/inquiries",
         icon: Inbox,
-        badge: "6 New",
-        badgeColor: "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30",
       },
     ],
   },
   {
-    title: "Content Management",
+    title: "Content",
     items: [
       {
         label: "Our Clients",
         href: "/dashboard/clients",
         icon: Building2,
-        badge: "12",
-        badgeColor: "bg-slate-800 text-slate-300",
       },
       {
         label: "News & Events",
         href: "/dashboard/news-events",
         icon: Calendar,
-        badge: "3",
-        badgeColor: "bg-slate-800 text-slate-300",
       },
       {
-        label: "Downloads Library",
+        label: "Downloads",
         href: "/dashboard/downloads",
         icon: FileDown,
-        badge: "11",
-        badgeColor: "bg-slate-800 text-slate-300",
       },
       {
         label: "Technical Blog",
         href: "/dashboard/blog",
         icon: BookOpen,
-        badge: "6",
-        badgeColor: "bg-slate-800 text-slate-300",
       },
       {
         label: "Photo Gallery",
         href: "/dashboard/gallery",
         icon: ImageIcon,
-        badge: "18",
-        badgeColor: "bg-slate-800 text-slate-300",
-      },
-    ],
-  },
-  {
-    title: "System Administration",
-    items: [
-      {
-        label: "Portal Settings",
-        href: "/dashboard/settings",
-        icon: Settings,
       },
     ],
   },
@@ -117,193 +83,149 @@ export default function AdminSidebar({
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
-  const isActive = (href: string) => {
-    if (href === "/dashboard") {
-      return pathname === "/dashboard" || pathname === "/admin/dashboard";
-    }
-    return pathname.startsWith(href);
-  };
+  const isActive = (href: string) => pathname.startsWith(href);
 
   const sidebarContent = (
-    <div className="flex h-full flex-col justify-between bg-slate-900 border-r border-white/10 text-slate-300 select-none">
-      {/* Top Section: Logo & Toggle */}
-      <div>
-        {/* Brand Header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-white/10">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2.5 overflow-hidden focus-visible:outline-none"
-            onClick={onMobileClose}
-          >
-            <div className="rounded-xl bg-white p-1.5 shrink-0 shadow-sm">
-              <Image
-                src="/athul-logo.png"
-                alt="Athul Energy"
-                width={120}
-                height={35}
-                className="h-6 w-auto object-contain"
-                priority
-              />
+    <div
+      className={`flex h-full flex-col bg-white border-r border-slate-200 select-none transition-all duration-300 ${
+        collapsed ? "w-[70px]" : "w-64"
+      }`}
+    >
+      {/* ── Logo bar ── */}
+      <div className="flex h-16 shrink-0 items-center justify-between px-4 border-b border-slate-100">
+        <Link
+          href="/dashboard"
+          onClick={onMobileClose}
+          className="flex items-center gap-2.5 overflow-hidden focus-visible:outline-none group"
+        >
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#053824] shadow-sm">
+            <Zap className="h-4.5 w-4.5 text-emerald-300" strokeWidth={2.2} />
+          </div>
+          {!collapsed && (
+            <div className="min-w-0 leading-tight">
+              <span className="block text-[12px] font-extrabold text-slate-900 tracking-tight truncate">
+                Athul Energy
+              </span>
+              <span className="block text-[10px] font-semibold text-emerald-700 truncate">
+                Admin Portal
+              </span>
             </div>
-            {!collapsed && (
-              <div className="min-w-0">
-                <span className="block text-[11px] font-extrabold uppercase tracking-wider text-emerald-400 truncate">
-                  Admin Command
-                </span>
-                <span className="block text-[9.5px] font-medium text-slate-400 truncate">
-                  BEE AEA-0275 Portal
-                </span>
-              </div>
-            )}
-          </Link>
+          )}
+        </Link>
 
-          {/* Desktop Collapse Toggle */}
+        {/* Desktop collapse toggle */}
+        <button
+          type="button"
+          onClick={() => setCollapsed(!collapsed)}
+          className="hidden lg:flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors cursor-pointer"
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {collapsed ? (
+            <ChevronRight className="h-3.5 w-3.5" />
+          ) : (
+            <ChevronLeft className="h-3.5 w-3.5" />
+          )}
+        </button>
+
+        {/* Mobile close */}
+        {onMobileClose && (
           <button
             type="button"
-            onClick={() => setCollapsed(!collapsed)}
-            className="hidden lg:flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            onClick={onMobileClose}
+            className="lg:hidden flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"
           >
-            {collapsed ? (
-              <ChevronRight className="h-4 w-4" />
-            ) : (
-              <ChevronLeft className="h-4 w-4" />
-            )}
+            <X className="h-4.5 w-4.5" />
           </button>
-
-          {/* Mobile Close Button */}
-          {onMobileClose && (
-            <button
-              type="button"
-              onClick={onMobileClose}
-              className="lg:hidden flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
-              title="Close menu"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          )}
-        </div>
-
-        {/* Quick Public Site Link (when expanded) */}
-        {!collapsed && (
-          <div className="p-3">
-            <Link
-              href="/"
-              target="_blank"
-              className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2 text-xs text-slate-400 hover:text-emerald-300 hover:bg-white/5 transition-colors"
-            >
-              <span className="flex items-center gap-2 font-medium">
-                <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
-                Live Public Website
-              </span>
-              <ExternalLink className="h-3 w-3 opacity-60" />
-            </Link>
-          </div>
         )}
-
-        {/* Navigation Sections */}
-        <nav aria-label="Admin Navigation" className="px-2.5 py-2 space-y-5 overflow-y-auto max-h-[calc(100vh-14rem)]">
-          {NAV_SECTIONS.map((section, sIdx) => (
-            <div key={sIdx}>
-              {!collapsed && (
-                <h2 className="px-3 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500 mb-1.5">
-                  {section.title}
-                </h2>
-              )}
-
-              <ul className="space-y-1">
-                {section.items.map((item) => {
-                  const Icon = item.icon;
-                  const active = isActive(item.href);
-
-                  return (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        onClick={onMobileClose}
-                        title={collapsed ? item.label : undefined}
-                        className={`group relative flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-semibold transition-all duration-200 ${
-                          active
-                            ? "bg-emerald-500/15 text-emerald-300 font-bold shadow-xs border-l-4 border-emerald-400"
-                            : "text-slate-400 hover:text-white hover:bg-white/5"
-                        } ${collapsed ? "justify-center px-2" : ""}`}
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <Icon
-                            className={`h-4 w-4 shrink-0 transition-colors ${
-                              active
-                                ? "text-emerald-400"
-                                : "text-slate-400 group-hover:text-white"
-                            }`}
-                          />
-                          {!collapsed && (
-                            <span className="truncate">{item.label}</span>
-                          )}
-                        </div>
-
-                        {!collapsed && item.badge && (
-                          <span
-                            className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                              item.badgeColor || "bg-slate-800 text-slate-300"
-                            }`}
-                          >
-                            {item.badge}
-                          </span>
-                        )}
-
-                        {/* Collapsed Active Indicator Dot */}
-                        {collapsed && active && (
-                          <span className="absolute right-1.5 top-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-        </nav>
       </div>
 
-      {/* Bottom Section: Auditor Profile & Logout */}
-      <div className="p-3 border-t border-white/10 bg-slate-950/40">
-        {!collapsed ? (
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-3 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#053824] border border-emerald-500/40 text-emerald-300 font-bold text-xs shadow-xs">
-                SA
-              </div>
-              <div className="min-w-0">
-                <span className="block truncate text-xs font-bold text-white">
-                  Er. Santhosh A.
-                </span>
-                <span className="block truncate text-[10px] text-emerald-400/90 font-medium">
-                  Lead Auditor · AEA-0275
-                </span>
-              </div>
-            </div>
+      {/* ── Navigation ── */}
+      <nav
+        aria-label="Admin navigation"
+        className="flex-1 overflow-y-auto overscroll-contain px-3 py-4 space-y-6 scrollbar-hide"
+        style={{ scrollbarWidth: "none" }}
+      >
+        {NAV_SECTIONS.map((section) => (
+          <div key={section.title}>
+            {!collapsed && (
+              <p className="mb-2 px-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+                {section.title}
+              </p>
+            )}
+            <ul className="space-y-0.5">
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={onMobileClose}
+                      title={collapsed ? item.label : undefined}
+                      className={`group relative flex items-center rounded-xl transition-all duration-150 ${
+                        collapsed
+                          ? "h-10 w-10 mx-auto justify-center"
+                          : "gap-3 px-3 py-2.5"
+                      } ${
+                        active
+                          ? "bg-emerald-50 text-emerald-800"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      }`}
+                    >
+                      {/* Icon */}
+                      <span
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors ${
+                          active
+                            ? "bg-emerald-600 text-white shadow-sm shadow-emerald-200"
+                            : "bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700"
+                        }`}
+                      >
+                        <Icon className="h-4 w-4" strokeWidth={active ? 2.2 : 1.8} />
+                      </span>
 
-            <Link
-              href="/login"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
-              title="Sign out of portal"
-            >
-              <LogOut className="h-4 w-4" />
-            </Link>
+                      {/* Label (expanded) */}
+                      {!collapsed && (
+                        <span
+                          className={`truncate text-[13px] font-semibold ${
+                            active ? "text-emerald-800" : "text-slate-700 group-hover:text-slate-900"
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      )}
+
+                      {/* Active indicator dot (collapsed) */}
+                      {collapsed && active && (
+                        <span className="absolute -right-0.5 top-1/2 -translate-y-1/2 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
+        ))}
+      </nav>
+
+      {/* ── Bottom Section: Logout Only ── */}
+      <div className="shrink-0 border-t border-slate-100 p-3">
+        {!collapsed ? (
+          <Link
+            href="/admin/login"
+            className="group flex items-center gap-2.5 w-full rounded-xl px-3 py-2.5 text-xs font-bold text-slate-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+            title="Logout of portal"
+          >
+            <LogOut className="h-4 w-4 shrink-0 text-slate-400 group-hover:text-red-600 transition-colors" />
+            <span>Logout</span>
+          </Link>
         ) : (
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#053824] border border-emerald-500/40 text-emerald-300 font-bold text-xs shadow-xs">
-              SA
-            </div>
-            <Link
-              href="/login"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
-              title="Sign out"
-            >
-              <LogOut className="h-4 w-4" />
-            </Link>
-          </div>
+          <Link
+            href="/admin/login"
+            className="group flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors mx-auto"
+            title="Logout"
+          >
+            <LogOut className="h-4 w-4" />
+          </Link>
         )}
       </div>
     </div>
@@ -311,26 +233,23 @@ export default function AdminSidebar({
 
   return (
     <>
-      {/* Desktop Sticky Sidebar */}
+      {/* Desktop sticky sidebar */}
       <aside
-        className={`hidden lg:block shrink-0 h-screen sticky top-0 transition-all duration-300 z-30 ${
-          collapsed ? "w-20" : "w-64"
+        className={`hidden lg:block shrink-0 h-screen sticky top-0 z-30 transition-all duration-300 ${
+          collapsed ? "w-[70px]" : "w-64"
         }`}
       >
         {sidebarContent}
       </aside>
 
-      {/* Mobile Slide-over Drawer */}
+      {/* Mobile slide-over drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop Blur Overlay */}
           <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity animate-in fade-in"
+            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm animate-in fade-in"
             onClick={onMobileClose}
           />
-
-          {/* Drawer Panel */}
-          <div className="fixed inset-y-0 left-0 w-72 max-w-[85vw] shadow-2xl transition-transform animate-in slide-in-from-left">
+          <div className="fixed inset-y-0 left-0 w-64 shadow-2xl animate-in slide-in-from-left duration-200">
             {sidebarContent}
           </div>
         </div>

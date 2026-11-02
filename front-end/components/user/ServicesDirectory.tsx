@@ -148,19 +148,32 @@ function ServiceVisualEmblem({
 
 export default function ServicesDirectory() {
   const searchParams = useSearchParams();
-  const initialCat = (searchParams.get("cat") as ServiceCategoryId) || "energy-audits";
+  const urlCat = searchParams.get("cat") as ServiceCategoryId | null;
+  const validUrlCat =
+    urlCat &&
+    [
+      "energy-audits",
+      "safety-audits",
+      "surveys-thermography",
+      "compliance-studies",
+      "training",
+    ].includes(urlCat)
+      ? urlCat
+      : null;
 
-  const [selectedCategory, setSelectedCategory] = useState<ServiceCategoryId | "all">(initialCat);
+  const [overrideCat, setOverrideCat] = useState<ServiceCategoryId | "all" | null>(null);
+  const [prevUrlCat, setPrevUrlCat] = useState(validUrlCat);
+
+  if (validUrlCat !== prevUrlCat) {
+    setPrevUrlCat(validUrlCat);
+    setOverrideCat(null);
+  }
+
+  const selectedCategory = overrideCat ?? validUrlCat ?? "energy-audits";
+  const setSelectedCategory = (cat: ServiceCategoryId | "all") => setOverrideCat(cat);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileCatOpen, setMobileCatOpen] = useState(false);
-
-  // Sync category state from URL query
-  useEffect(() => {
-    const cat = searchParams.get("cat") as ServiceCategoryId | null;
-    if (cat && ["energy-audits", "safety-audits", "surveys-thermography", "compliance-studies", "training"].includes(cat)) {
-      setSelectedCategory(cat);
-    }
-  }, [searchParams]);
 
   // Compute category counts
   const categoryCounts = useMemo(() => {

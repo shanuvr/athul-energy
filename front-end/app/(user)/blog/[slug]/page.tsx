@@ -280,7 +280,7 @@ async function BlogPostContent({ params }: Props) {
               </div>
 
               {/* Formatted Article Body */}
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-2xs prose prose-slate max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-3 prose-h3:text-base sm:prose-h3:text-lg prose-h3:mt-6 prose-p:text-sm prose-p:leading-relaxed prose-p:text-slate-600 prose-li:text-sm prose-li:text-slate-600 prose-table:text-xs">
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-2xs blog-article-content max-w-none">
                 {/* Parse Markdown content sections */}
                 <div
                   dangerouslySetInnerHTML={{
