@@ -83,6 +83,10 @@ DirectoryIndex index.html index.htm
   RewriteEngine On
   RewriteBase /
 
+  # Pass API and Media requests directly to Passenger Node.js
+  RewriteRule ^api - [L]
+  RewriteRule ^media - [L]
+
   # Redirect HTTP to HTTPS
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

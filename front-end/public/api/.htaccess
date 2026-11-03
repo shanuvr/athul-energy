@@ -1,0 +1,6 @@
+PassengerAppRoot "/home/newathulenergy/athul-backend"
+PassengerBaseURI "/api"
+PassengerNodejs "/home/newathulenergy/nodevenv/athul-backend/22/bin/node"
+PassengerAppType node
+PassengerStartupFile server.js
+

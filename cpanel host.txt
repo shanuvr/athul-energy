@@ -1,0 +1,199 @@
+================================================================================
+ATHUL ENERGY CONSULTANTS - CPANEL PRODUCTION HOSTING & UPDATE GUIDE
+================================================================================
+Domain:        https://new.athulenergy.com
+Frontend Path: /home/newathulenergy/public_html
+Backend Path:  /home/newathulenergy/athul-backend
+Node.js URL:   https://new.athulenergy.com/api
+Database Name: newathulenergy_athul_energy_db
+Database User: newathulenergy_dbadmin
+
+================================================================================
+PART 1: HOW TO UPDATE THE FRONTEND (NEXT.JS)
+================================================================================
+Use this workflow whenever you change UI components, text, pages, or styles.
+
+STEP 1.1: Build the static frontend locally
+--------------------------------------------------------------------------------
+Open a terminal in your project root and run:
+   cd front-end
+   npm run build
+   cd ..
+
+(This compiles and exports your Next.js application into the "front-end/out" directory).
+
+STEP 1.2: Generate the upload zip
+--------------------------------------------------------------------------------
+Run the helper PowerShell script located in the scratch directory:
+   powershell -ExecutionPolicy Bypass -File .\scratch\zip_frontend.ps1
+
+This automatically generates:
+   frontend-public_html.zip (inside your root directory)
+
+STEP 1.3: Upload and deploy in cPanel
+--------------------------------------------------------------------------------
+1. Log into your cPanel (https://new.athulenergy.com:2083).
+2. Open "File Manager" and double-click into "public_html".
+   *** CRITICAL: NEVER DELETE THE "api" FOLDER INSIDE public_html ***
+3. Click "Upload" in the top cPanel toolbar.
+4. Drag and drop "frontend-public_html.zip".
+5. Back in File Manager, click "Reload".
+6. Right-click "frontend-public_html.zip" and choose "Extract".
+   Confirm the target folder is "/public_html".
+7. Click "Extract File(s)", then close the popup.
+8. Delete the "frontend-public_html.zip" from public_html to save server space.
+9. Verify that public_html/.htaccess has the Passenger bypass rules (see PART 4).
+
+Your frontend changes are immediately live! Hard-refresh your browser (Ctrl + F5).
+
+
+================================================================================
+PART 2: HOW TO UPDATE THE BACKEND (EXPRESS / SEQUELIZE)
+================================================================================
+Use this workflow whenever you modify backend routes, controllers, or database models.
+
+STEP 2.1: Generate the backend zip
+--------------------------------------------------------------------------------
+Run the helper PowerShell script in your project root:
+   powershell -ExecutionPolicy Bypass -File .\scratch\zip_backend.ps1
+
+This creates:
+   athul-backend-deploy.zip (clean package without node_modules or heavy uploads)
+
+STEP 2.2: Upload and deploy to cPanel
+--------------------------------------------------------------------------------
+1. Open cPanel "File Manager" and double-click into the "athul-backend" folder.
+   *** CRITICAL: NEVER DELETE YOUR EXISTING .env FILE OR media/ FOLDER ***
+2. Click "Upload" and upload "athul-backend-deploy.zip".
+3. Return to File Manager, right-click "athul-backend-deploy.zip", and choose "Extract".
+   Target: "/athul-backend".
+4. Delete "athul-backend-deploy.zip".
+
+STEP 2.3: Restart the Node.js application
+--------------------------------------------------------------------------------
+1. In cPanel Home, search for and open "Setup Node.js App".
+2. Next to "new.athulenergy.com/api", click "RESTART".
+   *(NOTE: Only if you added brand new npm packages to package.json, scroll down
+   and click "Run NPM Install" first before clicking RESTART).*
+
+Verify the backend by opening:
+   https://new.athulenergy.com/api/health
+It should return: {"status":"healthy", ...}
+
+
+================================================================================
+PART 3: MEDIA STORAGE & STATIC SERVING (UPLOADS & IMAGES)
+================================================================================
+When photos or PDFs are uploaded in the admin dashboard, they are saved in:
+   /home/newathulenergy/athul-backend/media
+
+To allow Apache to serve them directly at lightning speed through:
+   https://new.athulenergy.com/media/...
+
+Run this ONE-TIME symlink command in cPanel Terminal (or cPanel Cron Jobs):
+   ln -s /home/newathulenergy/athul-backend/media /home/newathulenergy/public_html/media
+
+This ensures Apache serves all gallery images, blog covers, and downloadable
+PDFs instantly without loading the Node.js engine for static assets.
+
+
+================================================================================
+PART 4: DISASTER RECOVERY & CONFIGURATION REFERENCE
+================================================================================
+
+A) WHAT IF https://new.athulenergy.com/api/health SHOWS 404?
+--------------------------------------------------------------------------------
+This means the Passenger bridge file was accidentally removed during a frontend
+cleanup. Recreate it in 30 seconds:
+
+1. Inside "public_html", check if the folder "api" exists. If not, create it:
+   Folder name: api
+2. Inside "public_html/api/", create a file named: .htaccess
+3. Put these exact 5 lines into "public_html/api/.htaccess":
+   PassengerAppRoot "/home/newathulenergy/athul-backend"
+   PassengerBaseURI "/api"
+   PassengerNodejs "/home/newathulenergy/nodevenv/athul-backend/22/bin/node"
+   PassengerAppType node
+   PassengerStartupFile server.js
+4. Save the file, go to "Setup Node.js App", and click "RESTART".
+
+
+B) WHAT SHOULD BE IN "public_html/.htaccess" (ROOT HTACCESS)?
+--------------------------------------------------------------------------------
+The main .htaccess in public_html MUST contain the following lines right below
+"RewriteBase /" so Apache allows Passenger to handle /api:
+
+   # Pass API and Media requests directly to Passenger Node.js
+   RewriteRule ^api - [L]
+   RewriteRule ^media - [L]
+
+
+C) BACKEND .env TEMPLATE REFERENCE
+--------------------------------------------------------------------------------
+Located at: /home/newathulenergy/athul-backend/.env
+
+   PORT=5000
+   NODE_ENV=production
+   CLIENT_URL=https://new.athulenergy.com
+
+   # MySQL Database Connection
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_NAME=newathulenergy_athul_energy_db
+   DB_USER=newathulenergy_dbadmin
+   DB_PASSWORD=YOUR_CPANEL_DATABASE_PASSWORD
+
+   # JWT Security Keys
+   JWT_SECRET=athul_energy_prod_jwt_secret_2026_x89q2
+   JWT_ACCESS_SECRET=athul_energy_prod_jwt_secret_2026_x89q2
+   JWT_REFRESH_SECRET=athul_energy_prod_refresh_secret_2026_v91m4
+   JWT_ACCESS_EXPIRES_IN=15m
+   JWT_REFRESH_EXPIRES_IN=7d
+
+   # Initial Superadmin (Seeded on first startup)
+   ADMIN_EMAIL=admin@athulenergy.com
+   ADMIN_PASSWORD=athul@2026
+
+
+D) IMPORTANT ADMIN ACCESS
+--------------------------------------------------------------------------------
+Administrative Portal: https://new.athulenergy.com/admin
+Default Login Email:   admin@athulenergy.com
+Default Password:      athul@2026
+
+
+================================================================================
+PART 5: HOW TO SWITCH FROM STAGING (new.) TO MAIN DOMAIN (athulenergy.com)
+================================================================================
+When the client approves the staging site and is ready to switch to the primary
+domain (athulenergy.com), the transition is smooth because all code is already
+built for athulenergy.com:
+
+1. FRONTEND:
+   - All canonical URLs, sitemaps, robots.txt, and metadataBase were ALREADY
+     pre-configured for "https://www.athulenergy.com".
+   - The frontend API calls use relative paths ("/api"), which automatically
+     adapt to whichever domain is loaded.
+   - Simply upload "frontend-public_html.zip" into the main domain's document
+     root (usually public_html for the primary domain in cPanel).
+
+2. BACKEND CPANEL NODE.JS APP:
+   - In cPanel "Setup Node.js App", edit the application:
+     Change "Application URL" dropdown from "new.athulenergy.com" to "athulenergy.com"
+     Keep URI as "api".
+     Click SAVE, then click RESTART.
+
+3. BACKEND .env:
+   - In "athul-backend/.env", update line 4:
+     CLIENT_URL=https://www.athulenergy.com
+   - The server.js CORS already has both "https://athulenergy.com" and
+     "https://new.athulenergy.com" pre-whitelisted, so no code change is needed.
+
+4. RE-RUN MEDIA SYMLINK (IF NEEDED):
+   - In cPanel Terminal, link the media directory for the primary domain:
+     ln -s /home/newathulenergy/athul-backend/media /home/newathulenergy/public_html/media
+
+That's it! Your primary website will be 100% live with all SEO, database,
+and dashboard features operational.
+================================================================================
+
