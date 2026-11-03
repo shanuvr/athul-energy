@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Phone,
+  Award,
+  GraduationCap,
+  BookOpen,
+  Users,
+  Building2,
+} from "lucide-react";
 import {
   getTeamMemberById,
   type TeamMember,
@@ -15,6 +24,7 @@ import {
   ABOUT_TIMELINE,
   ABOUT_VALUES,
   ABOUT_VISION_MISSION,
+  ABOUT_OUTREACH,
 } from "@/lib/about-data";
 
 export const metadata: Metadata = {
@@ -430,6 +440,170 @@ export default function AboutPage() {
                 <ArrowUpRight className="hidden h-4 w-4 text-slate-400 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-700 sm:block" />
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Academic Partnerships, Social Outreach & Energy Literacy */}
+      <section className="border-b border-slate-200/90 bg-white py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-2 text-[10.5px] font-bold uppercase tracking-[0.2em] text-emerald-700">
+              <Award className="h-4 w-4 text-emerald-600" />
+              <span>Institutional Excellence &amp; Outreach</span>
+            </div>
+            <h2 className="mt-3 text-balance font-display text-[2rem] font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-[2.5rem]">
+              Academic Partnerships, Social Initiatives &amp; Energy Mentorship
+            </h2>
+            <p className="mt-3 text-pretty text-[14px] leading-relaxed text-slate-600 sm:text-base">
+              Beyond industrial statutory audits, Athul Energy Consultants actively partners with leading universities, engineering faculties, and national agencies to cultivate energy conservation ethics, practical engineering literacy, and field training.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-12 lg:gap-8 items-stretch">
+            {/* Left Featured Award Card (5 cols) */}
+            <div className="lg:col-span-5 flex flex-col justify-between overflow-hidden rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-[#002425] via-[#01352e] to-[#001d1c] p-7 sm:p-9 text-white shadow-xl shadow-emerald-950/15 relative">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-emerald-500/20 blur-3xl"
+              />
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-400/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-300 backdrop-blur-md">
+                  <Award className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Govt. Award of Excellence</span>
+                </div>
+
+                <h3 className="mt-6 font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                  {ABOUT_OUTREACH.award.title}
+                </h3>
+                <p className="mt-2 text-xs sm:text-sm font-semibold text-emerald-300">
+                  {ABOUT_OUTREACH.award.body}
+                </p>
+
+                <p className="mt-4 text-[13px] leading-relaxed text-emerald-100/80">
+                  {ABOUT_OUTREACH.award.description}
+                </p>
+              </div>
+
+              <div className="relative z-10 mt-8 pt-6 border-t border-emerald-500/25 flex items-center justify-between">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400/90">
+                  State Designated Agency (EMC)
+                </span>
+                <span className="font-mono text-xs font-bold text-white bg-white/10 px-2.5 py-1 rounded-md">
+                  Year 2020
+                </span>
+              </div>
+            </div>
+
+            {/* Right Grid of 4 Initiatives (7 cols) */}
+            <div className="lg:col-span-7 grid gap-5 sm:grid-cols-2">
+              {/* Card 1: 19 College MOUs */}
+              <div className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/70 p-6 transition-all duration-200 hover:border-emerald-600/30 hover:bg-white hover:shadow-md">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100/80 text-emerald-800">
+                      <GraduationCap className="h-5 w-5" />
+                    </span>
+                    <span className="font-display text-2xl font-black tracking-tight text-emerald-700">
+                      19
+                    </span>
+                  </div>
+                  <h4 className="mt-4 font-display text-base font-bold text-slate-900">
+                    College MOUs &amp; Awareness
+                  </h4>
+                  <div className="mt-2 flex items-center gap-2 text-[11px] font-bold text-emerald-800">
+                    <span className="rounded bg-emerald-100/70 px-2 py-0.5">10 Engineering</span>
+                    <span className="rounded bg-emerald-100/70 px-2 py-0.5">9 Science</span>
+                  </div>
+                  <p className="mt-3 text-xs leading-relaxed text-slate-600">
+                    {ABOUT_OUTREACH.mouDetails.description}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10.5px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Social Awareness Initiative
+                </div>
+              </div>
+
+              {/* Card 2: 30-Day Add-On Course */}
+              <div className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/70 p-6 transition-all duration-200 hover:border-emerald-600/30 hover:bg-white hover:shadow-md">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-100/80 text-teal-800">
+                      <BookOpen className="h-5 w-5" />
+                    </span>
+                    <span className="font-display text-xs font-bold uppercase tracking-wider text-teal-700 bg-teal-50 border border-teal-200/60 px-2 py-1 rounded-md">
+                      30 Days
+                    </span>
+                  </div>
+                  <h4 className="mt-4 font-display text-base font-bold text-slate-900">
+                    {ABOUT_OUTREACH.courses.title}
+                  </h4>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                    {ABOUT_OUTREACH.courses.description}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10.5px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Curriculum-Integrated Course
+                </div>
+              </div>
+
+              {/* Card 3: 100+ Trainees Internship */}
+              <div className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/70 p-6 transition-all duration-200 hover:border-emerald-600/30 hover:bg-white hover:shadow-md">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100/80 text-emerald-800">
+                      <Users className="h-5 w-5" />
+                    </span>
+                    <span className="font-display text-xl font-black tracking-tight text-emerald-700">
+                      100+
+                    </span>
+                  </div>
+                  <h4 className="mt-4 font-display text-base font-bold text-slate-900">
+                    {ABOUT_OUTREACH.internship.title}
+                  </h4>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                    {ABOUT_OUTREACH.internship.description}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10.5px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Hands-On Plant Field Audits
+                </div>
+              </div>
+
+              {/* Card 4: Resource Persons for Govt Bodies */}
+              <div className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-slate-50/70 p-6 transition-all duration-200 hover:border-emerald-600/30 hover:bg-white hover:shadow-md">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100/80 text-sky-800">
+                      <Building2 className="h-5 w-5" />
+                    </span>
+                    <span className="font-display text-xs font-bold uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200/60 px-2 py-1 rounded-md">
+                      Official
+                    </span>
+                  </div>
+                  <h4 className="mt-4 font-display text-base font-bold text-slate-900">
+                    Empaneled Resource Persons
+                  </h4>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                    Senior Athul engineers serve as official faculty and resource persons conducting industrial, academic, and societal training workshops.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {ABOUT_OUTREACH.resourcePersons.map((rp) => (
+                      <span
+                        key={rp.name}
+                        title={rp.fullName}
+                        className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-bold text-slate-800 shadow-2xs"
+                      >
+                        {rp.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10.5px] font-semibold text-slate-500 uppercase tracking-wider">
+                  Govt. &amp; Industry Standing
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

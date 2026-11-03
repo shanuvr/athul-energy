@@ -20,11 +20,42 @@ export interface AboutDiscipline {
   href: string;
 }
 
+export interface OutreachPartner {
+  name: string;
+  fullName: string;
+}
+
+export interface AboutOutreach {
+  award: {
+    title: string;
+    body: string;
+    year: string;
+    description: string;
+  };
+  mouDetails: {
+    totalColleges: number;
+    engineeringColleges: number;
+    scienceColleges: number;
+    description: string;
+  };
+  courses: {
+    duration: string;
+    title: string;
+    description: string;
+  };
+  internship: {
+    traineesCount: string;
+    title: string;
+    description: string;
+  };
+  resourcePersons: OutreachPartner[];
+}
+
 export const ABOUT_PROOF_POINTS: AboutProofPoint[] = [
   { value: "2008", label: "Established in Thrissur" },
   { value: "1,000+", label: "Audits delivered" },
-  { value: "30", label: "Audit disciplines" },
-  { value: "15+", label: "Field specialists" },
+  { value: "19", label: "College MOUs (10 Engg + 9 Science)" },
+  { value: "100+", label: "Students trained in internship" },
 ];
 
 export const ABOUT_STORY = {
@@ -92,18 +123,55 @@ export const ABOUT_TIMELINE: AboutTimelineItem[] = [
       "BEE Accredited Energy Auditor status (AEA-0275 / EmAEA 091) and EMC Kerala empanelment follow.",
   },
   {
-    year: "Expansion",
-    title: "Multi-state empanelment",
+    year: "2020",
+    title: "EMC Certificate of Excellence",
     description:
-      "GEDA and MEDA approvals extend the practice across Gujarat, Maharashtra and southern industrial corridors.",
+      "Awarded the prestigious Certificate of Excellence in the area of Energy Auditing by Energy Management Centre (EMC), Govt. of Kerala.",
   },
   {
     year: "Today",
-    title: "30 disciplines, one team",
+    title: "Multi-state reach, 30 disciplines",
     description:
-      "15+ specialists deliver 1,000+ audits across energy, safety, thermography, green building and training.",
+      "GEDA, MEDA empanelments, 19 College MOUs, and 1,000+ audits delivered across energy, safety, power quality, and NAAC green audits.",
   },
 ];
+
+export const ABOUT_OUTREACH: AboutOutreach = {
+  award: {
+    title: "Certificate of Excellence (2020)",
+    body: "Energy Management Centre (EMC), Govt. of Kerala",
+    year: "2020",
+    description:
+      "Conferred the prestigious Certificate of Excellence in Energy Auditing by the Energy Management Centre, Kerala, recognizing exceptional field rigor, accurate thermal/electrical reporting, and measurable industrial energy conservation.",
+  },
+  mouDetails: {
+    totalColleges: 19,
+    engineeringColleges: 10,
+    scienceColleges: 9,
+    description:
+      "Signed formal institutional MOUs with 10 Engineering and 9 Science Colleges across Kerala as a social initiative to build energy conservation awareness, technical literacy, and sustainability ethics among students.",
+  },
+  courses: {
+    duration: "30-Day Add-On Course",
+    title: "Energy Conservation & Practical Auditing",
+    description:
+      "Designed and delivered intensive 30-day curriculum-integrated courses for college students covering real-world energy audits, electrical safety norms, and NABL test instrumentation.",
+  },
+  internship: {
+    traineesCount: "100+ Students Trained",
+    title: "Athul Internship Training Programme",
+    description:
+      "Mentored more than 100 budding engineering and science scholars through hands-on industrial internship programs, including live plant field measurements, thermal imaging, and report preparation.",
+  },
+  resourcePersons: [
+    { name: "PCRA", fullName: "Petroleum Conservation Research Association (Govt. of India)" },
+    { name: "EMC", fullName: "Energy Management Centre (Govt. of Kerala)" },
+    { name: "SEEM", fullName: "Society of Energy Engineers and Managers" },
+    { name: "ECS", fullName: "Energy Conservation Society" },
+    { name: "ANERT", fullName: "Agency for New and Renewable Energy Research and Technology" },
+    { name: "KSPC", fullName: "Kerala State Productivity Council" },
+  ],
+};
 
 export const ABOUT_DISCIPLINES: AboutDiscipline[] = [
   {

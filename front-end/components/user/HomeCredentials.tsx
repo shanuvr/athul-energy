@@ -2,16 +2,16 @@ import Link from "next/link";
 
 const credentials = [
   {
-    label: "Statutory empanelment",
-    title: "BEE, EMC Kerala, GEDA and MEDA",
+    label: "Statutory recognition & award",
+    title: "BEE, EMC Excellence Award (2020) & SDAs",
     description:
-      "Energy audit and related technical work delivered under the empanelment and accreditation requirements of the relevant statutory bodies.",
+      "Won the Certificate of Excellence from Energy Management Centre (EMC) Kerala in 2020. Empanelled with BEE, GEDA, and MEDA, with senior engineers acting as official resource persons for PCRA, EMC, ANERT, and SEEM.",
   },
   {
     label: "Field experience since 2008",
     title: "Industrial, commercial and institutional sites",
     description:
-      "A Thrissur-based practice serving organisations that need practical, site-specific audit work.",
+      "A Thrissur-based practice delivering over 1,000+ verified plant audits and holding MOUs with 19 higher education institutions across Kerala.",
   },
   {
     label: "Engineering depth",
@@ -29,8 +29,9 @@ const credentials = [
 
 const proofPoints = [
   { value: "2008", label: "Established in Thrissur", mobileLabel: "Since" },
-  { value: "7", label: "Audit and engineering services", mobileLabel: "Services" },
-  { value: "4", label: "Statutory empanelments", mobileLabel: "Empanelments" },
+  { value: "1,000+", label: "Audits delivered", mobileLabel: "Audits" },
+  { value: "19", label: "College MOUs signed", mobileLabel: "MOUs" },
+  { value: "100+", label: "Interns trained", mobileLabel: "Interns" },
 ];
 
 export default function HomeCredentials() {
@@ -181,7 +182,7 @@ export default function HomeCredentials() {
           </div>
         </div>
 
-        <dl className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:mt-10 lg:mt-14">
+        <dl className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:mt-10 lg:mt-14">
           {proofPoints.map((point) => (
             <div
               key={point.label}
