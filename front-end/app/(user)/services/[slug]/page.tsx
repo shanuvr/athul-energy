@@ -438,7 +438,7 @@ async function ServiceDetailContent({ params }: Props) {
 
           {/* Right Column: Sticky Consultation Box */}
           <div className="lg:col-span-1">
-            <div className="sticky top-20 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-md space-y-5">
+            <div className="sticky top-24 lg:top-36 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-md space-y-5">
               <div>
                 <span className="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
                   Accredited Service

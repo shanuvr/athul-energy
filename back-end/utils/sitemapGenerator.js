@@ -184,3 +184,4 @@ export async function syncSitemapFiles(siteUrl = BASE_URL) {
     return null;
   }
 }
+

@@ -405,7 +405,7 @@ async function BlogPostContent({ params }: Props) {
 
             {/* Right 4 Columns: Sticky Table of Contents & Consultation Box */}
             <aside className="lg:col-span-4 space-y-6">
-              <div className="sticky top-20 space-y-6">
+              <div className="sticky top-24 lg:top-36 space-y-6">
                 {/* Table of Contents */}
                 {post.tableOfContents && post.tableOfContents.length > 0 && (
                   <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-2xs">
