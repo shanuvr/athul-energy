@@ -4,6 +4,7 @@ import { Gallery } from "../model/Gallery.js";
 import { Client } from "../model/Client.js";
 import { Download } from "../model/Download.js";
 import { Blog } from "../model/Blog.js";
+import { Inquiry } from "../model/Inquiry.js";
 
 const INITIAL_CLIENTS = [
   { name: "Transformers and Electricals Kerala Ltd. (TELK)", logoUrl: "/clients/telk.webp", order: 1 },
@@ -30,6 +31,7 @@ export async function initDB() {
     await Client.sync();
     await Download.sync();
     await Blog.sync();
+    await Inquiry.sync();
 
     // 2. Check if default superadmin exists
     const defaultEmail = process.env.ADMIN_EMAIL || "admin@athulenergy.com";

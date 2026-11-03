@@ -18,6 +18,7 @@ import authRoutes from "./routes/authRoutes.js";
 import clientRoutes from "./routes/clientRoutes.js";
 import downloadRoutes from "./routes/downloadRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import inquiryRoutes from "./routes/inquiryRoutes.js";
 import { generateSitemapXml, syncSitemapFiles } from "./utils/sitemapGenerator.js";
 
 const app = express();
@@ -116,6 +117,9 @@ app.use("/downloads", downloadRoutes);
 
 app.use("/api/blog", blogRoutes);
 app.use("/blog", blogRoutes);
+
+app.use("/api/inquiries", inquiryRoutes);
+app.use("/inquiries", inquiryRoutes);
 
 // Dynamic SEO Sitemap endpoint (served directly from live database)
 const handleSitemapRequest = async (req, res) => {

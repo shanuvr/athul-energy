@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { logoutAdmin } from "@/lib/api";
+import { fetchInquiryStats } from "@/lib/inquiry-api";
 import { usePathname } from "next/navigation";
 import {
   Building2,
@@ -78,6 +79,17 @@ export default function AdminSidebar({
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [pendingInquiries, setPendingInquiries] = useState<number>(0);
+
+  useEffect(() => {
+    fetchInquiryStats()
+      .then((res) => {
+        if (res.data?.pending !== undefined) {
+          setPendingInquiries(res.data.pending);
+        }
+      })
+      .catch(() => {});
+  }, [pathname]);
 
   const isActive = (href: string) =>
     pathname.startsWith(href) ||
@@ -190,6 +202,13 @@ export default function AdminSidebar({
                           }`}
                         >
                           {item.label}
+                        </span>
+                      )}
+
+                      {/* Pending Inquiries Badge */}
+                      {item.href === "/dashboard/inquiries" && pendingInquiries > 0 && !collapsed && (
+                        <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                          {pendingInquiries}
                         </span>
                       )}
 
