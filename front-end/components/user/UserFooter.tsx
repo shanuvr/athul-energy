@@ -8,7 +8,7 @@ const companyLinks = [
   { label: "Engineering team", href: "/about/team" },
   { label: "Downloads", href: "/downloads" },
   { label: "Gallery", href: "/gallery" },
-  { label: "News & events", href: "/blog" },
+  { label: "Technical blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 

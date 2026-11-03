@@ -1,4 +1,8 @@
 node_modules
 .env
 .DS_Store
-
+startup-error.log
+media/downloads/*
+!media/downloads/.gitkeep
+media/blog/*
+!media/blog/.gitkeep

@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import { Admin } from "../model/Admin.js";
 import { Gallery } from "../model/Gallery.js";
 import { Client } from "../model/Client.js";
+import { Download } from "../model/Download.js";
+import { Blog } from "../model/Blog.js";
 
 const INITIAL_CLIENTS = [
   { name: "Transformers and Electricals Kerala Ltd. (TELK)", logoUrl: "/clients/telk.webp", order: 1 },
@@ -26,6 +28,8 @@ export async function initDB() {
     await Admin.sync({ alter: true });
     await Gallery.sync({ alter: true });
     await Client.sync({ alter: true });
+    await Download.sync({ alter: true });
+    await Blog.sync({ alter: true });
 
     // 2. Check if default superadmin exists
     const defaultEmail = process.env.ADMIN_EMAIL || "admin@athulenergy.com";

@@ -12,6 +12,8 @@ export interface AccreditationItem {
   certNumber: string;
   validThrough: string;
   scope: string;
+  /** Public path to the real certificate image - null if not available */
+  certificateImage: string | null;
 }
 
 const ACCREDITATIONS: AccreditationItem[] = [
@@ -25,6 +27,7 @@ const ACCREDITATIONS: AccreditationItem[] = [
     certNumber: "EMC/EA/2023/KL-042",
     validThrough: "2027",
     scope: "Energy Auditing & Conservation Studies in Kerala",
+    certificateImage: "/certificates/emc-certificate.jpg",
   },
   {
     id: "bee",
@@ -36,6 +39,7 @@ const ACCREDITATIONS: AccreditationItem[] = [
     certNumber: "BEE/AEA/2022/IND-108",
     validThrough: "2026",
     scope: "Accredited Energy Auditor (AEA) - Grade A",
+    certificateImage: "/certificates/bee-certificate.jpg",
   },
   {
     id: "geda",
@@ -47,6 +51,7 @@ const ACCREDITATIONS: AccreditationItem[] = [
     certNumber: "GEDA/EA/EMPANEL/2023-45",
     validThrough: "2026",
     scope: "Mandatory Energy Audit & Solar Consultancy",
+    certificateImage: "/certificates/apsc-certificate.jpg",
   },
   {
     id: "meda",
@@ -58,6 +63,7 @@ const ACCREDITATIONS: AccreditationItem[] = [
     certNumber: "MEDA/EC/EA-P/2023/88",
     validThrough: "2026",
     scope: "Class-A Energy Auditor for Industrial Sectors",
+    certificateImage: "/certificates/maharashtra-energy-development.jpg",
   },
   {
     id: "govt",
@@ -69,6 +75,7 @@ const ACCREDITATIONS: AccreditationItem[] = [
     certNumber: "GOI/MNRE/EC-AUTH/991",
     validThrough: "2028",
     scope: "Statutory Energy & Safety Audits across India",
+    certificateImage: "/certificates/india-sme-certificate.jpg",
   },
 ];
 
@@ -666,42 +673,50 @@ export default function HomeCertifications() {
                     />
                   </div>
 
-                  {/* Bottom: View Certificate Button */}
+                  {/* Bottom: View Certificate Button - opens real certificate in a new tab */}
                   <div className="pt-1">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveId(item.id);
-                        setModalCert(item);
-                      }}
-                      className={`w-full inline-flex items-center justify-center gap-1.5 rounded-full py-2 px-3 text-xs font-semibold transition-all duration-200 ${
-                        isActive
-                          ? "bg-[#0d6832] text-white hover:bg-[#0a5227] shadow-md hover:scale-[1.02] active:scale-98"
-                          : "bg-emerald-50 text-emerald-800 border border-emerald-200/90 hover:bg-emerald-100 hover:text-emerald-900"
-                      }`}
-                    >
-                      <svg
-                        className="h-3.5 w-3.5 shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        aria-hidden="true"
+                    {item.certificateImage ? (
+                      <a
+                        href={item.certificateImage}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className={`w-full inline-flex items-center justify-center gap-1.5 rounded-full py-2 px-3 text-xs font-semibold transition-all duration-200 ${
+                          isActive
+                            ? "bg-[#0d6832] text-white hover:bg-[#0a5227] shadow-md hover:scale-[1.02] active:scale-98"
+                            : "bg-emerald-50 text-emerald-800 border border-emerald-200/90 hover:bg-emerald-100 hover:text-emerald-900"
+                        }`}
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                      <span>View Certificate</span>
-                    </button>
+                        <svg
+                          className="h-3.5 w-3.5 shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          aria-hidden="true"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                          />
+                        </svg>
+                        <span>View Certificate</span>
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        disabled
+                        className="w-full inline-flex items-center justify-center gap-1.5 rounded-full py-2 px-3 text-xs font-semibold bg-slate-100 text-slate-400 cursor-not-allowed"
+                      >
+                        <span>Not Available</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               );

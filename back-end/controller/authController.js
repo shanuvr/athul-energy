@@ -104,6 +104,16 @@ export async function login(req, res, next) {
       },
     });
   } catch (error) {
+    if (
+      error.name?.startsWith("Sequelize") ||
+      error.original?.code === "ECONNREFUSED"
+    ) {
+      console.error("❌ Database connection error during login:", error.message);
+      return res.status(503).json({
+        success: false,
+        message: "Database connection failed. Please ensure MySQL is running on port 3306.",
+      });
+    }
     next(error);
   }
 }

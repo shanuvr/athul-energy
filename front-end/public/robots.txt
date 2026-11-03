@@ -1,0 +1,9 @@
+# Robots.txt for Athul Energy Consultants
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://www.athulenergy.com/sitemap.xml
+

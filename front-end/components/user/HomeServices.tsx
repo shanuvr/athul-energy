@@ -215,6 +215,8 @@ export default function HomeServices() {
                         alt=""
                         fill
                         sizes="(min-width: 640px) 64px, 50vw"
+                        priority={true}
+                        loading="eager"
                         quality={75}
                         style={{ objectPosition: service.imagePosition }}
                         className="object-cover"
@@ -337,6 +339,8 @@ export default function HomeServices() {
                           alt=""
                           fill
                           sizes="80px"
+                          priority={index === 0}
+                          loading={index === 0 ? "eager" : "lazy"}
                           quality={75}
                           style={{ objectPosition: service.imagePosition }}
                           className="object-cover transition-transform duration-500 group-hover:scale-105"

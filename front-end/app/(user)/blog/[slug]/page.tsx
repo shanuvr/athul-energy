@@ -18,11 +18,7 @@ import {
   ListOrdered,
   BookOpen,
 } from "lucide-react";
-import {
-  BLOG_POSTS,
-  getPostBySlug,
-  getRelatedPosts,
-} from "@/lib/blog-data";
+import { fetchBlogs, fetchBlogBySlug, type BlogPost } from "@/lib/blog-api";
 import BlogCard from "@/components/user/BlogCard";
 
 interface Props {
@@ -30,34 +26,56 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({
+  const posts = await fetchBlogs();
+  if (!posts || posts.length === 0) {
+    return [{ slug: "_" }];
+  }
+  return posts.map((post) => ({
     slug: post.slug,
   }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  if (slug === "_") {
+    return {
+      title: "Article Not Found | Athul Energy Consultants",
+      description: "The requested engineering insight or article could not be located.",
+    };
+  }
+  const { post } = await fetchBlogBySlug(slug);
 
   if (!post) {
     return {
-      title: "Article Not Found | Athul Energy",
+      title: "Article Not Found | Athul Energy Consultants",
+      description: "The requested engineering insight or article could not be located.",
     };
   }
 
+  const metaTitle = post.seo?.metaTitle || `${post.title} | Athul Energy Consultants`;
+  const metaDescription = post.seo?.metaDescription || post.excerpt;
+  const canonicalUrl = `https://www.athulenergy.com/blog/${post.slug}`;
+  const ogImageUrl = post.coverImage.startsWith("http")
+    ? post.coverImage
+    : `https://www.athulenergy.com${post.coverImage.startsWith("/") ? "" : "/"}${post.coverImage}`;
+
   return {
-    title: `${post.title} | Athul Energy Consultants`,
-    description: post.seo.metaDescription || post.excerpt,
-    keywords: post.seo.keywords,
+    title: metaTitle,
+    description: metaDescription,
+    keywords: post.seo?.keywords?.length ? post.seo.keywords : post.tags,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
-      title: post.title,
-      description: post.excerpt,
+      title: metaTitle,
+      description: metaDescription,
+      url: canonicalUrl,
       type: "article",
       publishedTime: post.publishedAt,
       authors: [post.author.name],
       images: [
         {
-          url: post.coverImage,
+          url: ogImageUrl,
           width: 1200,
           height: 675,
           alt: post.title,
@@ -68,9 +86,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
-      images: [post.coverImage],
+      title: metaTitle,
+      description: metaDescription,
+      images: [ogImageUrl],
     },
   };
 }
@@ -107,41 +125,82 @@ function BlogDetailSkeleton() {
 
 async function BlogPostContent({ params }: Props) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  if (slug === "_") {
+    notFound();
+  }
+  const { post, related: relatedPosts } = await fetchBlogBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = getRelatedPosts(post.slug, post.category, 2);
+  const postUrl = `https://www.athulenergy.com/blog/${post.slug}`;
+  const postImageUrl = post.coverImage.startsWith("http")
+    ? post.coverImage
+    : `https://www.athulenergy.com${post.coverImage.startsWith("/") ? "" : "/"}${post.coverImage}`;
 
-  // Structured Data (JSON-LD) for Google TechArticle schema
-  const jsonLd = {
+  // Structured Data (JSON-LD) for Google TechArticle schema + Breadcrumbs
+  const jsonLdGraph = {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    headline: post.title,
-    description: post.excerpt,
-    image: `https://www.athulenergy.com${post.coverImage}`,
-    datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
-    author: {
-      "@type": "Person",
-      name: post.author.name,
-      jobTitle: post.author.role,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Athul Energy Consultants Pvt. Ltd.",
-      url: "https://www.athulenergy.com",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://www.athulenergy.com/athul-logo.png",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": `${postUrl}#article`,
+        isPartOf: {
+          "@type": "WebPage",
+          "@id": postUrl,
+        },
+        headline: post.title,
+        description: post.excerpt,
+        image: postImageUrl,
+        datePublished: post.publishedAt,
+        dateModified: post.publishedAt,
+        inLanguage: "en-IN",
+        author: {
+          "@type": "Person",
+          name: post.author.name,
+          jobTitle: post.author.role,
+          description: post.author.bio,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Athul Energy Consultants Pvt. Ltd.",
+          url: "https://www.athulenergy.com",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://www.athulenergy.com/athul-logo.png",
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": postUrl,
+        },
       },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://www.athulenergy.com/blog/${post.slug}`,
-    },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${postUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://www.athulenergy.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Technical Blog",
+            item: "https://www.athulenergy.com/blog",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: post.title,
+            item: postUrl,
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -149,7 +208,7 @@ async function BlogPostContent({ params }: Props) {
       {/* Google SEO JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
       />
 
       <div className="min-h-screen bg-slate-50/60 pb-16">
@@ -158,45 +217,32 @@ async function BlogPostContent({ params }: Props) {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Breadcrumb Navigation */}
             <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 mb-4 overflow-x-auto whitespace-nowrap scrollbar-none py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
-              <Link href="/" className="shrink-0 hover:text-emerald-700 transition-colors">
+              <Link href="/" className="hover:text-emerald-700 transition-colors shrink-0">
                 Home
               </Link>
               <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-              <Link href="/blog" className="shrink-0 hover:text-emerald-700 transition-colors">
-                Blog
+              <Link href="/blog" className="hover:text-emerald-700 transition-colors shrink-0">
+                Technical Blog
               </Link>
               <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-              <Link
-                href={`/blog`}
-                className="shrink-0 hover:text-emerald-700 transition-colors"
-              >
-                {post.categoryLabel}
-              </Link>
-              <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-              <span className="shrink-0 font-semibold text-slate-900 truncate max-w-[200px] sm:max-w-none">
+              <span className="font-semibold text-slate-900 truncate max-w-[200px] sm:max-w-md shrink-0">
                 {post.title}
               </span>
             </nav>
 
+            {/* Article Header Metadata */}
             <div className="max-w-4xl">
               <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-0.5 text-[11px] font-bold text-emerald-800">
+                <span className="rounded-full bg-emerald-100 px-3 py-0.5 text-xs font-bold text-emerald-800">
                   {post.categoryLabel}
                 </span>
-
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500">
-                  <Calendar className="h-3 w-3 text-slate-400" />
-                  {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
+                <span className="flex items-center gap-1 text-xs text-slate-500">
+                  <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                  {post.publishedAt}
                 </span>
-
-                <span className="text-slate-300">•</span>
-
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500">
-                  <Clock className="h-3 w-3 text-slate-400" />
+                <span className="text-slate-300">·</span>
+                <span className="flex items-center gap-1 text-xs text-slate-500">
+                  <Clock className="h-3.5 w-3.5 text-slate-400" />
                   {post.readTime}
                 </span>
               </div>
@@ -281,7 +327,6 @@ async function BlogPostContent({ params }: Props) {
 
               {/* Formatted Article Body */}
               <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-2xs blog-article-content max-w-none">
-                {/* Parse Markdown content sections */}
                 <div
                   dangerouslySetInnerHTML={{
                     __html: formatArticleContent(post.content),
@@ -290,21 +335,23 @@ async function BlogPostContent({ params }: Props) {
               </div>
 
               {/* Tags Section */}
-              <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-2xs">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                  Related Engineering Tags:
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="rounded-lg bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition-colors cursor-pointer"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
+              {post.tags && post.tags.length > 0 && (
+                <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-2xs">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                    Related Engineering Tags:
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {post.tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="rounded-lg bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 transition-colors cursor-pointer"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Author Bio Card */}
               <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-2xs">
@@ -358,7 +405,6 @@ async function BlogPostContent({ params }: Props) {
 
             {/* Right 4 Columns: Sticky Table of Contents & Consultation Box */}
             <aside className="lg:col-span-4 space-y-6">
-              {/* Sticky Container */}
               <div className="sticky top-20 space-y-6">
                 {/* Table of Contents */}
                 {post.tableOfContents && post.tableOfContents.length > 0 && (
@@ -382,20 +428,23 @@ async function BlogPostContent({ params }: Props) {
                 )}
 
                 {/* Consultation & Scoping Box */}
-                <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-md space-y-4">
-                  <div>
-                    <span className="inline-block rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
-                      Empanelled Firm
+                <div className="rounded-2xl border border-emerald-200/90 bg-white p-6 shadow-2xs space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">
+                      Statutory Consultation
                     </span>
-                    <h3 className="mt-2 text-base sm:text-lg font-bold text-slate-900 leading-snug">
-                      Schedule a Facility Audit
-                    </h3>
-                    <p className="mt-1 text-xs text-slate-500 leading-relaxed">
-                      Need assistance with BEE statutory audits, electrical safety sign-offs, or power quality mitigation?
-                    </p>
                   </div>
 
-                  <div className="space-y-2 pt-1">
+                  <h3 className="text-base font-bold text-slate-900">
+                    Plan Your Statutory Audit with Athul Energy
+                  </h3>
+
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Connect directly with Er. Santhosh A. and our certified engineering auditors to assess facility compliance under EC Act 2001 or CEA Regulations.
+                  </p>
+
+                  <div className="pt-2 space-y-2">
                     <Link
                       href="/contact"
                       className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#053824] py-3 text-xs font-bold text-white shadow-2xs hover:bg-emerald-800 transition-colors"

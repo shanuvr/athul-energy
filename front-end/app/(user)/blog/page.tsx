@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, BookOpen, ShieldCheck } from "lucide-react";
+import { ChevronRight, BookOpen } from "lucide-react";
 import BlogDirectory from "@/components/user/BlogDirectory";
+import { fetchBlogs } from "@/lib/blog-api";
 
 export const metadata: Metadata = {
   title: "Engineering Insights & Energy Audit Guides | Athul Energy Consultants",
@@ -28,7 +29,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const initialPosts = await fetchBlogs();
+
   return (
     <div className="min-h-screen bg-slate-50/60 pb-16">
       {/* Hero Header Section */}
@@ -87,7 +90,7 @@ export default function BlogPage() {
 
       {/* Main Blog Directory Container */}
       <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-        <BlogDirectory />
+        <BlogDirectory initialPosts={initialPosts} />
       </div>
     </div>
   );

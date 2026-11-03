@@ -13,7 +13,8 @@ import {
   Upload,
   Trash2,
 } from "lucide-react";
-import type { BlogPost } from "@/lib/blog-data";
+import type { BlogPost } from "@/lib/blog-api";
+import { createBlogPost } from "@/lib/blog-api";
 
 const RichTextEditor = dynamic(
   () => import("@/components/admin/RichTextEditor"),
@@ -40,6 +41,7 @@ export default function CreateBlogPage() {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState("");
+  const [coverFile, setCoverFile] = useState<File | null>(null);
   const [coverFileName, setCoverFileName] = useState("");
   const [coverAlt, setCoverAlt] = useState("");
 
@@ -88,6 +90,7 @@ export default function CreateBlogPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setCoverFile(file);
       setCoverFileName(file.name);
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -103,6 +106,7 @@ export default function CreateBlogPage() {
   };
 
   const handleRemoveCover = () => {
+    setCoverFile(null);
     setCoverImage("");
     setCoverFileName("");
     if (fileInputRef.current) {
@@ -110,7 +114,7 @@ export default function CreateBlogPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title.trim()) {
@@ -125,14 +129,49 @@ export default function CreateBlogPage() {
       return;
     }
 
-    setError("");
-    setIsSubmitting(true);
-    setSuccessToast(true);
+    if (!content.trim()) {
+      setError("Article content is required.");
+      setActiveTab("content");
+      return;
+    }
 
-    // Front-end UI transition
-    setTimeout(() => {
-      router.push("/dashboard/blog");
-    }, 1000);
+    try {
+      setError("");
+      setIsSubmitting(true);
+
+      const formData = new FormData();
+      formData.append("title", title.trim());
+      formData.append("slug", slug.trim());
+      formData.append("category", category);
+      formData.append("excerpt", excerpt.trim() || title.trim());
+      formData.append("content", content.trim());
+      if (coverFile) {
+        formData.append("coverImage", coverFile);
+      } else if (coverImage) {
+        formData.append("coverImage", coverImage);
+      }
+      formData.append("metaTitle", metaTitle.trim() || `${title} | Athul Energy Consultants`);
+      formData.append("metaDescription", metaDescription.trim() || excerpt.trim());
+      formData.append("keywords", keywordsInput.trim());
+      formData.append("authorName", authorName.trim());
+      formData.append("authorRole", authorRole.trim());
+
+      await createBlogPost(formData);
+
+      setSuccessToast(true);
+      setTimeout(() => {
+        router.push("/dashboard/blog");
+      }, 1200);
+    } catch (err: any) {
+      console.error("Failed to publish blog post:", err);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Failed to publish article. Please verify database connection."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

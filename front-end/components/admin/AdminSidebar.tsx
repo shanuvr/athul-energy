@@ -49,11 +49,6 @@ const NAV_SECTIONS: NavSection[] = [
         icon: Building2,
       },
       {
-        label: "News & Events",
-        href: "/dashboard/news-events",
-        icon: Calendar,
-      },
-      {
         label: "Downloads",
         href: "/dashboard/downloads",
         icon: FileDown,

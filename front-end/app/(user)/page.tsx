@@ -6,7 +6,7 @@ import HomeTestimonials from "@/components/user/HomeTestimonials";
 import HomeDownloads from "@/components/user/HomeDownloads";
 import HomeCertifications from "@/components/user/HomeCertifications";
 import HomeClients from "@/components/user/HomeClients";
-import HomeNewsEvents from "@/components/user/HomeNewsEvents";
+import HomeRecentBlogs from "@/components/user/HomeRecentBlogs";
 import HomeCTA from "@/components/user/HomeCTA";
 
 export const metadata: Metadata = {
@@ -161,7 +161,7 @@ export default function HomePage() {
       <HomeDownloads />
       <HomeCertifications />
       <HomeClients />
-      <HomeNewsEvents />
+      <HomeRecentBlogs />
       <HomeCTA />
     </>
   );

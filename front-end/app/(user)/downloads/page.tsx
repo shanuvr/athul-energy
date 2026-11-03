@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 import DownloadsPageClient from "@/components/user/DownloadsPageClient";
 
 export const metadata: Metadata = {
@@ -23,57 +22,46 @@ export const metadata: Metadata = {
 
 export default function DownloadsPage() {
   return (
-    <div className="min-h-screen bg-slate-50/60 pb-20">
-      {/* Top Hero Section */}
-      <section className="border-b border-slate-200 bg-white py-10 sm:py-14 shadow-2xs">
+    <div className="min-h-screen bg-slate-50/50 pb-20">
+      {/* Hero Section — compact banner with greenish background */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50/80 via-green-50/50 to-white border-b border-emerald-100/60 py-4 sm:py-5">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs text-slate-500">
-            <Link href="/" className="hover:text-emerald-700 transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="h-3 w-3 text-slate-300" />
-            <span className="font-semibold text-slate-900">Downloads &amp; Knowledge Base</span>
-          </nav>
-
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full">
-                Statutory Regulatory Knowledge Base
-              </span>
+          {/* Always side-by-side: text left, image right */}
+          <div className="flex flex-row items-center justify-between gap-4">
+            {/* Left Content */}
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2.5">
+                <span className="w-1.5 h-6 sm:h-8 rounded-full bg-emerald-600 shrink-0" />
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                  Downloads
+                </h1>
+              </div>
+              <p className="mt-1.5 text-xs sm:text-sm text-slate-600 font-normal leading-relaxed pl-4">
+                Statutory documents, guidelines and government publications.
+              </p>
             </div>
 
-            <h1 className="mt-4 text-balance font-display text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
-              Technical Standards, Government Orders &amp; Reference Books
-            </h1>
-
-            <p className="mt-3 text-pretty text-sm sm:text-base leading-relaxed text-slate-600">
-              Access and download official Central &amp; State Government Gazette orders,
-              Bureau of Energy Efficiency (BEE) study books, Central Electricity Authority (CEA)
-              safety regulations, and environmental compliance standards.
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-500">
-              <span className="flex items-center gap-1.5 text-emerald-700">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
-                Verified Gazette Copies
-              </span>
-              <span className="flex items-center gap-1.5 text-slate-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
-                Official BEE Guidebooks
-              </span>
-              <span className="flex items-center gap-1.5 text-slate-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
-                CEA Safety Codes 2010
-              </span>
+            {/* Right Hero Illustration */}
+            <div className="relative shrink-0 flex items-center justify-center">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute h-28 w-28 sm:h-36 sm:w-36 rounded-full bg-emerald-100/60 blur-2xl -z-10"
+              />
+              <Image
+                src="/downloads-hero.webp"
+                alt="Downloads illustration"
+                width={180}
+                height={180}
+                priority
+                className="w-20 sm:w-28 md:w-36 h-auto object-contain select-none mix-blend-multiply"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Downloads Container */}
-      <main className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+      {/* Main Content List Container */}
+      <main className="mx-auto max-w-7xl px-4 pt-6 sm:pt-8 sm:px-6 lg:px-8">
         <DownloadsPageClient />
       </main>
     </div>

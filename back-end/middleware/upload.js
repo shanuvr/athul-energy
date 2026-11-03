@@ -76,4 +76,12 @@ export const galleryUpload = createUploader("gallery", [
   ".webp",
 ]);
 
+// Pre-configured uploader for Blog cover images (max 10MB)
+export const blogUpload = createUploader("blog", [
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".webp",
+], 10);
+
 export default galleryUpload;

@@ -16,6 +16,8 @@ import { initDB } from "./config/initDB.js";
 import galleryRoutes from "./routes/galleryRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import clientRoutes from "./routes/clientRoutes.js";
+import downloadRoutes from "./routes/downloadRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -55,11 +57,22 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 // Body Parsing Middleware
-app.use(express.json({ limit: "25mb" }));
-app.use(express.urlencoded({ extended: true, limit: "25mb" }));
+app.use(express.json({ limit: "150mb" }));
+app.use(express.urlencoded({ extended: true, limit: "150mb" }));
 
 // Static Media Folder (serves uploaded gallery photos, blog covers, PDFs, logos)
-app.use("/media", express.static(path.join(__dirname, "media")));
+app.use(
+  "/media",
+  express.static(path.join(__dirname, "media"), {
+    maxAge: "7d",
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith(".pdf")) {
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", "inline");
+      }
+    },
+  })
+);
 
 // Root & Health Check Routes
 app.get("/", (req, res) => {
@@ -97,6 +110,12 @@ app.use("/gallery", galleryRoutes);
 app.use("/api/clients", clientRoutes);
 app.use("/clients", clientRoutes);
 
+app.use("/api/downloads", downloadRoutes);
+app.use("/downloads", downloadRoutes);
+
+app.use("/api/blog", blogRoutes);
+app.use("/blog", blogRoutes);
+
 // 404 Fallback Handler
 app.use((req, res, next) => {
   res.status(404).json({
@@ -108,9 +127,18 @@ app.use((req, res, next) => {
 // Central Error Handler
 app.use((err, req, res, next) => {
   console.error("Unhandled Server Error:", err.stack || err);
-  res.status(err.status || 500).json({
+  const isDbError =
+    err.name?.startsWith("Sequelize") ||
+    err.original?.code === "ECONNREFUSED" ||
+    err.code === "ECONNREFUSED";
+  const status = isDbError ? 503 : (err.status || 500);
+  const message = isDbError
+    ? "Database service is temporarily unavailable. Please verify MySQL connection on port 3306."
+    : (err.message || "Internal Server Error");
+
+  res.status(status).json({
     success: false,
-    message: err.message || "Internal Server Error",
+    message,
   });
 });
 

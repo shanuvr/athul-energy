@@ -1,14 +1,24 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
 
-export const API_BASE_URL =
+const rawApiUrl =
   process.env.NEXT_PUBLIC_API_URL !== undefined
     ? process.env.NEXT_PUBLIC_API_URL
-    : "http://localhost:5000/api";
+    : "http://127.0.0.1:5000/api";
 
-export const MEDIA_BASE_URL =
+export const API_BASE_URL =
+  typeof window === "undefined" && rawApiUrl.startsWith("/")
+    ? `http://127.0.0.1:5000${rawApiUrl}`
+    : rawApiUrl;
+
+const rawMediaUrl =
   process.env.NEXT_PUBLIC_MEDIA_URL !== undefined
     ? process.env.NEXT_PUBLIC_MEDIA_URL
-    : "http://localhost:5000";
+    : "http://127.0.0.1:5000";
+
+export const MEDIA_BASE_URL =
+  typeof window === "undefined" && rawMediaUrl.startsWith("/")
+    ? `http://127.0.0.1:5000${rawMediaUrl}`
+    : rawMediaUrl;
 
 export const AUTH_TOKEN_KEY = "athul_admin_token";
 
@@ -158,7 +168,10 @@ export function getMediaUrl(path?: string | null): string {
   if (
     path.startsWith("/clients/") ||
     path.startsWith("/icons/") ||
-    path.startsWith("/images/")
+    path.startsWith("/images/") ||
+    path.startsWith("/services/") ||
+    path.startsWith("/certificates/") ||
+    path.startsWith("/documents/")
   ) {
     return path;
   }
