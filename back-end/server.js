@@ -18,6 +18,7 @@ import authRoutes from "./routes/authRoutes.js";
 import clientRoutes from "./routes/clientRoutes.js";
 import downloadRoutes from "./routes/downloadRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import { generateSitemapXml, syncSitemapFiles } from "./utils/sitemapGenerator.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -116,6 +117,25 @@ app.use("/downloads", downloadRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/blog", blogRoutes);
 
+// Dynamic SEO Sitemap endpoint (served directly from live database)
+const handleSitemapRequest = async (req, res) => {
+  try {
+    const host = req.headers["x-forwarded-host"] || req.headers.host;
+    const protocol = req.headers["x-forwarded-proto"] || (req.secure ? "https" : "http");
+    const siteUrl = process.env.SITE_URL || `${protocol}://${host}`;
+    const xml = await generateSitemapXml(siteUrl);
+    res.header("Content-Type", "application/xml; charset=utf-8");
+    res.header("Cache-Control", "public, max-age=1800, s-maxage=3600");
+    return res.status(200).send(xml);
+  } catch (err) {
+    console.error("Error serving dynamic sitemap:", err);
+    res.status(500).send("Error generating dynamic sitemap");
+  }
+};
+
+app.get("/sitemap.xml", handleSitemapRequest);
+app.get("/api/sitemap.xml", handleSitemapRequest);
+
 // 404 Fallback Handler
 app.use((req, res, next) => {
   res.status(404).json({
@@ -148,6 +168,11 @@ async function startServer() {
     await connectDB();
     await initDB();
     console.log("Database connected and initialized successfully.");
+    try {
+      await syncSitemapFiles();
+    } catch (e) {
+      console.warn("Initial sitemap sync skipped:", e.message);
+    }
   } catch (error) {
     console.error("Database connection warning:", error.message);
     try {

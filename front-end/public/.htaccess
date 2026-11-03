@@ -71,6 +71,11 @@ DirectoryIndex index.html index.htm
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-XSS-Protection "1; mode=block"
   Header set Connection keep-alive
+
+  # Disallow search engine indexing of admin and dashboard routes via HTTP header
+  <If "%{REQUEST_URI} =~ m#^/(dashboard|admin|login)#">
+    Header set X-Robots-Tag "noindex, nofollow, noarchive"
+  </If>
 </IfModule>
 
 # 4. REWRITE RULES & CLEAN URLS

@@ -3,6 +3,7 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import { Op } from "sequelize";
 import { Blog } from "../model/Blog.js";
+import { syncSitemapFiles } from "../utils/sitemapGenerator.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -352,6 +353,9 @@ export async function createBlog(req, res) {
       isPublished: isPublished === undefined ? true : (isPublished === true || isPublished === "true"),
     });
 
+    // Regenerate sitemap in background
+    syncSitemapFiles().catch((err) => console.warn("[Sitemap] Background sync warning:", err.message));
+
     return res.status(201).json({
       success: true,
       message: "Blog post created successfully",
@@ -476,6 +480,9 @@ export async function updateBlog(req, res) {
 
     await blog.save();
 
+    // Regenerate sitemap in background
+    syncSitemapFiles().catch((err) => console.warn("[Sitemap] Background sync warning:", err.message));
+
     return res.status(200).json({
       success: true,
       message: "Blog post updated successfully",
@@ -520,6 +527,9 @@ export async function deleteBlog(req, res) {
     }
 
     await blog.destroy();
+
+    // Regenerate sitemap in background
+    syncSitemapFiles().catch((err) => console.warn("[Sitemap] Background sync warning:", err.message));
 
     return res.status(200).json({
       success: true,
@@ -585,6 +595,9 @@ export async function togglePublish(req, res) {
 
     blog.isPublished = !blog.isPublished;
     await blog.save();
+
+    // Regenerate sitemap in background
+    syncSitemapFiles().catch((err) => console.warn("[Sitemap] Background sync warning:", err.message));
 
     return res.status(200).json({
       success: true,

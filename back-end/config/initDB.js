@@ -24,12 +24,12 @@ const INITIAL_CLIENTS = [
  */
 export async function initDB() {
   try {
-    // 1. Ensure empty table structures exist in MySQL
-    await Admin.sync({ alter: true });
-    await Gallery.sync({ alter: true });
-    await Client.sync({ alter: true });
-    await Download.sync({ alter: true });
-    await Blog.sync({ alter: true });
+    // 1. Ensure empty table structures exist in MySQL (use sync() instead of alter to prevent hitting MySQL 64 index limit)
+    await Admin.sync();
+    await Gallery.sync();
+    await Client.sync();
+    await Download.sync();
+    await Blog.sync();
 
     // 2. Check if default superadmin exists
     const defaultEmail = process.env.ADMIN_EMAIL || "admin@athulenergy.com";

@@ -62,3 +62,9 @@ next-env.d.ts
 *.key
 *.cert
 
+
+# Backend Media Uploads (User uploads should not be committed into Git repo)
+back-end/media/downloads/*
+!back-end/media/downloads/.gitkeep
+back-end/media/blog/*
+!back-end/media/blog/.gitkeep

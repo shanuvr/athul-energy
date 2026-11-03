@@ -80,7 +80,7 @@ export default function RichTextEditor({
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        class: "tiptap min-h-[420px] p-5 sm:p-6 focus:outline-none text-slate-800",
+        class: "tiptap min-h-[460px] p-5 sm:p-7 focus:outline-none text-slate-800 leading-relaxed",
       },
     },
     onUpdate: ({ editor }) => {
@@ -166,11 +166,14 @@ export default function RichTextEditor({
   };
 
   const currentBlock = getCurrentBlockType();
+  const editorText = editor.getText();
+  const wordCount = editorText.trim() ? editorText.trim().split(/\s+/).length : 0;
+  const charCount = editorText.length;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-2xs">
-      {/* ── Toolbar Header ── */}
-      <div className="flex flex-wrap items-center gap-1.5 p-2.5 bg-slate-50/90 border-b border-slate-200 text-slate-700">
+    <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-2xs flex flex-col">
+      {/* ── Sticky Toolbar Header (Always visible while scrolling content) ── */}
+      <div className="sticky top-0 z-20 flex flex-wrap items-center gap-1.5 p-2.5 bg-slate-50/95 backdrop-blur-xs border-b border-slate-200 text-slate-700 shadow-2xs">
 
         {/* ── 1. Block Format Dropdown (P + H1-H6) ── */}
         <div className="relative inline-flex items-center">
@@ -394,9 +397,32 @@ export default function RichTextEditor({
         </div>
       </div>
 
-      {/* ── Editor Canvas ── */}
-      <div className="bg-white">
+      {/* ── Editor Canvas (Fixed Height with Internal Scroll) ── */}
+      <div
+        className="bg-white flex-1 h-[520px] max-h-[65vh] overflow-y-auto cursor-text scrollbar-thin scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-300 transition-colors"
+        onClick={() => {
+          if (!editor.isFocused) {
+            editor.commands.focus("end");
+          }
+        }}
+      >
         <EditorContent editor={editor} />
+      </div>
+
+      {/* ── Bottom Status Strip (Word Count & Hints) ── */}
+      <div className="flex items-center justify-between px-4 py-2 bg-slate-50/90 border-t border-slate-100 text-[11px] text-slate-400 select-none">
+        <div className="flex items-center gap-3">
+          <span>
+            <strong className="text-slate-700 font-semibold">{wordCount}</strong> words
+          </span>
+          <span>·</span>
+          <span>
+            <strong className="text-slate-700 font-semibold">{charCount}</strong> characters
+          </span>
+        </div>
+        <div className="hidden sm:flex items-center gap-2 text-slate-400">
+          <span>Tip: Select text to quickly switch between H2 / H3 using the toolbar above</span>
+        </div>
       </div>
 
       {/* ── Insert Image Modal (File Upload + URL with SEO Alt Text) ── */}

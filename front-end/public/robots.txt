@@ -1,9 +1,20 @@
-# Robots.txt for Athul Energy Consultants
+# ==============================================================================
+# Athul Energy Consultants - Production robots.txt
+# Technical Audits, Safety, Power Quality & Sustainability
+# ==============================================================================
+
 User-agent: *
 Allow: /
+
+# Disallow indexing of private admin portal, auth, and backend API routes
 Disallow: /dashboard/
+Disallow: /dashboard/*
 Disallow: /admin/
+Disallow: /admin/*
+Disallow: /login
+Disallow: /login/
 Disallow: /api/
+Disallow: /api/*
 
+# XML Sitemap (dynamically includes all services and published blog articles)
 Sitemap: https://www.athulenergy.com/sitemap.xml
-

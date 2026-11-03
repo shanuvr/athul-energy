@@ -230,8 +230,8 @@ export default function CreateBlogPage() {
         </div>
       )}
 
-      {/* Tabs */}
-      <div className="flex items-center border-b border-slate-200 bg-white rounded-2xl p-1.5 shadow-2xs">
+      {/* Tabs (Sticky top so switching tabs never requires scrolling) */}
+      <div className="sticky top-2 z-30 flex items-center border border-slate-200/90 bg-white/95 backdrop-blur-md rounded-2xl p-1.5 shadow-sm">
         <button
           type="button"
           onClick={() => setActiveTab("content")}
