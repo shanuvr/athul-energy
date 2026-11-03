@@ -3,25 +3,92 @@ import type { Metadata } from "next";
 import ServicesDirectory from "@/components/user/ServicesDirectory";
 
 export const metadata: Metadata = {
-  title: "Comprehensive Energy & Engineering Services | Athul Energy",
+  title: "Comprehensive Energy & Engineering Services | Athul Energy Consultants",
   description:
-    "BEE-accredited audits, statutory compliance, safety inspections and specialized engineering studies for industries, buildings and institutions since 2008.",
+    "BEE Accredited Energy Audits (AEA-0275), CEA 2010 Electrical Safety Inspections, IEEE 519 Power Quality studies, and NAAC Green Audits across Kerala and India since 2008.",
   keywords: [
     "Energy audit Kerala",
-    "BEE accredited energy auditor",
+    "BEE accredited energy auditor AEA-0275",
     "Electrical safety audit CEA 2010",
     "Thermal imaging survey FLIR",
-    "Power quality and harmonics audit",
-    "NAAC green audit college",
+    "Power quality and harmonics audit IEEE 519",
+    "NAAC green audit college Kerala",
     "GRIHA energy audit",
     "PAT scheme M&V audit",
-    "EMC Kerala empanelled",
+    "EMC Kerala empanelled energy auditor",
+  ],
+  alternates: {
+    canonical: "/services",
+  },
+  openGraph: {
+    title: "Comprehensive Energy & Engineering Services | Athul Energy Consultants",
+    description:
+      "BEE Accredited Energy Audits, CEA Electrical Safety, Power Quality, and Green Building Compliance services.",
+    url: "https://www.athulenergy.com/services",
+    type: "website",
+    siteName: "Athul Energy Consultants",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/hero-desk.webp",
+        width: 1672,
+        height: 941,
+        alt: "Athul Energy Consultants - Engineering Services Directory",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Comprehensive Energy & Engineering Services | Athul Energy Consultants",
+    description:
+      "BEE Accredited Energy Audits, Electrical Safety, Power Quality and Sustainability services.",
+    images: ["/hero-desk.webp"],
+  },
+};
+
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.athulenergy.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Services",
+          item: "https://www.athulenergy.com/services",
+        },
+      ],
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://www.athulenergy.com/services#webpage",
+      name: "Engineering & Energy Audit Services",
+      description:
+        "Complete catalog of statutory energy audits, electrical safety inspections, thermography surveys, and environmental compliance studies.",
+      url: "https://www.athulenergy.com/services",
+      provider: {
+        "@type": "ProfessionalService",
+        "@id": "https://www.athulenergy.com/#organization",
+        name: "Athul Energy Consultants Pvt. Ltd.",
+      },
+    },
   ],
 };
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-[#f4f7f5] pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }}
+      />
       {/* Hero Header Banner (Matches User Desktop & Mobile Mockup References) */}
       <section className="relative overflow-hidden bg-[#042d1b] py-6 sm:py-10 lg:py-14 text-white shadow-xs">
         {/* Abstract Green Curved Wave Graphic (as seen in Mockup right side) */}

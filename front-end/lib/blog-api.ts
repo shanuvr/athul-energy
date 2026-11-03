@@ -78,6 +78,7 @@ export interface SingleBlogResponse {
 /**
  * Normalizes backend DB response into a strongly-typed BlogPost object
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function normalizeBlogPost(raw: any): BlogPost {
   if (!raw) return raw;
 

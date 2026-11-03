@@ -19,7 +19,6 @@ import {
   Activity,
   Gauge,
   Leaf,
-  SlidersHorizontal,
 } from "lucide-react";
 import {
   BLOG_CATEGORIES,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   Plus,
@@ -13,7 +13,6 @@ import {
   AlertCircle,
   Globe,
   Loader2,
-  Eye,
   Calendar,
 } from "lucide-react";
 import {
@@ -34,23 +33,33 @@ export default function AdminBlogPage() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const showToast = useCallback((msg: string, isError = false) => {
+    if (isError) {
+      setToastError(msg);
+      setTimeout(() => setToastError(null), 3500);
+    } else {
+      setToastMessage(msg);
+      setTimeout(() => setToastMessage(null), 3000);
+    }
+  }, []);
+
   // Load articles from backend API
-  const loadPosts = async () => {
+  const loadPosts = useCallback(async () => {
     try {
       setLoading(true);
       const data = await fetchBlogs({ all: true });
       setPosts(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to load blog posts:", err);
       showToast("Could not load from backend. Showing cached list.", true);
     } finally {
       setLoading(false);
     }
-  };
+  }, [showToast]);
 
   useEffect(() => {
     loadPosts();
-  }, []);
+  }, [loadPosts]);
 
   const filtered = posts.filter((p) => {
     const q = search.toLowerCase();
@@ -73,7 +82,7 @@ export default function AdminBlogPage() {
       );
       await toggleBlogFeatured(id);
       showToast("Featured status updated successfully");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to toggle featured:", err);
       showToast("Failed to update featured status", true);
       loadPosts(); // Revert
@@ -92,7 +101,7 @@ export default function AdminBlogPage() {
       );
       await toggleBlogPublish(id);
       showToast("Article visibility updated");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to toggle publish:", err);
       showToast("Failed to update publish status", true);
       loadPosts(); // Revert
@@ -107,21 +116,11 @@ export default function AdminBlogPage() {
       setPosts((prev) => prev.filter((p) => p.id !== deleteConfirmId));
       setDeleteConfirmId(null);
       showToast("Article deleted permanently");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to delete blog post:", err);
       showToast("Failed to delete article. Check backend server.", true);
     } finally {
       setIsDeleting(false);
-    }
-  };
-
-  const showToast = (msg: string, isError = false) => {
-    if (isError) {
-      setToastError(msg);
-      setTimeout(() => setToastError(null), 3500);
-    } else {
-      setToastMessage(msg);
-      setTimeout(() => setToastMessage(null), 3000);
     }
   };
 

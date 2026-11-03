@@ -18,11 +18,70 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/downloads",
   },
+  openGraph: {
+    title: "Statutory Downloads, Government Orders & Standards | Athul Energy Consultants",
+    description:
+      "Official regulatory gazettes, BEE guidebooks, CEA safety regulations, and compliance manuals.",
+    url: "https://www.athulenergy.com/downloads",
+    type: "website",
+    siteName: "Athul Energy Consultants",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/hero-desk.webp",
+        width: 1672,
+        height: 941,
+        alt: "Athul Energy Consultants - Statutory Downloads and Regulatory Publications",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Statutory Downloads & Regulatory Publications | Athul Energy Consultants",
+    description:
+      "BEE guidebooks, CEA safety regulations, and compliance manuals.",
+    images: ["/hero-desk.webp"],
+  },
+};
+
+const downloadsJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.athulenergy.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Downloads",
+          item: "https://www.athulenergy.com/downloads",
+        },
+      ],
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://www.athulenergy.com/downloads#webpage",
+      name: "Regulatory & Statutory Downloads Archive",
+      description:
+        "Technical guidebooks, gazette notifications, and standards published for plant engineers and facility managers.",
+      url: "https://www.athulenergy.com/downloads",
+    },
+  ],
 };
 
 export default function DownloadsPage() {
   return (
     <div className="min-h-screen bg-slate-50/50 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(downloadsJsonLd) }}
+      />
       {/* Hero Section — compact banner with greenish background */}
       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50/80 via-green-50/50 to-white border-b border-emerald-100/60 py-4 sm:py-5">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

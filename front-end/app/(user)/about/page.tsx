@@ -20,14 +20,94 @@ import {
 export const metadata: Metadata = {
   title: "About Us | Athul Energy Consultants",
   description:
-    "Athul Energy Consultants Pvt. Ltd. (AEC) is a premier BEE Accredited Energy Auditing and Electrical Safety consulting firm empanelled with EMC Kerala, GEDA, and MEDA.",
+    "Athul Energy Consultants Pvt. Ltd. (AEC) is a premier BEE Accredited Energy Auditing and Electrical Safety consulting firm empanelled with EMC Kerala, GEDA, and MEDA since 2008.",
   keywords: [
     "About Athul Energy Consultants",
     "Energy Auditor Kerala",
-    "BEE Accredited Energy Auditor firm Thrissur",
+    "BEE Accredited Energy Auditor AEA-0275",
     "Santhosh A Energy Auditor",
     "EMC Kerala empanelled auditor",
     "Industrial energy audit Kerala",
+    "Electrical safety consulting Thrissur",
+  ],
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Us | Athul Energy Consultants",
+    description:
+      "BEE Accredited Energy Auditing (AEA-0275) and Electrical Safety consultancy firm empanelled with EMC Kerala, GEDA, and MEDA since 2008.",
+    url: "https://www.athulenergy.com/about",
+    type: "website",
+    siteName: "Athul Energy Consultants",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/hero-desk.webp",
+        width: 1672,
+        height: 941,
+        alt: "Athul Energy Consultants - Engineering Leadership and Heritage",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | Athul Energy Consultants",
+    description:
+      "Premier BEE Accredited Energy Auditing and Electrical Safety consulting firm based in Thrissur, Kerala.",
+    images: ["/hero-desk.webp"],
+  },
+};
+
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.athulenergy.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About Us",
+          item: "https://www.athulenergy.com/about",
+        },
+      ],
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://www.athulenergy.com/about#webpage",
+      name: "About Athul Energy Consultants",
+      description:
+        "Overview of Athul Energy Consultants' engineering credentials, BEE AEA-0275 accreditation, EMC Kerala empanelment, leadership, and track record since 2008.",
+      url: "https://www.athulenergy.com/about",
+      mainEntity: {
+        "@type": "Organization",
+        name: "Athul Energy Consultants Pvt. Ltd.",
+        foundingDate: "2008",
+        founder: {
+          "@type": "Person",
+          name: "Er. Santhosh A.",
+          jobTitle: "Managing Director & Lead Energy Auditor",
+          hasCredential: [
+            {
+              "@type": "EducationalOccupationalCredential",
+              name: "BEE Accredited Energy Auditor (AEA-0275)",
+              credentialCategory: "degree",
+              recognizedBy: {
+                "@type": "GovernmentOrganization",
+                name: "Bureau of Energy Efficiency, Ministry of Power, Govt. of India",
+              },
+            },
+          ],
+        },
+      },
+    },
   ],
 };
 
@@ -42,6 +122,10 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-slate-950 text-white">
         <div className="absolute inset-0">

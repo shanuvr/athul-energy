@@ -6,7 +6,7 @@ import TeamDirectory from "@/components/user/TeamDirectory";
 export const metadata: Metadata = {
   title: "Engineering Team & Leadership | Athul Energy Consultants",
   description:
-    "Meet our multidisciplinary team of BEE Accredited Energy Auditors, Certified Energy Managers, and BEE Empaneled Sector Experts for Refineries, Thermal Power, DISCOMs, and Buildings.",
+    "Meet our multidisciplinary team of BEE Accredited Energy Auditors (AEA-0275), Certified Energy Managers, and BEE Empaneled Sector Experts for Refineries, Thermal Power, DISCOMs, and Buildings.",
   keywords: [
     "Athul Energy Team",
     "BEE Accredited Energy Auditor Kerala",
@@ -16,11 +16,79 @@ export const metadata: Metadata = {
     "BEE Sector Empaneled Experts",
     "Energy Auditing Specialists",
   ],
+  alternates: {
+    canonical: "/about/team",
+  },
+  openGraph: {
+    title: "Engineering Team & Leadership | Athul Energy Consultants",
+    description:
+      "Meet our multidisciplinary team of BEE Accredited Energy Auditors, Certified Energy Managers, and BEE Empaneled Sector Experts.",
+    url: "https://www.athulenergy.com/about/team",
+    type: "website",
+    siteName: "Athul Energy Consultants",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/hero-desk.webp",
+        width: 1672,
+        height: 941,
+        alt: "Athul Energy Consultants - Engineering Team",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Engineering Team & Leadership | Athul Energy Consultants",
+    description:
+      "Meet our certified BEE Accredited Energy Auditors and statutory inspection experts.",
+    images: ["/hero-desk.webp"],
+  },
+};
+
+const teamJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.athulenergy.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About Us",
+          item: "https://www.athulenergy.com/about",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Our Engineering Team",
+          item: "https://www.athulenergy.com/about/team",
+        },
+      ],
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://www.athulenergy.com/about/team#webpage",
+      name: "Athul Energy Engineering Team & Leadership",
+      description:
+        "Accredited Energy Auditors, Certified Energy Managers, and Empaneled Sector Specialists.",
+      url: "https://www.athulenergy.com/about/team",
+    },
+  ],
 };
 
 export default function TeamPage() {
   return (
     <div className="min-h-screen bg-slate-50/60 pb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(teamJsonLd) }}
+      />
       {/* Top Hero Section */}
       <section className="border-b border-slate-200 bg-white py-8 shadow-2xs sm:py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

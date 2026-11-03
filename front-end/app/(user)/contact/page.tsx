@@ -12,13 +12,79 @@ import ContactForm from "@/components/user/ContactForm";
 export const metadata: Metadata = {
   title: "Contact Us | Athul Energy Consultants",
   description:
-    "Contact Athul Energy Consultants in Thrissur, Kerala, to scope an energy audit, electrical safety inspection or statutory compliance review.",
+    "Contact Athul Energy Consultants in Thrissur, Kerala, to scope a BEE accredited energy audit, CEA electrical safety inspection or statutory compliance review.",
   keywords: [
     "Contact Athul Energy Consultants",
     "Energy auditor Thrissur",
     "BEE energy audit enquiry",
     "Electrical safety audit Kerala",
     "Energy audit quote Kerala",
+    "Energy audit proposal Kerala",
+  ],
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact Us | Athul Energy Consultants",
+    description:
+      "Request an engineering scope or statutory audit proposal from BEE Accredited Energy Auditors.",
+    url: "https://www.athulenergy.com/contact",
+    type: "website",
+    siteName: "Athul Energy Consultants",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/hero-desk.webp",
+        width: 1672,
+        height: 941,
+        alt: "Athul Energy Consultants - Head Office Contact",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us | Athul Energy Consultants",
+    description:
+      "Request an engineering scope or statutory audit proposal from BEE Accredited Energy Auditors.",
+    images: ["/hero-desk.webp"],
+  },
+};
+
+const contactJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.athulenergy.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Contact Us",
+          item: "https://www.athulenergy.com/contact",
+        },
+      ],
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://www.athulenergy.com/contact#webpage",
+      name: "Contact Athul Energy Consultants",
+      description:
+        "Official inquiry and technical contact channel for Athul Energy Consultants Pvt. Ltd. in Thrissur, Kerala.",
+      url: "https://www.athulenergy.com/contact",
+      mainEntity: {
+        "@type": "ProfessionalService",
+        "@id": "https://www.athulenergy.com/#organization",
+        name: "Athul Energy Consultants Pvt. Ltd.",
+        telephone: "+91-7356111990",
+        email: "info@athulenergy.com",
+      },
+    },
   ],
 };
 
@@ -55,6 +121,10 @@ const channels = [
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-slate-50/60">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-slate-950 text-white">
         <div

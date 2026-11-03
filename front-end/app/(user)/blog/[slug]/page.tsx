@@ -8,17 +8,12 @@ import {
   Calendar,
   ChevronRight,
   ShieldCheck,
-  User,
   ArrowRight,
   Phone,
-  Bookmark,
-  Share2,
-  CheckCircle2,
   Lock,
   ListOrdered,
-  BookOpen,
 } from "lucide-react";
-import { fetchBlogs, fetchBlogBySlug, type BlogPost } from "@/lib/blog-api";
+import { fetchBlogs, fetchBlogBySlug } from "@/lib/blog-api";
 import BlogCard from "@/components/user/BlogCard";
 
 interface Props {

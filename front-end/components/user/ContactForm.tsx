@@ -61,13 +61,13 @@ export default function ContactForm() {
       } else {
         throw new Error(res.message || "Failed to submit inquiry");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Submission error:", err);
-      setErrorMsg(
-        err.response?.data?.message ||
-          err.message ||
-          "Could not reach inquiry server. Please email info@athulenergy.com directly."
-      );
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Could not reach inquiry server. Please email info@athulenergy.com directly.";
+      setErrorMsg(message);
     } finally {
       setSubmitting(false);
     }

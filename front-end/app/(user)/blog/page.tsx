@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     "NAAC Criteria 7 Green Audit",
     "Athul Energy Technical Insights",
   ],
+  alternates: {
+    canonical: "/blog",
+  },
   openGraph: {
     title: "Engineering Insights & Energy Audit Guides | Athul Energy Consultants",
     description:
@@ -26,7 +29,58 @@ export const metadata: Metadata = {
     siteName: "Athul Energy Consultants",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/hero-desk.webp",
+        width: 1672,
+        height: 941,
+        alt: "Athul Energy Consultants - Technical Insights and Knowledge Base",
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Engineering Insights & Energy Audit Guides | Athul Energy Consultants",
+    description:
+      "Authoritative technical articles and compliance guides on BEE audits, CEA safety, and harmonics.",
+    images: ["/hero-desk.webp"],
+  },
+};
+
+const blogIndexJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.athulenergy.com",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Blog",
+          item: "https://www.athulenergy.com/blog",
+        },
+      ],
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://www.athulenergy.com/blog#blog",
+      name: "Athul Energy Technical Blog & Knowledge Base",
+      description:
+        "Authoritative technical articles, case studies, and statutory compliance guides by BEE Accredited Energy Auditors.",
+      url: "https://www.athulenergy.com/blog",
+      publisher: {
+        "@type": "ProfessionalService",
+        "@id": "https://www.athulenergy.com/#organization",
+        name: "Athul Energy Consultants Pvt. Ltd.",
+      },
+    },
+  ],
 };
 
 export default async function BlogPage() {
@@ -34,6 +88,10 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-slate-50/60 pb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogIndexJsonLd) }}
+      />
       {/* Hero Header Section */}
       <section className="border-b border-slate-200/90 bg-white py-5 sm:py-10 shadow-2xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

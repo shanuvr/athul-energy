@@ -43,19 +43,53 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!service) {
     return {
-      title: "Service Not Found | Athul Energy",
+      title: "Service Not Found | Athul Energy Consultants",
+      description: "The requested energy audit or engineering service could not be located.",
     };
   }
 
+  const title = `${service.title} | Athul Energy Consultants`;
+  const description = `${service.shortDesc} Executed by BEE Accredited Energy Auditors (AEA-0275) with NABL-calibrated instruments.`;
+  const canonicalUrl = `https://www.athulenergy.com/services/${service.slug}`;
+
   return {
-    title: `${service.title} | Athul Energy Consultants`,
-    description: service.shortDesc,
+    title,
+    description,
     keywords: [
       service.title,
       service.categoryLabel,
+      "Athul Energy Consultants",
+      "Energy Auditor Kerala",
+      "BEE Accredited Energy Auditor AEA-0275",
+      "Electrical Safety Inspection Kerala",
       ...service.standards,
       ...service.targetIndustries,
     ],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      type: "website",
+      siteName: "Athul Energy Consultants",
+      locale: "en_IN",
+      images: [
+        {
+          url: "/hero-desk.webp",
+          width: 1672,
+          height: 941,
+          alt: `${service.title} - Athul Energy Consultants`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/hero-desk.webp"],
+    },
   };
 }
 
@@ -97,8 +131,75 @@ async function ServiceDetailContent({ params }: Props) {
     .filter((s) => s.slug !== service.slug)
     .slice(0, 3);
 
+  const serviceUrl = `https://www.athulenergy.com/services/${service.slug}`;
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://www.athulenergy.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: "https://www.athulenergy.com/services",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: categoryInfo?.title || service.categoryLabel,
+            item: `https://www.athulenergy.com/services?cat=${service.category}`,
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: service.title,
+            item: serviceUrl,
+          },
+        ],
+      },
+      {
+        "@type": "Service",
+        "@id": `${serviceUrl}#service`,
+        name: service.title,
+        description: service.shortDesc,
+        serviceType: service.categoryLabel,
+        category: service.category,
+        url: serviceUrl,
+        provider: {
+          "@type": "ProfessionalService",
+          "@id": "https://www.athulenergy.com/#organization",
+          name: "Athul Energy Consultants Pvt. Ltd.",
+          url: "https://www.athulenergy.com",
+          telephone: "+91-7356111990",
+        },
+        areaServed: [
+          { "@type": "State", name: "Kerala" },
+          { "@type": "State", name: "Tamil Nadu" },
+          { "@type": "State", name: "Karnataka" },
+          { "@type": "Country", name: "India" },
+        ],
+        termsOfService: "Statutory adherence to EC Act 2001 and CEA Regulations 2010",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: categoryInfo?.title || service.categoryLabel,
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-slate-50/60 pb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
       {/* Top Breadcrumb & Compact Hero Section */}
       <section className="border-b border-slate-200/90 bg-white py-6 sm:py-8 lg:py-10 shadow-2xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

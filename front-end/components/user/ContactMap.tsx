@@ -1,4 +1,4 @@
-import { MapPin, Navigation, Compass, ExternalLink, Train, Plane, Car } from "lucide-react";
+import { Navigation, ExternalLink, Train, Plane, Car } from "lucide-react";
 
 export default function ContactMap() {
   const directionsUrl =
