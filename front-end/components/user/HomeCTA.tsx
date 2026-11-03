@@ -1,45 +1,7 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { submitInquiry } from "@/lib/inquiry-api";
+import HomeCTAForm from "./HomeCTAForm";
 
 export default function HomeCTA() {
-  const [contactInput, setContactInput] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [ticketId, setTicketId] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!contactInput.trim()) return;
-
-    setLoading(true);
-    try {
-      const isEmail = contactInput.includes("@");
-      const res = await submitInquiry({
-        name: "Homepage Quick Lead",
-        email: isEmail ? contactInput.trim() : `visitor-${Date.now()}@callback.athulenergy.local`,
-        phone: !isEmail ? contactInput.trim() : undefined,
-        company: "Website Visitor",
-        service: "General Audit Scoping Request",
-        message: `Quick callback requested via homepage banner for contact: ${contactInput.trim()}`,
-        source: "home-cta",
-      });
-
-      if (res.data?.ticketId) {
-        setTicketId(res.data.ticketId);
-      }
-      setSubmitted(true);
-      setContactInput("");
-    } catch (err) {
-      console.error("HomeCTA submit error:", err);
-      setSubmitted(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <section
       id="cta"
@@ -160,102 +122,28 @@ export default function HomeCTA() {
               </a>
             </div>
 
-            {/* Quick Consultation Callback Bar: 2 items side-by-side in single horizontal pill */}
+            {/* Quick Consultation Callback Bar (Extracted Client Component Leaf) */}
             <div className="mt-5 sm:mt-7 mx-auto max-w-lg">
-              {submitted ? (
-                <div className="rounded-2xl border border-emerald-400/40 bg-emerald-900/60 p-4 text-emerald-200 backdrop-blur-md animate-in fade-in duration-300">
-                  <div className="flex items-center justify-center gap-2 font-bold text-xs sm:text-sm text-emerald-300">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Request Received! {ticketId ? `(#${ticketId})` : ""}</span>
-                  </div>
-                  <p className="mt-1 text-[11px] sm:text-xs text-emerald-100/80">
-                    Our accredited auditor will contact you within 2 business hours.
-                  </p>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="relative flex flex-row items-center gap-1.5 rounded-full bg-white/10 p-1 sm:p-1.5 border border-white/15 backdrop-blur-md"
-                >
-                  <div className="relative flex-1 min-w-0">
-                    <input
-                      type="text"
-                      value={contactInput}
-                      onChange={(e) => setContactInput(e.target.value)}
-                      placeholder="Enter phone or email"
-                      aria-label="Phone or email for quick callback"
-                      required
-                      className="h-10 sm:h-12 w-full bg-transparent px-3.5 sm:px-5 text-xs sm:text-sm text-white placeholder:text-emerald-100/60 focus:outline-none"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="shrink-0 inline-flex items-center justify-center rounded-full bg-emerald-500 hover:bg-emerald-400 px-4 sm:px-6 py-2.5 sm:py-3 text-[11px] sm:text-xs font-bold text-slate-950 transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50 whitespace-nowrap cursor-pointer"
-                  >
-                    {loading ? (
-                      "Sending..."
-                    ) : (
-                      <>
-                        <span className="sm:hidden">Get Callback</span>
-                        <span className="hidden sm:inline">Request Callback</span>
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
+              <HomeCTAForm />
             </div>
 
-            {/* Trust Micro-Badges Bar */}
-            <div className="mt-10 sm:mt-12 pt-8 border-t border-emerald-500/20 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
-                <span className="text-[11px] sm:text-xs font-semibold text-emerald-100">
-                  100% Confidential
-                </span>
-                <span className="text-[10px] text-emerald-300/70">Zero plant downtime</span>
+            {/* Credibility & Trust Markers Footer */}
+            <div className="mt-8 sm:mt-10 pt-6 border-t border-emerald-500/20 flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-10 gap-y-3 text-[11px] sm:text-xs font-semibold text-emerald-200/90 tracking-wide uppercase">
+              <div className="flex items-center gap-2">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span>BEE Accredited AEA-0275</span>
               </div>
-
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <span className="text-[11px] sm:text-xs font-semibold text-emerald-100">
-                  BEE &amp; EMC Accredited
-                </span>
-                <span className="text-[10px] text-emerald-300/70">Statutory reports</span>
+              <div className="flex items-center gap-2">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span>EMC Kerala Empanelled</span>
               </div>
-
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                  </svg>
-                </div>
-                <span className="text-[11px] sm:text-xs font-semibold text-emerald-100">
-                  12% - 25% Savings
-                </span>
-                <span className="text-[10px] text-emerald-300/70">Proven track record</span>
+              <div className="flex items-center gap-2">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span>1000+ Completed Audits</span>
               </div>
-
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <span className="text-[11px] sm:text-xs font-semibold text-emerald-100">
-                  24h Scope &amp; Quote
-                </span>
-                <span className="text-[10px] text-emerald-300/70">Swift turnaround</span>
+              <div className="flex items-center gap-2">
+                <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                <span>Zero Plant Disruption</span>
               </div>
             </div>
           </div>

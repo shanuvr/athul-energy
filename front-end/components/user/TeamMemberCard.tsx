@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import { Award, Briefcase, GraduationCap } from "lucide-react";
 import type { TeamMember } from "@/lib/team-data";
@@ -11,8 +8,7 @@ interface TeamMemberCardProps {
 }
 
 export default function TeamMemberCard({ member, priority = false }: TeamMemberCardProps) {
-  const [imageError, setImageError] = useState(false);
-  const showImage = Boolean(member.image) && !imageError;
+  const showImage = Boolean(member.image);
 
   const initials = member.name
     .replace(/^Er\.\s+|^Mr\.\s+|^Ms\.\s+|^Mrs\.\s+/, "")
@@ -35,92 +31,92 @@ export default function TeamMemberCard({ member, priority = false }: TeamMemberC
             sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
             priority={priority}
             className="object-cover transition-all duration-500 group-hover:scale-[1.03]"
-            onError={() => setImageError(true)}
           />
         ) : (
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br from-[#002425] via-slate-900 to-[#023126]">
             <div
               aria-hidden="true"
-              className="absolute inset-0 opacity-[0.09]"
+              className="absolute inset-0 opacity-[0.08]"
               style={{
                 backgroundImage:
-                  "linear-gradient(to right, rgba(255,255,255,0.22) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.22) 1px, transparent 1px)",
+                  "linear-gradient(to right, rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.2) 1px, transparent 1px)",
                 backgroundSize: "28px 28px",
               }}
             />
             <div
               aria-hidden="true"
-              className="absolute -bottom-12 right-0 h-36 w-36 rounded-full bg-emerald-500/20 blur-3xl"
+              className="absolute -bottom-10 -right-8 h-36 w-36 rounded-full bg-emerald-500/20 blur-2xl"
             />
-            <span className="relative font-display text-4xl font-semibold tracking-tight text-white/90">
-              {initials}
-            </span>
+            <div className="relative flex items-center gap-3">
+              <span className="font-display text-3xl font-semibold tracking-tight text-white/95">
+                {initials}
+              </span>
+              <span className="h-4 w-px bg-white/20" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-400">
+                Athul Energy
+              </span>
+            </div>
           </div>
         )}
 
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"
-        />
+        {/* Department Pill */}
+        <span className="absolute left-3.5 top-3.5 rounded-full border border-white/20 bg-slate-950/70 px-2.5 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-white/90 backdrop-blur-md">
+          {member.departmentLabel}
+        </span>
+      </div>
 
-        <div className="absolute left-3.5 top-3 flex flex-wrap gap-1.5">
-          <span className="rounded-full bg-black/40 backdrop-blur-xs px-2.5 py-0.5 text-[9.5px] font-bold uppercase tracking-wider text-emerald-300 border border-emerald-500/20">
-            {member.departmentLabel}
-          </span>
-          {member.sector && (
-            <span className="rounded-full bg-emerald-600/90 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white shadow-2xs">
-              BEE: {member.sector}
-            </span>
-          )}
-        </div>
-
-        <div className="absolute inset-x-3.5 bottom-2.5 flex items-center justify-between gap-3 text-[10.5px] font-semibold">
-          <span className="text-emerald-300 flex items-center gap-1">
-            <Briefcase className="h-3 w-3" />
-            {member.experienceYears} yrs experience
-          </span>
+      {/* Card Content Body */}
+      <div className="flex flex-1 flex-col p-4 sm:p-5">
+        {/* Name and Official Role */}
+        <div className="flex items-start justify-between gap-2.5">
+          <div className="min-w-0">
+            <h3 className="font-display text-base font-bold tracking-tight text-slate-900 sm:text-lg truncate">
+              {member.name}
+            </h3>
+            <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-emerald-700">
+              {member.role}
+            </p>
+          </div>
           {member.badge && (
-            <span className="truncate rounded-md bg-white/10 px-2 py-0.5 text-white/90 font-mono text-[9.5px]">
+            <span className="shrink-0 rounded-full border border-emerald-600/30 bg-emerald-50 px-2 py-0.5 text-[9.5px] font-semibold text-emerald-800">
               {member.badge}
             </span>
           )}
         </div>
-      </div>
 
-      {/* Body Info */}
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-base sm:text-[17px] font-bold leading-snug tracking-tight text-slate-900 group-hover:text-emerald-800 transition-colors">
-          {member.name}
-        </h3>
-        <p className="mt-1 text-xs font-medium text-emerald-700 leading-snug">
-          {member.role}
-        </p>
+        {/* Qualification */}
+        <div className="mt-3 flex items-start gap-1.5 text-[11.5px] text-slate-600">
+          <GraduationCap className="h-3.5 w-3.5 shrink-0 text-emerald-600 mt-0.5" />
+          <span className="line-clamp-2 leading-relaxed">{member.qualification}</span>
+        </div>
 
-        {/* Qualifications */}
-        <div className="mt-3.5 space-y-2.5 border-t border-slate-100 pt-3">
-          <div className="flex items-start gap-2">
-            <GraduationCap className="h-4 w-4 shrink-0 text-slate-400 mt-0.5" />
-            <p className="text-[11.5px] font-medium leading-relaxed text-slate-700">
-              {member.qualification}
-            </p>
-          </div>
-
-          <p className="text-[11.5px] leading-relaxed text-slate-500 pl-6">
+        {/* Function / Plant Domain */}
+        <div className="mt-2 flex items-start gap-1.5 text-[11.5px] text-slate-600">
+          <Briefcase className="h-3.5 w-3.5 shrink-0 text-emerald-600 mt-0.5" />
+          <p className="line-clamp-3 leading-relaxed text-slate-600">
             {member.function}
           </p>
         </div>
 
-        {/* Certifications Pills at Bottom */}
-        <div className="mt-auto pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
-          {member.certifications.slice(0, 3).map((cert, idx) => (
+        {/* Certifications Badges */}
+        <div className="mt-4 flex flex-wrap gap-1 border-t border-slate-100 pt-3">
+          {member.certifications.map((cert) => (
             <span
-              key={idx}
-              className="inline-flex items-center gap-1 rounded-md bg-slate-50 border border-slate-200/80 px-2 py-0.5 text-[9.5px] font-semibold text-slate-600"
+              key={cert}
+              className="inline-flex items-center gap-1 rounded bg-slate-100/90 px-1.5 py-0.5 text-[10px] font-medium text-slate-700"
             >
-              <Award className="h-2.5 w-2.5 text-emerald-600" />
-              <span className="truncate max-w-[180px]">{cert}</span>
+              <Award className="h-2.5 w-2.5 text-emerald-600 shrink-0" />
+              <span>{cert}</span>
             </span>
           ))}
+        </div>
+
+        {/* Experience Footer */}
+        <div className="mt-auto border-t border-slate-100 pt-3 flex items-center justify-between text-[11px] text-slate-500">
+          <span>{member.experienceYears}+ years in industry</span>
+          {member.sector && (
+            <span className="font-medium text-emerald-800">{member.sector}</span>
+          )}
         </div>
       </div>
     </article>

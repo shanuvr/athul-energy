@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -12,8 +9,7 @@ interface LeadershipCardProps {
 }
 
 export default function LeadershipCard({ member, priority = false }: LeadershipCardProps) {
-  const [imageError, setImageError] = useState(false);
-  const showImage = Boolean(member.image) && !imageError;
+  const showImage = Boolean(member.image);
 
   const initials = member.name
     .replace(/^Er\.\s+|^Mr\.\s+|^Ms\.\s+|^Mrs\.\s+/, "")
@@ -35,7 +31,6 @@ export default function LeadershipCard({ member, priority = false }: LeadershipC
             sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
             priority={priority}
             className="object-cover transition-all duration-500 group-hover:scale-[1.03]"
-            onError={() => setImageError(true)}
           />
         ) : (
           <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-slate-950">
@@ -68,33 +63,52 @@ export default function LeadershipCard({ member, priority = false }: LeadershipC
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-6 sm:p-7">
         <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <h3 className="font-display text-lg font-semibold leading-snug tracking-tight text-slate-900">
+          <div>
+            <h3 className="font-display text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
               {member.name}
             </h3>
-            <p className="mt-1 text-xs leading-relaxed text-slate-600">{member.role}</p>
+            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">
+              {member.role}
+            </p>
           </div>
-          <span className="shrink-0 pt-0.5 text-[11px] font-semibold tabular-nums text-slate-400">
-            {member.experienceYears} yrs
-          </span>
+          {member.badge && (
+            <span className="shrink-0 rounded-full border border-emerald-600/30 bg-emerald-50 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800">
+              {member.badge}
+            </span>
+          )}
         </div>
 
-        <p className="mt-4 line-clamp-3 text-[12.5px] leading-relaxed text-slate-500">
+        <p className="mt-4 text-xs font-medium text-slate-500 sm:text-[13px]">
+          {member.qualification}
+        </p>
+
+        <p className="mt-3 flex-1 text-xs leading-relaxed text-slate-600 sm:text-[13px]">
           {member.function}
         </p>
 
-        <div className="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4">
-          <span className="truncate text-[11px] font-medium text-emerald-700">
-            {member.badge ?? member.certifications[0]}
+        <div className="mt-6 flex flex-wrap gap-1.5 border-t border-slate-100 pt-5">
+          {member.certifications.map((cert) => (
+            <span
+              key={cert}
+              className="rounded-md bg-slate-100 px-2 py-0.5 text-[10.5px] font-medium text-slate-600"
+            >
+              {cert}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
+          <span className="text-[11px] font-medium text-slate-400">
+            {member.experienceYears}+ years experience
           </span>
           <Link
             href="/about/team"
-            className="inline-flex shrink-0 items-center gap-1 text-[11px] font-semibold text-slate-500 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
           >
-            Profile
-            <ArrowUpRight className="h-3 w-3 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            <span>Team overview</span>
+            <ArrowUpRight className="h-3 w-3" />
           </Link>
         </div>
       </div>

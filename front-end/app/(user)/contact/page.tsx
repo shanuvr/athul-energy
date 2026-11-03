@@ -8,6 +8,7 @@ import {
   Phone,
 } from "lucide-react";
 import ContactForm from "@/components/user/ContactForm";
+import ContactFAQ from "@/components/user/ContactFAQ";
 
 export const metadata: Metadata = {
   title: "Contact Us | Athul Energy Consultants",
@@ -84,6 +85,36 @@ const contactJsonLd = {
         telephone: "+91-7356111990",
         email: "info@athulenergy.com",
       },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.athulenergy.com/contact#faq",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How quickly can Athul Energy mobilize an audit team to our plant?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For urgent statutory deadlines, CEA electrical safety notices, or insurance compliance inspections, we can deploy an accredited engineering team within 48 to 72 hours across Kerala, Tamil Nadu, and Karnataka.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Are your audit reports recognized by BEE and State Designated Agencies (EMC Kerala)?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, 100%. Athul Energy Consultants Pvt. Ltd. is an approved energy auditing firm empanelled with Energy Management Centre (EMC) Kerala, GEDA, and MEDA. Our lead auditor holds Bureau of Energy Efficiency Accredited Energy Auditor credential (AEA-0275).",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you supply measurement equipment, or does the plant need to provide meters?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Our engineers bring our own calibrated, high-precision test instrumentation including Class-A power quality analyzers (Fluke / Hioki), FLIR Level-II infrared thermal imagers, ultrasonic non-invasive flow meters, and earth resistance testers.",
+          },
+        },
+      ],
     },
   ],
 };
@@ -355,6 +386,11 @@ export default function ContactPage() {
                 </div>
               </div>
             </aside>
+          </div>
+
+          {/* Frequently Asked Technical & Statutory Questions */}
+          <div className="mt-12 sm:mt-16">
+            <ContactFAQ />
           </div>
         </div>
       </section>
