@@ -211,7 +211,7 @@ export default function ContactForm() {
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label htmlFor="email" className={labelClass}>
-                Work email <span className="text-red-500">*</span>
+                Email <span className="text-red-500">*</span>
               </label>
               <div className={fieldContainerClass}>
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
