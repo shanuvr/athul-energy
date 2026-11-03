@@ -336,3 +336,4 @@ export async function deleteInquiry(req, res) {
     });
   }
 }
+

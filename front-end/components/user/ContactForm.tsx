@@ -2,26 +2,20 @@
 
 import { useState, type FormEvent } from "react";
 import {
-  ArrowRight,
   CheckCircle2,
   User,
   Mail,
   Phone,
-  Building2,
-  Layers,
   MessageSquare,
   Sparkles,
   Send,
   ShieldCheck,
   MessageCircle,
-  MapPin,
-  Zap,
   Loader2,
   AlertCircle,
   Copy,
   Check,
 } from "lucide-react";
-import { SERVICE_CATEGORIES } from "@/lib/services-data";
 import { submitInquiry } from "@/lib/inquiry-api";
 
 const labelClass =
@@ -43,10 +37,6 @@ export default function ContactForm() {
     name: "",
     email: "",
     phone: "",
-    organisation: "",
-    location: "",
-    load: "",
-    interest: "",
     message: "",
   });
 
@@ -60,10 +50,7 @@ export default function ContactForm() {
         name: formData.name,
         email: formData.email,
         phone: formData.phone || undefined,
-        company: formData.organisation || undefined,
-        location: formData.location || undefined,
-        load: formData.load || undefined,
-        service: formData.interest || "General Audit Scoping",
+        service: "General Audit Scoping",
         message: formData.message,
         source: "contact-page",
       });
@@ -76,7 +63,6 @@ export default function ContactForm() {
       }
     } catch (err: any) {
       console.error("Submission error:", err);
-      // Fallback: If backend is completely unreachable, still enable direct email
       setErrorMsg(
         err.response?.data?.message ||
           err.message ||
@@ -95,7 +81,7 @@ export default function ContactForm() {
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Hello Athul Energy Team,\nI have submitted an audit scoping inquiry.\n\n*Ticket ID:* ${ticketId || "Pending"}\n*Name:* ${formData.name || "Client"}\n*Company:* ${formData.organisation || "Not specified"}\n*Service:* ${formData.interest || "Audit Scoping"}\n*Location:* ${formData.location || "Kerala / South India"}\n*Connected Load:* ${formData.load || "—"}\n*Notes:* ${formData.message || "Please provide quotation and scoping schedule."}`
+    `Hello Athul Energy Team,\nI have submitted an inquiry via your website.\n\n*Ticket ID:* ${ticketId || "Pending"}\n*Name:* ${formData.name || "Client"}\n*Email:* ${formData.email || "—"}\n*Phone:* ${formData.phone || "—"}\n*Message:* ${formData.message || "Please provide quotation."}`
   );
 
   return (
@@ -108,15 +94,14 @@ export default function ContactForm() {
         <div className="flex items-center gap-2 mb-2">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 px-3 py-0.5 text-[11px] font-bold text-emerald-800 uppercase tracking-wider">
             <Sparkles className="h-3 w-3 text-emerald-600" />
-            Priority Plant Audit Desk
+            Priority Audit Desk
           </span>
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
-          Request an Audit Scoping &amp; Quotation
+          Send an enquiry
         </h2>
         <p className="mt-1.5 text-xs sm:text-[13px] leading-relaxed text-slate-500">
-          Tell us the site, the compliance standard and the timeline. Er. Santhosh A. and our BEE accredited team
-          will review your plant specifics and respond with an official scope within 24 hours.
+          Tell us what you need and our accredited engineering auditors will review your requirements and respond promptly.
         </p>
       </div>
 
@@ -135,7 +120,7 @@ export default function ContactForm() {
                 Inquiry Logged Successfully!
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
-                Thank you, <strong className="text-slate-900">{formData.name}</strong>. Your audit scoping inquiry has been assigned ticket{" "}
+                Thank you, <strong className="text-slate-900">{formData.name}</strong>. Your inquiry has been assigned ticket{" "}
                 <strong className="text-emerald-800 font-mono">#{ticketId}</strong> and forwarded to our lead engineering auditors.
               </p>
             </div>
@@ -180,16 +165,12 @@ export default function ContactForm() {
                   name: "",
                   email: "",
                   phone: "",
-                  organisation: "",
-                  location: "",
-                  load: "",
-                  interest: "",
                   message: "",
                 });
               }}
               className="text-xs font-bold text-emerald-800 hover:text-emerald-950 underline underline-offset-4 cursor-pointer"
             >
-              ← Submit another plant inquiry
+              ← Submit another inquiry
             </button>
           </div>
         </div>
@@ -219,7 +200,7 @@ export default function ContactForm() {
                   type="text"
                   required
                   autoComplete="name"
-                  placeholder="Rajesh Nair"
+                  placeholder="e.g. Rajesh Nair"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className={inputClass}
@@ -240,129 +221,39 @@ export default function ContactForm() {
                   type="email"
                   required
                   autoComplete="email"
-                  placeholder="you@company.com"
+                  placeholder="e.g. you@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className={inputClass}
                 />
               </div>
             </div>
-
-            {/* Phone Number */}
-            <div>
-              <label htmlFor="phone" className={labelClass}>
-                Phone / WhatsApp
-              </label>
-              <div className={fieldContainerClass}>
-                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder="+91 98765 43210"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            {/* Organisation */}
-            <div>
-              <label htmlFor="organisation" className={labelClass}>
-                Organisation / Plant Facility
-              </label>
-              <div className={fieldContainerClass}>
-                <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                <input
-                  id="organisation"
-                  name="organisation"
-                  type="text"
-                  autoComplete="organization"
-                  placeholder="Synthite Industries / Apollo Tyres"
-                  value={formData.organisation}
-                  onChange={(e) => setFormData({ ...formData, organisation: e.target.value })}
-                  className={inputClass}
-                />
-              </div>
-            </div>
           </div>
 
-          {/* Plant Location & Contract Demand */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label htmlFor="location" className={labelClass}>
-                Plant Location / District
-              </label>
-              <div className={fieldContainerClass}>
-                <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                <input
-                  id="location"
-                  name="location"
-                  type="text"
-                  placeholder="e.g. Ernakulam / Palakkad / Coimbatore"
-                  value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="load" className={labelClass}>
-                Connected Load / Demand (kVA / HT)
-              </label>
-              <div className={fieldContainerClass}>
-                <Zap className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                <input
-                  id="load"
-                  name="load"
-                  type="text"
-                  placeholder="e.g. 1250 kVA · 11 kV HT or 500 kW"
-                  value={formData.load}
-                  onChange={(e) => setFormData({ ...formData, load: e.target.value })}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Service Category */}
+          {/* Phone / WhatsApp */}
           <div>
-            <label htmlFor="interest" className={labelClass}>
-              Requested Engineering Discipline
+            <label htmlFor="phone" className={labelClass}>
+              Phone / WhatsApp
             </label>
             <div className={fieldContainerClass}>
-              <Layers className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <select
-                id="interest"
-                name="interest"
-                value={formData.interest}
-                onChange={(e) => setFormData({ ...formData, interest: e.target.value })}
-                className={`${inputClass} appearance-none bg-[length:14px] bg-[right_1rem_center] bg-no-repeat pr-9 cursor-pointer`}
-                style={{
-                  backgroundImage:
-                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
-                }}
-              >
-                <option value="">Select an engineering discipline</option>
-                {SERVICE_CATEGORIES.map((category) => (
-                  <option key={category.id} value={category.shortTitle}>
-                    {category.title} ({category.badge})
-                  </option>
-                ))}
-                <option value="Multi-disciplinary / Statutory Combined Audit">
-                  Multi-disciplinary Statutory Combined Audit (BEE + CEA Safety)
-                </option>
-              </select>
+              <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                placeholder="+91 98765 43210"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className={inputClass}
+              />
             </div>
           </div>
 
           {/* Message */}
           <div>
             <label htmlFor="message" className={labelClass}>
-              Scope Specifics / Statutory Requirements <span className="text-red-500">*</span>
+              Message <span className="text-red-500">*</span>
             </label>
             <div className={fieldContainerClass}>
               <MessageSquare className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
@@ -371,7 +262,7 @@ export default function ContactForm() {
                 name="message"
                 required
                 rows={4}
-                placeholder="Mention specific areas: e.g. transformer thermal imaging, harmonics violation penalty, steam boiler efficiency, or statutory compliance deadlines..."
+                placeholder="Tell us about your requirements, facility, or query..."
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-10 pr-3.5 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-600/10 resize-y"
@@ -379,7 +270,7 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Submit & Secondary Actions */}
+          {/* Submit Button */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-slate-100 pt-5">
             <p className="text-[11px] leading-relaxed text-slate-400">
               Protected under professional Non-Disclosure Agreements (NDA).
@@ -393,11 +284,11 @@ export default function ContactForm() {
               {submitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin text-emerald-300" />
-                  <span>Submitting Scope...</span>
+                  <span>Sending Inquiry...</span>
                 </>
               ) : (
                 <>
-                  <span>Submit Inquiry</span>
+                  <span>Send enquiry</span>
                   <Send className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 text-emerald-400" />
                 </>
               )}
@@ -412,7 +303,7 @@ export default function ContactForm() {
             </span>
             <span className="flex items-center gap-1.5">
               <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
-              24h Proposal Turnaround
+              24h Response SLA
             </span>
             <span>BEE AEA-0275 Lead Auditor</span>
           </div>

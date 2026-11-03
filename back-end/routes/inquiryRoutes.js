@@ -22,3 +22,4 @@ router.patch("/:id/status", protect, updateInquiryStatus);
 router.delete("/:id", protect, deleteInquiry);
 
 export default router;
+

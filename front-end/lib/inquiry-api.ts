@@ -93,3 +93,4 @@ export async function deleteInquiry(id: number | string) {
   const response = await api.delete(`/inquiries/${id}`);
   return response.data;
 }
+

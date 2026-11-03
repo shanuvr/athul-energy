@@ -88,3 +88,4 @@ export const Inquiry = sequelize.define(
 );
 
 export default Inquiry;
+
