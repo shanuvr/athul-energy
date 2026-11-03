@@ -5,21 +5,17 @@ import {
   Search,
   Phone,
   Mail,
-  MapPin,
   MessageSquare,
-  Zap,
   RefreshCw,
   Trash2,
   Clock,
   CheckCircle2,
   Send,
-  Calendar,
   AlertCircle,
   Copy,
   Check,
-  ExternalLink,
   MessageCircle,
-  Filter,
+  User,
 } from "lucide-react";
 import {
   Inquiry,
@@ -120,7 +116,6 @@ export default function AdminInquiriesPage() {
         if (selectedInquiry && selectedInquiry.id === id) {
           setSelectedInquiry({ ...selectedInquiry, ...res.data });
         }
-        // Refresh counts
         fetchInquiryStats().then((s) => s.data && setStats(s.data)).catch(() => {});
       }
     } catch (err: any) {
@@ -217,14 +212,14 @@ export default function AdminInquiriesPage() {
           <div className="flex items-center gap-2 mb-1.5">
             <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full">
-              Audit Scoping Desk
+              Inquiries Desk
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-display">
-            Plant Audit Inquiries &amp; Leads
+            Inquiries &amp; Leads
           </h1>
           <p className="mt-1 text-xs sm:text-sm text-slate-500">
-            Live technical scoping leads submitted via your website. Review contract demand, site location, and dispatch audit proposals.
+            Messages and scoping inquiries submitted by clients through your website forms.
           </p>
         </div>
 
@@ -244,7 +239,7 @@ export default function AdminInquiriesPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
-            <span>Total Leads</span>
+            <span>Total Inquiries</span>
             <MessageSquare className="h-4 w-4 text-slate-400" />
           </div>
           <p className="mt-2 text-2xl font-black text-slate-900 font-display">
@@ -261,7 +256,7 @@ export default function AdminInquiriesPage() {
           <p className="mt-2 text-2xl font-black text-amber-900 font-display">
             {stats.pending}
           </p>
-          <span className="text-[10.5px] text-amber-700 font-medium">Requires scoping review</span>
+          <span className="text-[10.5px] text-amber-700 font-medium">Requires review</span>
         </div>
 
         <div className="rounded-2xl border border-blue-200/80 bg-blue-50/50 p-4 shadow-2xs">
@@ -272,18 +267,18 @@ export default function AdminInquiriesPage() {
           <p className="mt-2 text-2xl font-black text-blue-900 font-display">
             {stats.proposalSent}
           </p>
-          <span className="text-[10.5px] text-blue-700 font-medium">Awaiting plant sanction</span>
+          <span className="text-[10.5px] text-blue-700 font-medium">Responded</span>
         </div>
 
         <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/50 p-4 shadow-2xs">
           <div className="flex items-center justify-between text-emerald-800 text-xs font-bold">
-            <span>Scheduled &amp; Done</span>
+            <span>Completed</span>
             <CheckCircle2 className="h-4 w-4 text-emerald-600" />
           </div>
           <p className="mt-2 text-2xl font-black text-emerald-900 font-display">
             {stats.scheduled + stats.completed}
           </p>
-          <span className="text-[10.5px] text-emerald-700 font-medium">Confirmed field audits</span>
+          <span className="text-[10.5px] text-emerald-700 font-medium">Finished / Scheduled</span>
         </div>
       </div>
 
@@ -295,7 +290,7 @@ export default function AdminInquiriesPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by ticket ID, plant company, contact person, service, or city..."
+            placeholder="Search by ticket ID, client name, email, phone, or message..."
             className="w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-10 pr-4 py-2 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all"
           />
         </div>
@@ -341,10 +336,10 @@ export default function AdminInquiriesPage() {
             <thead className="border-b border-slate-200 bg-slate-50/80 text-[10.5px] uppercase font-bold text-slate-500 tracking-wider">
               <tr>
                 <th className="py-3 px-4">Ticket</th>
-                <th className="py-3 px-4">Plant / Client</th>
-                <th className="py-3 px-4">Requested Service</th>
-                <th className="py-3 px-4">Location</th>
-                <th className="py-3 px-4">Connected Load</th>
+                <th className="py-3 px-4">Name</th>
+                <th className="py-3 px-4">Email</th>
+                <th className="py-3 px-4">Phone</th>
+                <th className="py-3 px-4">Message</th>
                 <th className="py-3 px-4">Received</th>
                 <th className="py-3 px-4">Status</th>
                 <th className="py-3 px-4 text-right">Action</th>
@@ -377,6 +372,7 @@ export default function AdminInquiriesPage() {
               ) : (
                 inquiries.map((inq) => (
                   <tr key={inq.id} className="hover:bg-slate-50/70 transition-colors">
+                    {/* Ticket */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
                       <div className="flex items-center gap-1.5 font-mono font-bold text-emerald-700">
                         <span>{inq.ticketId}</span>
@@ -384,7 +380,7 @@ export default function AdminInquiriesPage() {
                           type="button"
                           onClick={() => copyTicket(inq.ticketId)}
                           title="Copy Ticket ID"
-                          className="text-slate-400 hover:text-slate-700 transition-colors"
+                          className="text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
                         >
                           {copiedId === inq.ticketId ? (
                             <Check className="h-3 w-3 text-emerald-600" />
@@ -394,22 +390,51 @@ export default function AdminInquiriesPage() {
                         </button>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4">
-                      <span className="block font-bold text-slate-900">{inq.company || "Individual"}</span>
-                      <span className="block text-[11px] text-slate-500">{inq.name}</span>
+
+                    {/* Name */}
+                    <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
+                      {inq.name}
                     </td>
-                    <td className="py-3.5 px-4 font-medium text-slate-800 max-w-xs truncate">
-                      {inq.service || "General Audit"}
+
+                    {/* Email */}
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      <a
+                        href={`mailto:${inq.email}`}
+                        className="text-slate-600 hover:text-emerald-700 hover:underline flex items-center gap-1.5"
+                      >
+                        <Mail className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                        <span>{inq.email}</span>
+                      </a>
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500 whitespace-nowrap">
-                      {inq.location || "—"}
+
+                    {/* Phone */}
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      {inq.phone ? (
+                        <a
+                          href={`tel:${inq.phone}`}
+                          className="text-slate-600 hover:text-emerald-700 hover:underline flex items-center gap-1.5"
+                        >
+                          <Phone className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                          <span>{inq.phone}</span>
+                        </a>
+                      ) : (
+                        <span className="text-slate-400">—</span>
+                      )}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-600 whitespace-nowrap font-mono text-[11.5px]">
-                      {inq.load || "—"}
+
+                    {/* Message Preview */}
+                    <td className="py-3.5 px-4 max-w-xs">
+                      <p className="truncate text-slate-600" title={inq.message}>
+                        {inq.message}
+                      </p>
                     </td>
+
+                    {/* Received Date */}
                     <td className="py-3.5 px-4 text-slate-400 whitespace-nowrap text-[11px]">
                       {formatDate(inq.createdAt)}
                     </td>
+
+                    {/* Status Badge */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
                       <span
                         className={`inline-flex px-2.5 py-0.5 rounded-full text-[10.5px] font-bold border ${getStatusBadgeClass(
@@ -419,17 +444,19 @@ export default function AdminInquiriesPage() {
                         {inq.status}
                       </span>
                     </td>
+
+                    {/* Actions */}
                     <td className="py-3.5 px-4 text-right whitespace-nowrap space-x-1.5">
                       <button
                         onClick={() => setSelectedInquiry(inq)}
                         className="rounded-lg bg-slate-100 hover:bg-[#053824] hover:text-white px-2.5 py-1 text-[11px] font-bold text-slate-700 transition-colors cursor-pointer"
                       >
-                        Review Scope
+                        Review
                       </button>
                       <button
                         onClick={() => setDeleteConfirmId(inq.id)}
                         className="rounded-lg p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-                        title="Delete Lead"
+                        title="Delete Inquiry"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
@@ -445,8 +472,8 @@ export default function AdminInquiriesPage() {
       {/* Inquiry Detail Review Modal */}
       {selectedInquiry && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4 animate-in fade-in overflow-y-auto">
-          <div className="relative w-full max-w-2xl rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-2xl text-slate-900 animate-in zoom-in-95 my-8">
-            <div className="flex items-start justify-between border-b border-slate-100 pb-4 mb-4">
+          <div className="relative w-full max-w-xl rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-2xl text-slate-900 animate-in zoom-in-95 my-8">
+            <div className="flex items-start justify-between border-b border-slate-100 pb-3.5 mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-mono text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md">
@@ -454,12 +481,9 @@ export default function AdminInquiriesPage() {
                   </span>
                   <span className="text-xs text-slate-400">· {formatDate(selectedInquiry.createdAt)}</span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-black text-slate-900 font-display">
-                  {selectedInquiry.company || "Facility / Client"}
+                <h3 className="text-lg font-black text-slate-900 font-display">
+                  Inquiry from {selectedInquiry.name}
                 </h3>
-                <span className="text-xs text-emerald-700 font-semibold block mt-0.5">
-                  Requested: {selectedInquiry.service}
-                </span>
               </div>
               <button
                 onClick={() => setSelectedInquiry(null)}
@@ -469,18 +493,21 @@ export default function AdminInquiriesPage() {
               </button>
             </div>
 
-            {/* Contact Person & Plant Specs */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
-              <div className="rounded-xl bg-slate-50 p-3.5 border border-slate-100 space-y-1.5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">
-                  Contact Person
-                </span>
-                <p className="font-bold text-slate-900 text-sm">{selectedInquiry.name}</p>
+            {/* Contact Details Box */}
+            <div className="rounded-xl bg-slate-50 p-4 border border-slate-100 mb-4 space-y-2 text-xs">
+              <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                Contact Information
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="flex items-center gap-2 text-slate-800">
+                  <User className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                  <span className="font-bold">{selectedInquiry.name}</span>
+                </div>
                 <div className="flex items-center gap-2 text-slate-600">
                   <Mail className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                   <a
                     href={`mailto:${selectedInquiry.email}`}
-                    className="hover:text-emerald-700 hover:underline truncate"
+                    className="hover:text-emerald-700 hover:underline truncate font-medium"
                   >
                     {selectedInquiry.email}
                   </a>
@@ -490,36 +517,25 @@ export default function AdminInquiriesPage() {
                     <Phone className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                     <a
                       href={`tel:${selectedInquiry.phone}`}
-                      className="hover:text-emerald-700 hover:underline"
+                      className="hover:text-emerald-700 hover:underline font-medium"
                     >
                       {selectedInquiry.phone}
                     </a>
                   </div>
                 )}
-              </div>
-
-              <div className="rounded-xl bg-slate-50 p-3.5 border border-slate-100 space-y-1.5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">
-                  Plant &amp; Grid Specs
-                </span>
-                <div className="flex items-center gap-2 text-slate-800 font-semibold">
-                  <MapPin className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                  <span>{selectedInquiry.location || "Location not specified"}</span>
-                </div>
-                <div className="flex items-center gap-2 text-emerald-800 font-mono font-bold">
-                  <Zap className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
-                  <span>{selectedInquiry.load || "Connected load not specified"}</span>
-                </div>
-                <div className="text-[11px] text-slate-400">
-                  Source: <span className="font-mono text-slate-600">{selectedInquiry.source || "web"}</span>
+                <div className="text-slate-400 text-[11px] flex items-center gap-1.5">
+                  <span>Source:</span>
+                  <span className="font-mono text-slate-600 bg-white px-2 py-0.5 rounded border border-slate-200">
+                    {selectedInquiry.source || "contact-page"}
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Requested Scope & Site Notes */}
+            {/* Client Message */}
             <div className="rounded-xl bg-slate-50 p-4 border border-slate-100 mb-4">
               <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">
-                Client Requirements / Site Notes
+                Client Message
               </span>
               <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-line">
                 {selectedInquiry.message}
@@ -530,7 +546,7 @@ export default function AdminInquiriesPage() {
             <div className="rounded-xl border border-slate-200 p-3.5 mb-5 space-y-2">
               <div className="flex items-center justify-between">
                 <label htmlFor="auditorNotes" className="text-[10.5px] uppercase font-bold text-slate-500">
-                  Internal Auditor Notes / Proposal Reference
+                  Internal Notes / Follow-up Reference
                 </label>
                 {savingNotes && (
                   <span className="text-[10.5px] text-emerald-600 font-semibold flex items-center gap-1">
@@ -544,7 +560,7 @@ export default function AdminInquiriesPage() {
                 onChange={(e) => setEditingNotes(e.target.value)}
                 onBlur={handleSaveNotes}
                 rows={2}
-                placeholder="Add private auditor notes, quotation number, or assigned engineer..."
+                placeholder="Add private notes or quotation reference..."
                 className="w-full text-xs rounded-lg border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
               />
             </div>
@@ -576,7 +592,7 @@ export default function AdminInquiriesPage() {
                 {selectedInquiry.phone && (
                   <a
                     href={`https://wa.me/${selectedInquiry.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
-                      `Hello ${selectedInquiry.name},\nRegarding your Athul Energy inquiry ${selectedInquiry.ticketId} for ${selectedInquiry.service}:`
+                      `Hello ${selectedInquiry.name},\nRegarding your Athul Energy inquiry ${selectedInquiry.ticketId}:`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -589,12 +605,12 @@ export default function AdminInquiriesPage() {
 
                 <a
                   href={`mailto:${selectedInquiry.email}?subject=${encodeURIComponent(
-                    `Athul Energy Proposal — ${selectedInquiry.ticketId}`
+                    `Athul Energy — Inquiry ${selectedInquiry.ticketId}`
                   )}`}
                   className="inline-flex items-center gap-1.5 rounded-xl bg-[#053824] hover:bg-emerald-900 px-4 py-2 text-xs font-bold text-white shadow-xs transition-colors"
                 >
-                  <MessageSquare className="h-3.5 w-3.5 text-emerald-400" />
-                  <span>Send Proposal</span>
+                  <Mail className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Send Email</span>
                 </a>
 
                 <button
@@ -619,7 +635,7 @@ export default function AdminInquiriesPage() {
                 <Trash2 className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold text-slate-900 text-sm">Delete Inquiry Lead</h4>
+                <h4 className="font-bold text-slate-900 text-sm">Delete Inquiry</h4>
                 <p className="text-xs text-slate-500 mt-0.5">Are you sure you want to delete this inquiry record? This action cannot be undone.</p>
               </div>
             </div>
@@ -637,7 +653,7 @@ export default function AdminInquiriesPage() {
                 onClick={() => handleDelete(deleteConfirmId)}
                 className="rounded-xl bg-red-600 hover:bg-red-700 px-3.5 py-1.5 text-xs font-bold text-white shadow-2xs"
               >
-                Yes, Delete Lead
+                Yes, Delete
               </button>
             </div>
           </div>
