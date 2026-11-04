@@ -34,15 +34,21 @@ STEP 1.3: Upload and deploy in cPanel
 --------------------------------------------------------------------------------
 1. Log into your cPanel (https://new.athulenergy.com:2083).
 2. Open "File Manager" and double-click into "public_html".
-   *** CRITICAL: NEVER DELETE THE "api" FOLDER INSIDE public_html ***
-3. Click "Upload" in the top cPanel toolbar.
-4. Drag and drop "frontend-public_html.zip".
-5. Back in File Manager, click "Reload".
-6. Right-click "frontend-public_html.zip" and choose "Extract".
-   Confirm the target folder is "/public_html".
-7. Click "Extract File(s)", then close the popup.
-8. Delete the "frontend-public_html.zip" from public_html to save server space.
-9. Verify that public_html/.htaccess has the Passenger bypass rules (see PART 4).
+
+   *** PRO-TIP: CLEAN INSTALLATION ***
+   If you want a 100% clean installation to remove old Next.js build cache:
+   a. Click "Select All" inside public_html and click "Delete".
+   b. Don't worry about the "api" folder — "frontend-public_html.zip" ALREADY
+      contains the "api" folder and its ".htaccess" Passenger configuration!
+   c. Upload "frontend-public_html.zip" and "Extract" into "/public_html".
+   d. Delete the zip file after extraction.
+   e. *** IMPORTANT: RECONNECT THE MEDIA SHORTCUT ***
+      Deleting everything also removes the shortcut to your uploaded photos.
+      Right after extracting, reconnect it in 3 seconds:
+      Open cPanel Terminal (under "Advanced" in cPanel) and run:
+         ln -s /home/newathulenergy/athul-backend/media /home/newathulenergy/public_html/media
+      (Or open https://new.athulenergy.com/symlink.php once in your browser).
+      All photos, blog covers, and PDFs will show up instantly!
 
 Your frontend changes are immediately live! Hard-refresh your browser (Ctrl + F5).
 
@@ -118,7 +124,25 @@ cleanup. Recreate it in 30 seconds:
 4. Save the file, go to "Setup Node.js App", and click "RESTART".
 
 
-B) WHAT SHOULD BE IN "public_html/.htaccess" (ROOT HTACCESS)?
+B) WHAT IF GALLERY PHOTOS OR BLOG COVERS SHOW 404 (BROKEN IMAGES)?
+--------------------------------------------------------------------------------
+This happens when the shortcut link to uploaded media is missing (e.g., after
+emptying public_html during a frontend deployment). The files are safe in
+"athul-backend/media".
+
+Fix in 5 seconds (choose either method):
+
+METHOD 1: In cPanel Terminal (Recommended)
+Run:
+   ln -s /home/newathulenergy/athul-backend/media /home/newathulenergy/public_html/media
+
+METHOD 2: Via Browser (PHP Helper)
+If symlink.php is in public_html, simply visit in your browser:
+   https://new.athulenergy.com/symlink.php
+It will display "Successfully linked media folder!". Then delete symlink.php.
+
+
+C) WHAT SHOULD BE IN "public_html/.htaccess" (ROOT HTACCESS)?
 --------------------------------------------------------------------------------
 The main .htaccess in public_html MUST contain the following lines right below
 "RewriteBase /" so Apache allows Passenger to handle /api:
@@ -128,7 +152,7 @@ The main .htaccess in public_html MUST contain the following lines right below
    RewriteRule ^media - [L]
 
 
-C) BACKEND .env TEMPLATE REFERENCE
+D) BACKEND .env TEMPLATE REFERENCE
 --------------------------------------------------------------------------------
 Located at: /home/newathulenergy/athul-backend/.env
 
@@ -155,7 +179,7 @@ Located at: /home/newathulenergy/athul-backend/.env
    ADMIN_PASSWORD=athul@2026
 
 
-D) IMPORTANT ADMIN ACCESS
+E) IMPORTANT ADMIN ACCESS
 --------------------------------------------------------------------------------
 Administrative Portal: https://new.athulenergy.com/admin
 Default Login Email:   admin@athulenergy.com
