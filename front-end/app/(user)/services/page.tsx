@@ -1,22 +1,11 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import ServicesDirectory from "@/components/user/ServicesDirectory";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Comprehensive Energy & Engineering Services | Athul Energy Consultants",
+  title: "Comprehensive Energy & Engineering Services",
   description:
     "BEE Accredited Energy Audits (AEA-0275), CEA 2010 Electrical Safety Inspections, IEEE 519 Power Quality studies, and NAAC Green Audits across Kerala and India since 2008.",
-  keywords: [
-    "Energy audit Kerala",
-    "BEE accredited energy auditor AEA-0275",
-    "Electrical safety audit CEA 2010",
-    "Thermal imaging survey FLIR",
-    "Power quality and harmonics audit IEEE 519",
-    "NAAC green audit college Kerala",
-    "GRIHA energy audit",
-    "PAT scheme M&V audit",
-    "EMC Kerala empanelled energy auditor",
-  ],
   alternates: {
     canonical: "/services",
   },
@@ -147,6 +136,10 @@ export default function ServicesPage() {
 
         {/* Hero Content */}
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs
+            items={[{ label: "Services" }]}
+            className="px-0 pt-0 pb-3 text-slate-300 [&_a]:text-slate-300 [&_span]:text-white"
+          />
           <div className="max-w-3xl">
             {/* Tagline Strip: OUR SERVICES — */}
             <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.14em] text-[#4ade80] mb-2 sm:mb-2.5">
@@ -168,16 +161,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Main Services Master-Detail Directory (Sidebar + Horizontal Cards) */}
-      <Suspense
-        fallback={
-          <div className="py-20 text-center text-slate-500">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-emerald-600 border-t-transparent" />
-            <p className="mt-3 text-xs sm:text-sm">Loading engineering services...</p>
-          </div>
-        }
-      >
-        <ServicesDirectory />
-      </Suspense>
+      <ServicesDirectory />
     </div>
   );
 }

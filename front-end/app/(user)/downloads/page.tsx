@@ -1,25 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import DownloadsPageClient from "@/components/user/DownloadsPageClient";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Statutory Downloads, Government Orders & Standards | Athul Energy Consultants",
+  title: "Statutory Downloads, Government Orders & Standards",
   description:
     "Official regulatory gazettes, Bureau of Energy Efficiency (BEE) guidebooks, Central Electricity Authority (CEA) safety standards, K-ECBC orders, and energy auditing study manuals.",
-  keywords: [
-    "BEE Guide Books PDF",
-    "CEA Regulations 2010 Gazette",
-    "K-ECBC Kerala Gazette",
-    "Energy Conservation Act amended",
-    "Electricity Act 2003 statutory audit",
-    "NAAC Criteria 7 Green Audit Manual",
-    "Athul Energy Downloads",
-  ],
   alternates: {
     canonical: "/downloads",
   },
   openGraph: {
-    title: "Statutory Downloads, Government Orders & Standards | Athul Energy Consultants",
+    title: "Statutory Downloads, Government Orders & Standards | Athul Energy",
     description:
       "Official regulatory gazettes, BEE guidebooks, CEA safety regulations, and compliance manuals.",
     url: "https://www.athulenergy.com/downloads",
@@ -85,6 +77,10 @@ export default function DownloadsPage() {
       {/* Hero Section — compact banner with greenish background */}
       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50/80 via-green-50/50 to-white border-b border-emerald-100/60 py-4 sm:py-5">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs
+            items={[{ label: "Regulatory Downloads" }]}
+            className="px-0 pt-0 pb-2.5"
+          />
           {/* Always side-by-side: text left, image right */}
           <div className="flex flex-row items-center justify-between gap-4">
             {/* Left Content */}

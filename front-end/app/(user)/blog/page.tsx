@@ -2,27 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, BookOpen } from "lucide-react";
 import BlogDirectory from "@/components/user/BlogDirectory";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 import { fetchBlogs } from "@/lib/blog-api";
 
 export const metadata: Metadata = {
-  title: "Engineering Insights & Energy Audit Guides | Athul Energy Consultants",
+  title: "Engineering Insights & Energy Audit Guides",
   description:
     "Authoritative technical articles and compliance guides on BEE mandatory audits, CEA 2010 electrical safety, infrared thermography, harmonic mitigation, and boiler efficiency.",
-  keywords: [
-    "Energy Audit Blog",
-    "BEE Mandatory Energy Audit Guide",
-    "CEA Regulations 2010 Electrical Safety",
-    "Infrared Thermography Guide",
-    "IEEE 519 Harmonic Mitigation",
-    "Boiler Efficiency Energy Conservation",
-    "NAAC Criteria 7 Green Audit",
-    "Athul Energy Technical Insights",
-  ],
   alternates: {
     canonical: "/blog",
   },
   openGraph: {
-    title: "Engineering Insights & Energy Audit Guides | Athul Energy Consultants",
+    title: "Engineering Insights & Energy Audit Guides | Athul Energy",
     description:
       "Authoritative technical articles and compliance guides on BEE mandatory audits, CEA 2010 electrical safety, and industrial energy efficiency.",
     url: "https://www.athulenergy.com/blog",
@@ -95,16 +86,11 @@ export default async function BlogPage() {
       {/* Hero Header Section */}
       <section className="border-b border-slate-200/90 bg-white py-5 sm:py-10 shadow-2xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 mb-3 sm:mb-4 overflow-x-auto whitespace-nowrap scrollbar-none py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0">
-            <Link href="/" className="shrink-0 hover:text-emerald-700 transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-            <span className="shrink-0 font-semibold text-slate-900">
-              Technical Blog &amp; Insights
-            </span>
-          </nav>
+          {/* Breadcrumb Navigation with BreadcrumbList Schema */}
+          <Breadcrumbs
+            items={[{ label: "Technical Blog & Insights" }]}
+            className="px-0 py-0 mb-3 sm:mb-4"
+          />
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6">
             <div className="max-w-3xl">

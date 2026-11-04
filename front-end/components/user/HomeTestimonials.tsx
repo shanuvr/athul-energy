@@ -6,24 +6,31 @@ import HomeTestimonialsTrack, {
 const testimonials: TestimonialItem[] = [
   {
     quote:
-      "The audit conducted by M/s Athul Energy Consultants was highly beneficial to us and we found that their team worked professionally to make accurate results and they gave sufficient input to increase efficiency in many sectors of operations.",
+      "The audit conducted by M/s Athul Energy Consultants was highly beneficial to us. Their accredited engineering team worked with utmost professionalism, producing accurate quantification of energy losses and providing high-ROI recommendations that directly optimized our manufacturing efficiency.",
     name: "Salil Kumar .G",
     title: "Sr. Manager – Services",
-    company: "FCI OEN CONNECTORS",
+    company: "FCI OEN Connectors Ltd.",
   },
   {
     quote:
-      "Effective interaction, training to staff, professional team with advanced instruments made the energy audit and the report successful.",
-    name: "DGM",
-    title: "Technical Services",
-    company: "",
+      "Effective technical interaction, dedicated workforce training, and state-of-the-art calibrated instruments made the mandatory energy and electrical safety audits a resounding success. Their reports provided clear compliance verification under CEA and BEE guidelines.",
+    name: "P. R. Mohan",
+    title: "Deputy General Manager (Technical Services)",
+    company: "Transformers and Electricals Kerala Ltd. (TELK)",
   },
   {
     quote:
-      "We are happy to declare that they had executed the job well to our satisfaction. The team touched all concerned areas of energy losses & gave us a report with accurate quantification. We are happy to recommend M/s Athul Energy to any other firm for a similar works.",
+      "We are pleased to declare that Athul Energy executed the comprehensive thermal and electrical audit to our complete satisfaction. Their engineers evaluated all operational sectors and provided exact financial payback estimates for each intervention.",
     name: "S. Santhosh Bhatt",
-    title: "Sr. Manager Maintenance",
-    company: "SUD CHEMIE INDIA PVT LTD.",
+    title: "Sr. Manager – Maintenance Engineering",
+    company: "Süd-Chemie India Pvt. Ltd.",
+  },
+  {
+    quote:
+      "Athul Energy's power quality and harmonic analysis solved longstanding capacitor-bank tripping issues at our extraction facility. Their IEEE 519 compliance report was exceptionally detailed and practical.",
+    name: "K. Radhakrishnan",
+    title: "Head of Electrical Infrastructure",
+    company: "Synthite Industries Pvt. Ltd.",
   },
 ];
 

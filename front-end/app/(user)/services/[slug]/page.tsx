@@ -26,6 +26,7 @@ import {
   getServicesByCategory,
   SERVICE_CATEGORIES,
 } from "@/lib/services-data";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -48,28 +49,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const title = `${service.title} | Athul Energy Consultants`;
+  const fullTitle = `${service.title} | Athul Energy Consultants`;
   const description = `${service.shortDesc} Executed by BEE Accredited Energy Auditors (AEA-0275) with NABL-calibrated instruments.`;
   const canonicalUrl = `https://www.athulenergy.com/services/${service.slug}`;
 
   return {
-    title,
+    title: {
+      absolute: fullTitle,
+    },
     description,
-    keywords: [
-      service.title,
-      service.categoryLabel,
-      "Athul Energy Consultants",
-      "Energy Auditor Kerala",
-      "BEE Accredited Energy Auditor AEA-0275",
-      "Electrical Safety Inspection Kerala",
-      ...service.standards,
-      ...service.targetIndustries,
-    ],
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title,
+      title: fullTitle,
       description,
       url: canonicalUrl,
       type: "website",
@@ -86,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: fullTitle,
       description,
       images: ["/hero-desk.webp"],
     },
@@ -203,27 +196,15 @@ async function ServiceDetailContent({ params }: Props) {
       {/* Top Breadcrumb & Compact Hero Section */}
       <section className="border-b border-slate-200/90 bg-white py-6 sm:py-8 lg:py-10 shadow-2xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation - Compact, single line, horizontally scrollable on mobile */}
-          <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 mb-3 sm:mb-5 overflow-x-auto whitespace-nowrap scrollbar-none py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
-            <Link href="/" className="shrink-0 hover:text-emerald-700 transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-            <Link href="/services" className="shrink-0 hover:text-emerald-700 transition-colors">
-              Services
-            </Link>
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-            <Link
-              href={`/services?cat=${service.category}`}
-              className="shrink-0 hover:text-emerald-700 transition-colors"
-            >
-              {categoryInfo?.shortTitle || service.categoryLabel}
-            </Link>
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-            <span className="shrink-0 font-semibold text-slate-900">
-              {service.title}
-            </span>
-          </nav>
+          {/* Breadcrumb Navigation with Google BreadcrumbList Schema */}
+          <Breadcrumbs
+            items={[
+              { label: "Services", href: "/services" },
+              { label: categoryInfo?.shortTitle || service.categoryLabel, href: `/services?cat=${service.category}` },
+              { label: service.title },
+            ]}
+            className="px-0 py-0 mb-3 sm:mb-5"
+          />
 
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 sm:gap-5">
             <div className="max-w-3xl">

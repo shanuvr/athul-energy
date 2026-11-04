@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import {
   Zap,
   ShieldCheck,
@@ -147,30 +146,27 @@ function ServiceVisualEmblem({
 }
 
 export default function ServicesDirectory() {
-  const searchParams = useSearchParams();
-  const urlCat = searchParams.get("cat") as ServiceCategoryId | null;
-  const validUrlCat =
-    urlCat &&
-    [
-      "energy-audits",
-      "safety-audits",
-      "surveys-thermography",
-      "compliance-studies",
-      "training",
-    ].includes(urlCat)
-      ? urlCat
-      : null;
+  const [selectedCategory, setSelectedCategory] = useState<ServiceCategoryId | "all">("all");
 
-  const [overrideCat, setOverrideCat] = useState<ServiceCategoryId | "all" | null>(null);
-  const [prevUrlCat, setPrevUrlCat] = useState(validUrlCat);
-
-  if (validUrlCat !== prevUrlCat) {
-    setPrevUrlCat(validUrlCat);
-    setOverrideCat(null);
-  }
-
-  const selectedCategory = overrideCat ?? validUrlCat ?? "energy-audits";
-  const setSelectedCategory = (cat: ServiceCategoryId | "all") => setOverrideCat(cat);
+  // Read URL search parameter safely on client-side mount without de-opting SSR/Static HTML export
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlCat = params.get("cat") as ServiceCategoryId | null;
+      if (
+        urlCat &&
+        [
+          "energy-audits",
+          "safety-audits",
+          "surveys-thermography",
+          "compliance-studies",
+          "training",
+        ].includes(urlCat)
+      ) {
+        setSelectedCategory(urlCat);
+      }
+    }
+  }, []);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileCatOpen, setMobileCatOpen] = useState(false);

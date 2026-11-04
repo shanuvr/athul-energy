@@ -90,9 +90,9 @@ export default function HomeHero() {
           </h1>
 
           <p className="hero-subhead hero-rise hero-delay-3 mt-3 max-w-md text-pretty text-[15px] leading-relaxed text-slate-200/90 sm:mt-6 sm:max-w-xl sm:text-lg sm:text-slate-300">
-            Since 2008, helping industries, institutions and buildings cut
-            energy costs, meet statutory compliance and build a safer, greener
-            future.
+            Based in Thrissur since 2008, helping industries, institutions and
+            commercial facilities across Kerala cut energy costs, verify CEA safety,
+            and achieve statutory BEE compliance.
           </p>
 
           <div className="hero-ctas hero-rise hero-delay-4 mt-5 flex flex-row items-center gap-2.5 sm:mt-9 sm:gap-3">

@@ -2,25 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import TeamDirectory from "@/components/user/TeamDirectory";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Engineering Team & Leadership | Athul Energy Consultants",
+  title: "Engineering Team & Leadership",
   description:
     "Meet our multidisciplinary team of BEE Accredited Energy Auditors (AEA-0275), Certified Energy Managers, and BEE Empaneled Sector Experts for Refineries, Thermal Power, DISCOMs, and Buildings.",
-  keywords: [
-    "Athul Energy Team",
-    "BEE Accredited Energy Auditor Kerala",
-    "Santhosh A Energy Auditor",
-    "Ashok KMP Energy Auditor",
-    "Electrical Safety Auditor",
-    "BEE Sector Empaneled Experts",
-    "Energy Auditing Specialists",
-  ],
   alternates: {
     canonical: "/about/team",
   },
   openGraph: {
-    title: "Engineering Team & Leadership | Athul Energy Consultants",
+    title: "Engineering Team & Leadership | Athul Energy",
     description:
       "Meet our multidisciplinary team of BEE Accredited Energy Auditors, Certified Energy Managers, and BEE Empaneled Sector Experts.",
     url: "https://www.athulenergy.com/about/team",
@@ -92,20 +84,14 @@ export default function TeamPage() {
       {/* Top Hero Section */}
       <section className="border-b border-slate-200 bg-white py-8 shadow-2xs sm:py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <nav className="mb-6 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap py-1 text-[11px] text-slate-500 scrollbar-none sm:text-xs">
-            <Link href="/" className="shrink-0 transition-colors hover:text-emerald-700">
-              Home
-            </Link>
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-            <Link href="/about" className="shrink-0 transition-colors hover:text-emerald-700">
-              About Us
-            </Link>
-            <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-            <span className="shrink-0 font-semibold text-slate-900">
-              Our Engineering Team
-            </span>
-          </nav>
+          {/* Breadcrumb Navigation with BreadcrumbList Schema */}
+          <Breadcrumbs
+            items={[
+              { label: "About Us", href: "/about" },
+              { label: "Our Engineering Team" },
+            ]}
+            className="px-0 py-0 mb-6"
+          />
 
           <div className="max-w-3xl">
             <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-emerald-700">

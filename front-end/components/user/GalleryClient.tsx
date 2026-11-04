@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Loader2, ImageIcon, AlertCircle } from "lucide-react";
 import { api, getMediaUrl } from "@/lib/api";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 
 export interface GalleryItem {
   id: number;
@@ -62,6 +63,7 @@ export default function GalleryClient() {
       {/* Page Header */}
       <section className="border-b border-slate-200 bg-white py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: "Field Gallery" }]} className="px-0 pt-0 pb-4" />
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
               <p className="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-emerald-700">

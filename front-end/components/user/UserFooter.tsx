@@ -132,7 +132,7 @@ export default function UserFooter() {
                     href="/services"
                     className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-emerald-400 transition-colors duration-200 hover:text-emerald-300"
                   >
-                    All 30 services
+                    All 35 engineering services
                     <ArrowUpRight className="h-3 w-3" />
                   </Link>
                 </li>
@@ -158,7 +158,7 @@ export default function UserFooter() {
                     className="inline-flex items-center gap-2.5 transition-colors duration-200 hover:text-white"
                   >
                     <Phone className="h-3.5 w-3.5 shrink-0 text-emerald-400/80" />
-                    +91 73561 11990
+                    +91 73561 11990 / 11991
                   </a>
                 </p>
                 <p>
@@ -173,6 +173,25 @@ export default function UserFooter() {
               </address>
             </div>
           </div>
+        </div>
+
+        {/* Regional Industrial Coverage Bar */}
+        <div className="border-t border-slate-900 py-4 text-[11px] text-slate-500 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="font-semibold text-slate-400">Active Audit Hubs:</span>
+            <span>Thrissur (Headquarters)</span>
+            <span>·</span>
+            <span>Kochi / Ernakulam</span>
+            <span>·</span>
+            <span>Palakkad (KINFRA)</span>
+            <span>·</span>
+            <span>Kozhikode</span>
+            <span>·</span>
+            <span>Trivandrum</span>
+            <span>·</span>
+            <span>Pan-India SDAs</span>
+          </div>
+          <span className="text-emerald-400/80 font-medium">BEE AEA-0275 · CEA 2010 · ISO 50001</span>
         </div>
 
         {/* Bottom bar */}

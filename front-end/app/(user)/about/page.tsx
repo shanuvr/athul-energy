@@ -16,6 +16,7 @@ import {
   type TeamMember,
 } from "@/lib/team-data";
 import LeadershipCard from "@/components/user/LeadershipCard";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 import {
   ABOUT_DISCIPLINES,
   ABOUT_EMPANELMENTS,
@@ -28,23 +29,14 @@ import {
 } from "@/lib/about-data";
 
 export const metadata: Metadata = {
-  title: "About Us | Athul Energy Consultants",
+  title: "About Us | BEE Accredited Energy Auditors",
   description:
     "Athul Energy Consultants Pvt. Ltd. (AEC) is a premier BEE Accredited Energy Auditing and Electrical Safety consulting firm empanelled with EMC Kerala, GEDA, and MEDA since 2008.",
-  keywords: [
-    "About Athul Energy Consultants",
-    "Energy Auditor Kerala",
-    "BEE Accredited Energy Auditor AEA-0275",
-    "Santhosh A Energy Auditor",
-    "EMC Kerala empanelled auditor",
-    "Industrial energy audit Kerala",
-    "Electrical safety consulting Thrissur",
-  ],
   alternates: {
     canonical: "/about",
   },
   openGraph: {
-    title: "About Us | Athul Energy Consultants",
+    title: "About Us | BEE Accredited Energy Auditors | Athul Energy",
     description:
       "BEE Accredited Energy Auditing (AEA-0275) and Electrical Safety consultancy firm empanelled with EMC Kerala, GEDA, and MEDA since 2008.",
     url: "https://www.athulenergy.com/about",
@@ -165,6 +157,10 @@ export default function AboutPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-14 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8 lg:pb-24 lg:pt-24">
+          <Breadcrumbs
+            items={[{ label: "About Us" }]}
+            className="px-0 pt-0 pb-4 text-slate-300 [&_a]:text-slate-300 [&_span]:text-white"
+          />
           <div className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-slate-400">
               <span>Est. 2008</span>

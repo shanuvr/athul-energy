@@ -44,23 +44,27 @@ function LogoMarqueeRow({
           direction === "left" ? "animate-clients-left" : "animate-clients-right"
         }`}
       >
-        {items.map((client, index) => (
-          <div
-            key={`${client.id}-${index}`}
-            className="flex h-20 w-[200px] sm:h-24 sm:w-[230px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white p-2 shadow-2xs transition-all duration-300 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 shrink-0"
-            aria-label={client.name}
-          >
-            <Image
-              src={client.logo}
-              alt={client.name}
-              width={220}
-              height={90}
-              loading="lazy"
-              unoptimized
-              className="h-16 sm:h-20 w-auto max-w-[94%] max-h-[90%] object-contain transition-all duration-300"
-            />
-          </div>
-        ))}
+        {items.map((client, index) => {
+          const isDuplicate = index >= logos.length;
+          return (
+            <div
+              key={`${client.id}-${index}`}
+              className="flex h-20 w-[200px] sm:h-24 sm:w-[230px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white p-2 shadow-2xs transition-all duration-300 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 shrink-0"
+              aria-hidden={isDuplicate ? "true" : undefined}
+              aria-label={isDuplicate ? undefined : client.name}
+            >
+              <Image
+                src={client.logo}
+                alt={isDuplicate ? "" : `${client.name} - Athul Energy Client`}
+                width={220}
+                height={90}
+                loading="lazy"
+                unoptimized
+                className="h-16 sm:h-20 w-auto max-w-[94%] max-h-[90%] object-contain transition-all duration-300"
+              />
+            </div>
+          );
+        })}
       </div>
       {/* Edge Fading Gradients */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-28 bg-gradient-to-r from-white to-transparent z-10" />

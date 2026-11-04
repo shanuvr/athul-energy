@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { fetchBlogs, fetchBlogBySlug } from "@/lib/blog-api";
 import BlogCard from "@/components/user/BlogCard";
+import Breadcrumbs from "@/components/user/Breadcrumbs";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -47,7 +48,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const metaTitle = post.seo?.metaTitle || `${post.title} | Athul Energy Consultants`;
+  const cleanTitle = post.title.replace(/\s*\|\s*Athul Energy.*$/i, "").trim();
+  const fullTitle = post.seo?.metaTitle
+    ? post.seo.metaTitle
+    : `${cleanTitle} | Athul Energy Consultants`;
   const metaDescription = post.seo?.metaDescription || post.excerpt;
   const canonicalUrl = `https://www.athulenergy.com/blog/${post.slug}`;
   const ogImageUrl = post.coverImage.startsWith("http")
@@ -55,14 +59,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : `https://www.athulenergy.com${post.coverImage.startsWith("/") ? "" : "/"}${post.coverImage}`;
 
   return {
-    title: metaTitle,
+    title: {
+      absolute: fullTitle,
+    },
     description: metaDescription,
-    keywords: post.seo?.keywords?.length ? post.seo.keywords : post.tags,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: metaTitle,
+      title: fullTitle,
       description: metaDescription,
       url: canonicalUrl,
       type: "article",
@@ -81,7 +86,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: metaTitle,
+      title: fullTitle,
       description: metaDescription,
       images: [ogImageUrl],
     },
@@ -210,20 +215,14 @@ async function BlogPostContent({ params }: Props) {
         {/* Top Breadcrumb & Article Header */}
         <section className="border-b border-slate-200/90 bg-white py-6 sm:py-10 shadow-2xs">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {/* Breadcrumb Navigation */}
-            <nav className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-500 mb-4 overflow-x-auto whitespace-nowrap scrollbar-none py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
-              <Link href="/" className="hover:text-emerald-700 transition-colors shrink-0">
-                Home
-              </Link>
-              <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-              <Link href="/blog" className="hover:text-emerald-700 transition-colors shrink-0">
-                Technical Blog
-              </Link>
-              <ChevronRight className="h-3 w-3 shrink-0 text-slate-300" />
-              <span className="font-semibold text-slate-900 truncate max-w-[200px] sm:max-w-md shrink-0">
-                {post.title}
-              </span>
-            </nav>
+            {/* Breadcrumb Navigation with BreadcrumbList Schema */}
+            <Breadcrumbs
+              items={[
+                { label: "Engineering Insights", href: "/blog" },
+                { label: post.title },
+              ]}
+              className="px-0 py-0 mb-4"
+            />
 
             {/* Article Header Metadata */}
             <div className="max-w-4xl">

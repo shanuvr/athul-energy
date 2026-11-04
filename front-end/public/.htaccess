@@ -76,6 +76,11 @@ DirectoryIndex index.html index.htm
   <If "%{REQUEST_URI} =~ m#^/(dashboard|admin|login)#">
     Header set X-Robots-Tag "noindex, nofollow, noarchive"
   </If>
+
+  # Prevent search engines from indexing the staging domain (new.athulenergy.com)
+  <If "%{HTTP_HOST} =~ m#^new\.#">
+    Header set X-Robots-Tag "noindex, nofollow, noarchive"
+  </If>
 </IfModule>
 
 # 4. REWRITE RULES & CLEAN URLS

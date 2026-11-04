@@ -18,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.athulenergy.com"),
   title: {
-    default: "Athul Energy Consultants | BEE Accredited Energy & Safety Audits",
+    default: "Energy Audit Consultants in Kerala | BEE Accredited | Athul Energy",
     template: "%s | Athul Energy Consultants",
   },
   description:
@@ -27,20 +27,6 @@ export const metadata: Metadata = {
   authors: [{ name: "Athul Energy Consultants Pvt. Ltd.", url: "https://www.athulenergy.com" }],
   creator: "Athul Energy Consultants Pvt. Ltd.",
   publisher: "Athul Energy Consultants Pvt. Ltd.",
-  keywords: [
-    "energy audit kerala",
-    "BEE accredited energy auditor",
-    "accredited energy auditor AEA-0275",
-    "electrical safety audit CEA 2010",
-    "power quality audit IEEE 519",
-    "harmonics study kerala",
-    "thermal imaging survey FLIR",
-    "green audit NAAC",
-    "emc kerala empanelled energy auditor",
-    "mandatory energy audit EC Act 2001",
-    "PAT scheme M&V verification",
-    "industrial energy consultants thrissur",
-  ],
   alternates: {
     canonical: "./",
   },
@@ -112,9 +98,10 @@ const globalSchema = {
       ],
     },
     {
-      "@type": "ProfessionalService",
+      "@type": ["ProfessionalService", "LocalBusiness"],
       "@id": "https://www.athulenergy.com/#service",
-      name: "Athul Energy Consultants",
+      name: "Athul Energy Consultants Pvt. Ltd.",
+      alternateName: "Athul Energy Thrissur",
       parentOrganization: {
         "@id": "https://www.athulenergy.com/#organization",
       },

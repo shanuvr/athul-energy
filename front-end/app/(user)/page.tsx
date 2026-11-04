@@ -10,14 +10,16 @@ import HomeRecentBlogs from "@/components/user/HomeRecentBlogs";
 import HomeCTA from "@/components/user/HomeCTA";
 
 export const metadata: Metadata = {
-  title: "BEE-Accredited Energy Audit Consultants in Kerala",
+  title: {
+    absolute: "Energy Audit Consultants in Kerala | BEE Accredited | Athul Energy",
+  },
   description:
-    "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
+    "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008. Leading Accredited Energy Auditor AEA-0275.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "BEE-Accredited Energy Audit Consultants in Kerala",
+    title: "Energy Audit Consultants in Kerala | BEE Accredited | Athul Energy",
     description:
       "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
     url: "/",

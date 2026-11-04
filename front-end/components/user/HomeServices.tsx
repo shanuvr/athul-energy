@@ -12,6 +12,7 @@ interface ServiceItem {
   description: string;
   imageSrc: string;
   imagePosition: string;
+  href: string;
 }
 
 const services: ServiceItem[] = [
@@ -22,6 +23,7 @@ const services: ServiceItem[] = [
       "Electrical and thermal audits, SEC analysis and statutory reporting for BEE and EMC Kerala requirements.",
     imageSrc: "/hero-desk.webp",
     imagePosition: "18% 55%",
+    href: "/services/detailed-energy-audit",
   },
   {
     title: "Electrical safety audit",
@@ -30,6 +32,7 @@ const services: ServiceItem[] = [
       "Protection coordination, earthing, hazard review and thermal imaging to verify site safety and CEA compliance.",
     imageSrc: "/hero-desk.webp",
     imagePosition: "78% 42%",
+    href: "/services/electrical-safety-audit",
   },
   {
     title: "Power quality and harmonics",
@@ -38,6 +41,7 @@ const services: ServiceItem[] = [
       "Harmonic and power-factor studies, ETAP simulation and filter sizing to reduce losses and equipment stress.",
     imageSrc: "/hero-desk.webp",
     imagePosition: "48% 22%",
+    href: "/services/power-quality-harmonics-study",
   },
   {
     title: "Green and NAAC audit",
@@ -46,6 +50,7 @@ const services: ServiceItem[] = [
       "Green, environment and NAAC audits with carbon and water-balance assessments for campuses and institutions.",
     imageSrc: "/hero-mobile.webp",
     imagePosition: "70% 30%",
+    href: "/services/green-audit-naac-accreditation",
   },
   {
     title: "Thermal imaging survey",
@@ -54,6 +59,7 @@ const services: ServiceItem[] = [
       "Infrared scans of panels, motors and distribution equipment to locate hot spots before failure.",
     imageSrc: "/hero-desk.webp",
     imagePosition: "30% 18%",
+    href: "/services/infrared-thermal-imaging-survey",
   },
   {
     title: "Environment and carbon audit",
@@ -62,6 +68,7 @@ const services: ServiceItem[] = [
       "Environment audits, carbon footprint analysis and resource reviews for compliance and reporting.",
     imageSrc: "/hero-mobile.webp",
     imagePosition: "30% 70%",
+    href: "/services/iso-50001-enms-consultancy",
   },
   {
     title: "Measurement and verification",
@@ -70,6 +77,7 @@ const services: ServiceItem[] = [
       "Baseline development, payback analysis and measurement & verification after audit recommendations.",
     imageSrc: "/hero-desk.webp",
     imagePosition: "90% 58%",
+    href: "/services/pat-scheme-verification",
   },
 ];
 
@@ -157,17 +165,19 @@ export default function HomeServices() {
             <span className="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-slate-500">
               Services
             </span>
-            <span className="text-[10px] font-medium tabular-nums tracking-[0.12em] text-slate-400">
-              01 — 07
+            <span className="text-[10px] font-medium tracking-[0.12em] text-slate-400">
+              Comprehensive Solutions
             </span>
           </div>
 
-          <h2
+          <p
+            role="heading"
+            aria-level={2}
             id="services-heading-mobile"
             className="mt-5 text-balance font-display text-[1.5rem] font-bold leading-[1.1] tracking-tight text-slate-950"
           >
             Energy audit &amp; electrical safety services in Kerala
-          </h2>
+          </p>
           <p className="mt-3 max-w-md text-pretty text-[12px] leading-relaxed text-slate-600">
             Practical audits and engineering studies for industrial,
             institutional and commercial sites.
@@ -206,7 +216,7 @@ export default function HomeServices() {
                   className="w-[calc((100vw-2rem-0.75rem)/2)] max-w-[300px] shrink-0"
                 >
                   <Link
-                    href="/services"
+                    href={service.href}
                     className="group relative flex h-full flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3 transition-colors duration-200 hover:border-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 sm:flex-row sm:p-3.5"
                   >
                     <span className="relative block aspect-[5/3] w-full shrink-0 overflow-hidden rounded-lg bg-slate-100 ring-1 ring-inset ring-slate-900/5 sm:aspect-auto sm:h-16 sm:w-16">
@@ -326,7 +336,7 @@ export default function HomeServices() {
                 {services.map((service, index) => (
                   <li key={service.title}>
                     <Link
-                      href="/services"
+                      href={service.href}
                       className="group -mx-4 grid grid-cols-[2.25rem_5rem_1fr_auto] items-start gap-x-5 border-b border-slate-300/80 px-4 py-7 transition-colors duration-200 hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500/40"
                     >
                       <span className="pt-1 font-display text-[11px] font-semibold tabular-nums tracking-[0.12em] text-slate-400 transition-colors duration-200 group-hover:text-emerald-700">
