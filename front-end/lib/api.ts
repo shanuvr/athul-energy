@@ -1,24 +1,43 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
 
-const rawApiUrl =
-  process.env.NEXT_PUBLIC_API_URL !== undefined
-    ? process.env.NEXT_PUBLIC_API_URL
-    : "http://127.0.0.1:5000/api";
+export const getApiBaseUrl = (): string => {
+  if (typeof window !== "undefined") {
+    // Browser environment
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    if (isLocal) {
+      return "http://127.0.0.1:5000/api";
+    }
+    // On live server, use relative /api (routed by .htaccess to backend)
+    return "/api";
+  }
 
-export const API_BASE_URL =
-  typeof window === "undefined" && rawApiUrl.startsWith("/")
-    ? `http://127.0.0.1:5000${rawApiUrl}`
-    : rawApiUrl;
+  // Node.js / SSG Build environment
+  // Use the full absolute URL from env so SSR fetches work during build
+  const envUrl = process.env.NEXT_PUBLIC_API_URL || "https://new.athulenergy.com/api";
+  return envUrl;
+};
 
-const rawMediaUrl =
-  process.env.NEXT_PUBLIC_MEDIA_URL !== undefined
-    ? process.env.NEXT_PUBLIC_MEDIA_URL
-    : "http://127.0.0.1:5000";
+export const getMediaBaseUrl = (): string => {
+  if (typeof window !== "undefined") {
+    // Browser environment
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    if (isLocal) {
+      return "http://127.0.0.1:5000";
+    }
+    // On live server, media is served from same domain via .htaccess proxy
+    return "";
+  }
 
-export const MEDIA_BASE_URL =
-  typeof window === "undefined" && rawMediaUrl.startsWith("/")
-    ? `http://127.0.0.1:5000${rawMediaUrl}`
-    : rawMediaUrl;
+  // Node.js / SSG Build environment
+  return process.env.NEXT_PUBLIC_MEDIA_URL || "";
+};
+
+export const API_BASE_URL = getApiBaseUrl();
+export const MEDIA_BASE_URL = getMediaBaseUrl();
 
 export const AUTH_TOKEN_KEY = "athul_admin_token";
 
@@ -40,6 +59,7 @@ export const api = axios.create({
  */
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    config.baseURL = getApiBaseUrl();
     if (typeof window !== "undefined") {
       const token = localStorage.getItem(AUTH_TOKEN_KEY);
       if (token && config.headers) {
@@ -103,7 +123,7 @@ api.interceptors.response.use(
       try {
         // Call backend refresh endpoint (sends httpOnly cookie automatically)
         const refreshResponse = await axios.post(
-          `${API_BASE_URL}/auth/refresh`,
+          `${getApiBaseUrl()}/auth/refresh`,
           {},
           { withCredentials: true }
         );
@@ -176,10 +196,11 @@ export function getMediaUrl(path?: string | null): string {
     return path;
   }
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
-  if (!MEDIA_BASE_URL) {
+  const mediaBase = getMediaBaseUrl();
+  if (!mediaBase) {
     return cleanPath;
   }
-  return `${MEDIA_BASE_URL}${cleanPath}`;
+  return `${mediaBase}${cleanPath}`;
 }
 
 export default api;

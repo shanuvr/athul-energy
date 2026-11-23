@@ -258,14 +258,4 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.athulenergy.com/blog/this-is-a-h1-main-title-of-the-blog</loc>
-    <lastmod>2026-11-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://www.athulenergy.com/media/blog/1793689271012-5599-electrician-with-tablet-adjusting-circuitry-juncti.jpg</image:loc>
-      <image:title>this is a h1  main title of the blog</image:title>
-    </image:image>
-  </url>
 </urlset>

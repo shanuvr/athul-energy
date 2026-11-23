@@ -186,6 +186,106 @@ Default Login Email:   admin@athulenergy.com
 Default Password:      athul@2026
 
 
+F) WHAT IF NEXT.JS PREFETCH FILES SHOW 404 (__next.!...__PAGE__.txt)?
+--------------------------------------------------------------------------------
+Symptom:
+Browser console shows 404 errors like:
+GET https://new.athulenergy.com/dashboard/inquiries/__next.!KGFkbWluKQ.dashboard.inquiries.__PAGE__.txt 404
+
+Why it happens:
+Next.js 16 (with output: "export") compiles route prefetch segments into nested
+subdirectories inside out/, but the client-side router requests them as flat
+filenames separated by dots. Apache returns 404 because the flat file didn't exist.
+
+How it is solved:
+We created an automated post-build script: scratch/flatten_rsc_segments.py
+The script scans out/ and copies every segment file into its expected flat filename
+(all 57 prefetch files).
+Whenever you build, simply run:
+   powershell -ExecutionPolicy Bypass -File .\scratch\zip_frontend.ps1
+This script runs the flattening process automatically before packaging the zip.
+
+
+G) WHAT IF LOGIN SHOWS CORS ERROR: "http://127.0.0.1:5000/api/auth/me blocked"?
+--------------------------------------------------------------------------------
+Symptom:
+Browser console shows:
+Access to XMLHttpRequest at 'http://127.0.0.1:5000/api/auth/me' from origin
+'https://new.athulenergy.com' has been blocked by CORS policy.
+
+Why it happens:
+During static generation (npm run build), Next.js pre-rendered components on Node.
+If lib/api.ts falls back to 127.0.0.1 when NEXT_PUBLIC_API_URL starts with "/",
+the build embeds http://127.0.0.1:5000 into the static HTML files!
+
+How it is solved:
+1. "front-end/.env.production" must have:
+   NEXT_PUBLIC_API_URL=https://new.athulenergy.com/api
+   NEXT_PUBLIC_MEDIA_URL=https://new.athulenergy.com
+2. "front-end/lib/api.ts" is configured so:
+   - In browser: uses relative "/api" (routed cleanly by Apache).
+   - In build/SSR: uses "https://new.athulenergy.com/api" (never 127.0.0.1).
+
+
+H) WHAT IF DASHBOARD / UPLOAD SHOWS 503 ERROR ("Upload failed. Check server connection") WHILE /api/health IS 200 OK?
+--------------------------------------------------------------------------------
+Symptom:
+- Visiting https://new.athulenergy.com/api/health returns 200 {"status": "healthy"}.
+- BUT uploading a photo or loading /api/clients returns 503 Service Unavailable.
+
+Why it happens:
+In back-end/server.js, the Express app is designed to always listen on port 5000
+so Passenger/LiteSpeed stays alive (preventing gateway timeouts).
+However, when any route interacts with MySQL and Sequelize throws a connection error
+(ECONNREFUSED, wrong password, or unassigned database user), the central error
+handler catches it and returns HTTP 503:
+"Database service is temporarily unavailable. Please verify MySQL connection on port 3306."
+
+How to diagnose and fix:
+1. Run the Diagnostic Tool in your browser:
+   Visit: https://new.athulenergy.com/setup_media.php
+   It connects directly to MySQL using your athul-backend/.env credentials and
+   prints the exact error message (e.g. Access Denied or Unknown Database).
+2. Fix permissions in cPanel:
+   - Go to cPanel > "MySQL® Databases".
+   - Under "Add User To Database", select user "newathulenergy_dbadmin" and
+     database "newathulenergy_athul_energy_db".
+   - Click "Add", check "ALL PRIVILEGES", and click "Make Changes".
+3. Check password in athul-backend/.env:
+   - Ensure DB_PASSWORD matches the password set for newathulenergy_dbadmin.
+4. Restart Node.js:
+   - Go to cPanel > "Setup Node.js App" and click "RESTART".
+
+
+I) WHAT IF CPANEL HAS NO TERMINAL ICON (CREATING MEDIA LINK WITHOUT TERMINAL)?
+--------------------------------------------------------------------------------
+Symptom:
+You need to run: ln -s /home/newathulenergy/athul-backend/media /home/newathulenergy/public_html/media
+but the Terminal icon is missing under "Advanced" in cPanel.
+
+Why it happens:
+Most shared hosting providers disable SSH/Terminal access for security.
+
+How to fix (Choose either method):
+
+METHOD 1: Via Browser (Fastest - Recommended)
+1. Upload setup_media.php into public_html (already included in the frontend zip).
+2. Visit: https://new.athulenergy.com/setup_media.php
+3. The script automatically executes PHP's symlink() function to link backend
+   media to public_html/media, verifies the permissions, and displays green "OK".
+4. Delete setup_media.php when finished.
+
+METHOD 2: Via cPanel Cron Jobs (One-Time Execution Trick)
+1. In cPanel, open "Cron Jobs" (located under "Advanced").
+2. Under "Common Settings", select "Once Per Minute" (* * * * *).
+3. In the "Command" field, paste:
+   ln -s /home/newathulenergy/athul-backend/media /home/newathulenergy/public_html/media
+4. Click "Add New Cron Job".
+5. Wait 1 minute for it to trigger once.
+6. Refresh setup_media.php or symlink.php to verify "Media link already exists!".
+7. DELETE the cron job immediately so it doesn't keep running.
+
+
 ================================================================================
 PART 5: HOW TO SWITCH FROM STAGING (new.) TO MAIN DOMAIN (athulenergy.com)
 ================================================================================
