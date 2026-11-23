@@ -16,7 +16,7 @@ export const STATIC_PAGES = [
   { loc: "/contact", priority: "0.8", changefreq: "monthly" },
   { loc: "/downloads", priority: "0.8", changefreq: "weekly" },
   { loc: "/gallery", priority: "0.7", changefreq: "weekly" },
-  { loc: "/team", priority: "0.7", changefreq: "monthly" },
+  { loc: "/about/team", priority: "0.7", changefreq: "monthly" },
 ];
 
 export const SERVICE_SLUGS = [

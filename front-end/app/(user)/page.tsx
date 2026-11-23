@@ -14,14 +14,14 @@ export const metadata: Metadata = {
     absolute: "Energy Audit Consultants in Kerala | BEE Accredited | Athul Energy",
   },
   description:
-    "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008. Leading Accredited Energy Auditor AEA-0275.",
+    "BEE (EmAEA-091) and EMC Kerala accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008. Accredited Energy Auditor AEA-0275.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Energy Audit Consultants in Kerala | BEE Accredited | Athul Energy",
     description:
-      "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
+      "BEE (EmAEA-091) and EMC Kerala accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008. Accredited Energy Auditor AEA-0275.",
     url: "/",
     siteName: "Athul Energy Consultants",
     locale: "en_IN",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BEE-Accredited Energy Audit Consultants in Kerala",
     description:
-      "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008.",
+      "BEE (EmAEA-091) and EMC Kerala accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008. Accredited Energy Auditor AEA-0275.",
     images: ["/hero-desk.webp"],
   },
 };
@@ -53,17 +53,34 @@ const structuredData = {
   logo: "https://www.athulenergy.com/athul-logo.webp",
   image: "https://www.athulenergy.com/hero-desk.webp",
   description:
-    "BEE, EMC Kerala, GEDA and MEDA accredited energy audit, electrical safety, power quality and green audit consultants based in Thrissur, Kerala, since 2008.",
+    "BEE (EmAEA-091) and EMC Kerala accredited energy audit, electrical safety, power quality and green audit consultants based in Thrissur, Kerala, since 2008. Lead Accredited Energy Auditor AEA-0275.",
   foundingDate: "2008",
   telephone: "+91-7356111990",
   email: "info@athulenergy.com",
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-7356111990",
-    email: "info@athulenergy.com",
-    contactType: "customer service",
-    areaServed: "Kerala",
-  },
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-7356111990",
+      contactType: "customer service",
+      availableLanguage: ["English", "Malayalam", "Hindi"],
+      areaServed: "IN",
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-7356111991",
+      contactType: "customer service",
+      availableLanguage: ["English", "Malayalam", "Hindi"],
+      areaServed: "IN",
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-7356111994",
+      contactType: "technical support",
+      contactOption: "Direct Audit Desk",
+      availableLanguage: ["English", "Malayalam", "Hindi"],
+      areaServed: "IN",
+    },
+  ],
   address: {
     "@type": "PostalAddress",
     streetAddress:

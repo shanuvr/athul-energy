@@ -88,6 +88,30 @@ const globalSchema = {
       foundingLocation: "Thrissur, Kerala, India",
       telephone: "+91-7356111990",
       email: "info@athulenergy.com",
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: "+91-7356111990",
+          contactType: "customer service",
+          availableLanguage: ["English", "Malayalam", "Hindi"],
+          areaServed: "IN",
+        },
+        {
+          "@type": "ContactPoint",
+          telephone: "+91-7356111991",
+          contactType: "customer service",
+          availableLanguage: ["English", "Malayalam", "Hindi"],
+          areaServed: "IN",
+        },
+        {
+          "@type": "ContactPoint",
+          telephone: "+91-7356111994",
+          contactType: "technical support",
+          contactOption: "Direct Audit Desk",
+          availableLanguage: ["English", "Malayalam", "Hindi"],
+          areaServed: "IN",
+        },
+      ],
       address: {
         "@type": "PostalAddress",
         streetAddress: "Capital Legend Building, Korappath Lane, Thrissur North",
@@ -112,6 +136,30 @@ const globalSchema = {
       image: "https://www.athulenergy.com/hero-desk.webp",
       telephone: "+91-7356111990",
       email: "info@athulenergy.com",
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: "+91-7356111990",
+          contactType: "customer service",
+          availableLanguage: ["English", "Malayalam", "Hindi"],
+          areaServed: "IN",
+        },
+        {
+          "@type": "ContactPoint",
+          telephone: "+91-7356111991",
+          contactType: "customer service",
+          availableLanguage: ["English", "Malayalam", "Hindi"],
+          areaServed: "IN",
+        },
+        {
+          "@type": "ContactPoint",
+          telephone: "+91-7356111994",
+          contactType: "technical support",
+          contactOption: "Direct Audit Desk",
+          availableLanguage: ["English", "Malayalam", "Hindi"],
+          areaServed: "IN",
+        },
+      ],
       url: "https://www.athulenergy.com",
       priceRange: "$$",
       address: {
