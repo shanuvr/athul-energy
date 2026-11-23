@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -174,17 +173,11 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <head>
-        <meta name="color-scheme" content="light" />
-        <meta name="supported-color-schemes" content="light" />
-        <Script
-          id="global-schema-ld"
+      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans">
+        <script
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(globalSchema) }}
         />
-      </head>
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans">
         {children}
       </body>
     </html>
