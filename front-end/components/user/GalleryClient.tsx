@@ -75,7 +75,7 @@ export default function GalleryClient() {
               <p className="mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
                 Audits, thermal surveys, safety inspections and training
                 sessions from industrial, commercial and institutional sites
-                across Kerala and beyond.
+                across India and beyond.
               </p>
             </div>
             <p className="shrink-0 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">

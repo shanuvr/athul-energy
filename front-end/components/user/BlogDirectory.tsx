@@ -364,13 +364,13 @@ export default function BlogDirectory({ initialPosts = [] }: BlogDirectoryProps)
           <div className="max-w-2xl text-center lg:text-left">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 px-3 py-0.5 text-[11px] font-bold text-emerald-300 uppercase tracking-wider">
               <ShieldCheck className="h-3.5 w-3.5" />
-              Statutory Engineering Assistance
+              Engineering Assistance
             </span>
             <h3 className="mt-2 text-lg sm:text-2xl font-bold tracking-tight">
-              Require a Plant Audit or Statutory Compliance Verification?
+              Require a Plant Audit or Compliance Verification?
             </h3>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Our accredited engineers conduct comprehensive field measurements, calculate baseline SEC, and provide signed statutory documentation for BEE, EMC Kerala, and CEA requirements.
+              Our accredited engineers conduct comprehensive field measurements, generate reports and provide documentation for NABH, NAAC, NBA, ECSBC, BEE, and EMC Kerala requirements.
             </p>
           </div>
 
@@ -383,7 +383,7 @@ export default function BlogDirectory({ initialPosts = [] }: BlogDirectoryProps)
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
             <a
-              href="tel:+917356111990"
+              href="tel:+917356111994"
               className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-xs px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 transition-colors text-center"
             >
               <Phone className="h-3.5 w-3.5 text-emerald-300" />

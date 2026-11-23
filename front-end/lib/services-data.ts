@@ -772,7 +772,7 @@ export const SERVICES_DATA: ServiceDetail[] = [
     category: "training",
     categoryLabel: "Technical Training",
     shortDesc: "Hands-on engineering workshops, 30-day add-on courses, and structured internship programmes for engineering and science students across Kerala.",
-    fullDesc: "Bridging the academic-industry gap through formal institutional MOUs with 10 Engineering and 9 Science Colleges. We deliver comprehensive 30-day add-on courses, mentor 100+ students in our Athul Internship Programme, and serve as empaneled resource persons for PCRA, EMC, SEEM, ECS, ANERT, and KSPC.",
+    fullDesc: "Bridging the academic-industry gap through formal institutional MOUs with 10 Engineering and 9 Science Colleges. We deliver comprehensive 30-day add-on courses, mentor 100+ students in our Athul Internship Programme, and serve as empaneled resource persons for EMC, SEEM, and ECS.",
     featuredInNav: false,
     standards: ["AICTE Industry-Academia Guidelines", "EMC Kerala Energy Literacy Standards", "BEE National Energy Auditor Exam Syllabus"],
     keyDeliverables: [

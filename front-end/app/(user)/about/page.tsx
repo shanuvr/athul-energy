@@ -10,6 +10,7 @@ import {
   BookOpen,
   Users,
   Building2,
+  ExternalLink,
 } from "lucide-react";
 import {
   getTeamMemberById,
@@ -31,14 +32,14 @@ import {
 export const metadata: Metadata = {
   title: "About Us | BEE Accredited Energy Auditors",
   description:
-    "Athul Energy Consultants Pvt. Ltd. (AEC) is a premier BEE Accredited Energy Auditing and Electrical Safety consulting firm empanelled with EMC Kerala, GEDA, and MEDA since 2008.",
+    "Athul Energy Consultants Pvt. Ltd. (AEC) is a premier BEE Accredited Energy Auditing and Electrical Safety consulting firm empanelled with EMC Kerala since 2008.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     title: "About Us | BEE Accredited Energy Auditors | Athul Energy",
     description:
-      "BEE Accredited Energy Auditing (AEA-0275) and Electrical Safety consultancy firm empanelled with EMC Kerala, GEDA, and MEDA since 2008.",
+      "BEE Accredited Energy Auditing (AEA-0275) and Electrical Safety consultancy firm empanelled with EMC Kerala since 2008.",
     url: "https://www.athulenergy.com/about",
     type: "website",
     siteName: "Athul Energy Consultants",
@@ -167,7 +168,7 @@ export default function AboutPage() {
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-emerald-400/70" />
               <span>Thrissur, Kerala</span>
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-emerald-400/70" />
-              <span className="text-emerald-300/90">BEE AEA-0275</span>
+              <span className="text-emerald-300/90">BEE EmAEA 091 · AEA 0275</span>
             </div>
 
             <h1 className="mt-5 text-balance font-display text-[2.4rem] font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
@@ -228,21 +229,33 @@ export default function AboutPage() {
               <dl className="mt-8 space-y-4 border-t border-slate-200 pt-5 text-xs">
                 <div className="flex items-start justify-between gap-4">
                   <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                    Founded
-                  </dt>
-                  <dd className="font-semibold text-slate-900">2008</dd>
-                </div>
-                <div className="flex items-start justify-between gap-4">
-                  <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">
                     Head office
                   </dt>
-                  <dd className="font-semibold text-slate-900">Thrissur, Kerala</dd>
+                  <dd className="font-semibold text-slate-900 text-right">Thrissur, Kerala</dd>
                 </div>
                 <div className="flex items-start justify-between gap-4">
                   <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                    Accreditation
+                    Founded
                   </dt>
-                  <dd className="font-semibold text-slate-900">BEE AEA-0275</dd>
+                  <dd className="font-semibold text-slate-900 text-right">2008</dd>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                    Company Incorporated
+                  </dt>
+                  <dd className="font-semibold text-slate-900 text-right">2016</dd>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                    BEE firm empanelment
+                  </dt>
+                  <dd className="font-semibold text-slate-900 text-right">EmAEA-091</dd>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <dt className="text-[9.5px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                    Accredited Energy Auditor
+                  </dt>
+                  <dd className="font-semibold text-slate-900 text-right">Santhosh A · AEA-0275</dd>
                 </div>
               </dl>
             </div>
@@ -350,7 +363,7 @@ export default function AboutPage() {
             <span className="text-[9.5px] font-semibold uppercase tracking-[0.2em] text-slate-500">
               Accredited &amp; empanelled
             </span>
-            <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-5">
+            <div className="mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-3 lg:grid-cols-3">
               {ABOUT_EMPANELMENTS.map((item) => (
                 <div key={item.mark} className="bg-slate-950 px-4 py-4">
                   <span className="font-display text-lg font-bold tracking-tight text-white">
@@ -452,7 +465,7 @@ export default function AboutPage() {
               Academic Partnerships, Social Initiatives &amp; Energy Mentorship
             </h2>
             <p className="mt-3 text-pretty text-[14px] leading-relaxed text-slate-600 sm:text-base">
-              Beyond industrial statutory audits, Athul Energy Consultants actively partners with leading universities, engineering faculties, and national agencies to cultivate energy conservation ethics, practical engineering literacy, and field training.
+              Beyond energy audits, Athul Energy Consultants actively partners with leading universities, engineering faculties, and national agencies to cultivate energy conservation ethics, practical engineering literacy, and field training.
             </p>
           </div>
 
@@ -583,16 +596,30 @@ export default function AboutPage() {
                   <p className="mt-2 text-xs leading-relaxed text-slate-600">
                     Senior Athul engineers serve as official faculty and resource persons conducting industrial, academic, and societal training workshops.
                   </p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {ABOUT_OUTREACH.resourcePersons.map((rp) => (
-                      <span
-                        key={rp.name}
-                        title={rp.fullName}
-                        className="rounded border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-bold text-slate-800 shadow-2xs"
-                      >
-                        {rp.name}
-                      </span>
-                    ))}
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {ABOUT_OUTREACH.resourcePersons.map((rp) =>
+                      rp.url ? (
+                        <a
+                          key={rp.name}
+                          href={rp.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={`${rp.fullName} (${rp.url})`}
+                          className="group inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-2xs transition-all hover:border-emerald-500 hover:bg-emerald-50/70 hover:text-emerald-800"
+                        >
+                          <span>{rp.name}</span>
+                          <ExternalLink className="h-3 w-3 text-slate-400 transition-colors group-hover:text-emerald-700" />
+                        </a>
+                      ) : (
+                        <span
+                          key={rp.name}
+                          title={rp.fullName}
+                          className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-bold text-slate-800 shadow-2xs"
+                        >
+                          {rp.name}
+                        </span>
+                      )
+                    )}
                   </div>
                 </div>
                 <div className="mt-4 pt-3 border-t border-slate-200/60 text-[10.5px] font-semibold text-slate-500 uppercase tracking-wider">

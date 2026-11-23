@@ -4,14 +4,14 @@ import GalleryClient from "@/components/user/GalleryClient";
 export const metadata: Metadata = {
   title: "Field Archive & Photo Gallery",
   description:
-    "Field photographs from Athul Energy Consultants — verified energy audits, infrared thermal imaging surveys, electrical safety audits, and technical workshops across Kerala.",
+    "Field photographs from Athul Energy Consultants — verified energy audits, infrared thermal imaging surveys, electrical safety audits, and technical workshops across India.",
   alternates: {
     canonical: "/gallery",
   },
   openGraph: {
     title: "Field Archive & Photo Gallery | Athul Energy",
     description:
-      "Field photographs from verified energy audits, infrared thermography surveys, and safety inspections across Kerala.",
+      "Field photographs from verified energy audits, infrared thermography surveys, and safety inspections across India.",
     url: "https://www.athulenergy.com/gallery",
     type: "website",
     siteName: "Athul Energy Consultants",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Field Archive & Photo Gallery | Athul Energy Consultants",
     description:
-      "Field photographs from verified energy audits and electrical safety inspections across Kerala.",
+      "Field photographs from verified energy audits and electrical safety inspections across India.",
     images: ["/hero-desk.webp"],
   },
 };

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import api, { getMediaUrl } from "@/lib/api";
 
 interface ClientLogo {
@@ -13,16 +12,29 @@ interface ClientLogo {
 
 const DEFAULT_CLIENTS: ClientLogo[] = [
   { id: "telk", name: "Transformers and Electricals Kerala Ltd. (TELK)", logo: "/clients/telk.webp" },
-  { id: "aai", name: "Airports Authority of India (AAI)", logo: "/clients/airports-authority-of-india.webp" },
+  { id: "indian-railways", name: "Indian Railways", logo: "/clients/indian_railways_logo_white_bg_enhanced_1200x480.jpg" },
+  { id: "aai", name: "Airports Authority of India (AAI)", logo: "/clients/airports_authority_india_logo_white_bg_400x160.jpg" },
+  { id: "milma", name: "Milma (Kerala Co-operative Milk Marketing Federation)", logo: "/clients/milma_logo_white_bg_400x160.jpg" },
   { id: "petronet", name: "Petronet LNG Limited", logo: "/clients/petronet-lng.webp" },
+  { id: "avt", name: "A.V. Thomas Group (AVT)", logo: "/clients/avt_logo_white_bg_400x160.jpg" },
   { id: "synthite", name: "Synthite Industries Pvt. Ltd.", logo: "/clients/synthite.webp" },
-  { id: "andhra-bank", name: "Andhra Bank", logo: "/clients/andhra-bank.webp" },
-  { id: "central-bank", name: "Central Bank of India", logo: "/clients/central-bank-of-india.webp" },
-  { id: "pnb", name: "Punjab National Bank", logo: "/clients/punjab-national-bank.webp" },
-  { id: "syndicate-bank", name: "Syndicate Bank", logo: "/clients/syndicate-bank.webp" },
+  { id: "federal-bank", name: "Federal Bank", logo: "/clients/federal_bank_logo_white_bg_enhanced_1200x480.jpg" },
+  { id: "pcbl", name: "PCBL Limited", logo: "/clients/pcbl_chemical_logo_400x160_retina_fixed.png" },
+  { id: "south-indian-bank", name: "South Indian Bank", logo: "/clients/south_indian_bank_logo_white_bg_enhanced_1200x480.jpg" },
+  { id: "kdhp", name: "Kanan Devan Hills Plantations Company (KDHP)", logo: "/clients/Kanan Devan Hills Plantation Logo.png" },
+  { id: "aster-mims", name: "Aster MIMS Hospital", logo: "/clients/aster_mims_logo_white_bg_enhanced_1200x480.jpg" },
   { id: "union-bank", name: "Union Bank of India", logo: "/clients/union-bank-of-india.webp" },
+  { id: "mar-sleeva", name: "Mar Sleeva Medicity Palai", logo: "/clients/mar_sleeva_medcity_palai_logo_white_bg_enhanced_1200x480.jpg" },
+  { id: "nhm", name: "National Health Mission (NHM)", logo: "/clients/national_health_mission_logo_white_bg_400x160.jpg" },
+  { id: "daya-hospital", name: "Daya General Hospital", logo: "/clients/daya_hospital_logo_enhanced_white_bg_1200x480.jpg" },
   { id: "sud-chemie", name: "Süd-Chemie India Pvt. Ltd.", logo: "/clients/sud-chemie.webp" },
+  { id: "iqraa-hospital", name: "IQRAA International Hospital", logo: "/clients/iqraa_hospital_logo_white_bg_400x160.jpg" },
+  { id: "tced", name: "Thrissur Corporation Electricity Department (TCED)", logo: "/clients/tced_logo_white_bg_400x160.jpg" },
+  { id: "ficci", name: "FICCI", logo: "/clients/ficci_100_years_logo_enhanced_white_bg_1200x480.jpg" },
   { id: "ksca", name: "Karnataka State Cricket Association (KSCA)", logo: "/clients/karnataka-cricket-association.webp" },
+  { id: "wri", name: "World Resources Institute India (WRI India)", logo: "/clients/wri_india_logo_white_bg_400x160.jpg" },
+  { id: "pactive", name: "Pactive Sustainable Solutions", logo: "/clients/pactive_sustainable_solutions_logo_white_canvas_1200x480.jpg" },
+  { id: "team-sudhan", name: "Team Sudhan", logo: "/clients/team_sudhan_logo_white_bg_enhanced_1200x480.jpg" },
 ];
 
 function LogoMarqueeRow({
@@ -144,26 +156,6 @@ export default function HomeClients() {
         <div className="mt-8 sm:mt-10 flex flex-col gap-4 sm:gap-5">
           <LogoMarqueeRow logos={rowOne.length > 0 ? rowOne : clients} direction="left" />
           <LogoMarqueeRow logos={rowTwo.length > 0 ? rowTwo : clients} direction="right" />
-        </div>
-
-        {/* View All Clients Action Button */}
-        <div className="mt-8 sm:mt-10 flex justify-center">
-          <Link
-            prefetch={false}
-            href="/contact"
-            className="group inline-flex items-center gap-2 rounded-full border border-emerald-600 bg-white px-7 py-2.5 text-xs sm:text-sm font-semibold text-emerald-700 shadow-sm transition-all duration-200 hover:bg-emerald-50 hover:border-emerald-700 hover:scale-[1.02] active:scale-98"
-          >
-            <span>View All Clients</span>
-            <svg
-              className="h-4 w-4 text-emerald-600 transition-transform duration-200 group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
         </div>
 
         {/* 3 Metric Stat Pillars */}

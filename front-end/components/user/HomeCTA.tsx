@@ -143,7 +143,7 @@ export default function HomeCTA() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                <span>Zero Plant Disruption</span>
+                <span>1000+ Safety Audits</span>
               </div>
             </div>
           </div>

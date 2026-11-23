@@ -137,7 +137,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     function: "04 years in Energy and electrical safety audit. Focuses on commercial lighting, building energy audits, and domestic energy compliance.",
     experienceYears: 4,
     badge: "BEE EM-11843/24",
-    image: "",
+    image: "/team/keerthana-k.png",
     certifications: [
       "BEE Certified Energy Manager (EM-11843/24)",
       "EMC Certified Home Auditor",

@@ -61,7 +61,7 @@ export default function HomeCTAForm() {
           <span>Request Received! {ticketId ? `(#${ticketId})` : ""}</span>
         </div>
         <p className="mt-1 text-[11px] sm:text-xs text-emerald-100/80 text-center">
-          Our accredited auditor will contact you within 2 business hours.
+          Our accredited auditor will contact you within 24 business hours.
         </p>
       </div>
     );

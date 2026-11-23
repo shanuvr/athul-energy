@@ -105,22 +105,16 @@ export default async function BlogPage() {
               </div>
 
               <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Technical Knowledge, Statutory Codes &amp; Energy Guides
+                Energy efficiency and electrical safety in practice
               </h1>
 
-              <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-slate-600 max-w-2xl">
-                Practical, field-tested guidance from our accredited energy auditors and electrical safety specialists. Covering BEE PAT scheme compliance, CEA regulations, FLIR thermography, and high-ROI energy conservation measures.
+              <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-slate-600 max-w-3xl">
+                Explore field notes, case studies and technical guides from the Athul Energy Consultants team. See how we use on-site measurements to uncover energy savings, interpret thermal images and diagnose power quality problems. Our regulatory explainers cover what BEE&apos;s PAT scheme, CCTS and CEA electrical safety regulations mean for your facility and what to document for your next audit.
               </p>
             </div>
 
             {/* Credibility Micro-metrics */}
             <div className="hidden sm:flex items-center gap-3 shrink-0">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-center">
-                <span className="block text-lg font-extrabold text-emerald-800">100%</span>
-                <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">
-                  Accredited
-                </span>
-              </div>
               <div className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-center">
                 <span className="block text-lg font-extrabold text-emerald-800">Field-Tested</span>
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">

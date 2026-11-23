@@ -23,6 +23,7 @@ export interface AboutDiscipline {
 export interface OutreachPartner {
   name: string;
   fullName: string;
+  url?: string;
 }
 
 export interface AboutOutreach {
@@ -59,11 +60,11 @@ export const ABOUT_PROOF_POINTS: AboutProofPoint[] = [
 ];
 
 export const ABOUT_STORY = {
-  heading: "A Thrissur practice built on measured evidence",
+  heading: "Engineering advice grounded in on-site measurements",
   paragraphs: [
-    "Athul Energy Consultants was founded in Thrissur in 2008 to give industrial and institutional clients something the market rarely offered: energy audit findings that were measured on site, documented to statutory standards, and practical enough to implement.",
-    "Since then the practice has grown into a multidisciplinary engineering firm serving Designated Consumers, continuous process plants, hospitals, commercial buildings and academic institutions across Kerala and the southern industrial corridor.",
-    "Our work sits at the intersection of energy conservation and electrical safety. Every engagement combines calibrated field instrumentation, verified operating data and clear engineering judgement — so savings are never claimed at the expense of safety or uptime.",
+    "Athul Energy Consultants Pvt. Ltd. is a Thrissur-based engineering consultancy that helps industries, utilities and building owners reduce energy costs, improve electrical safety and keep critical systems reliable. Our team includes BEE-accredited and certified energy auditors, electrical engineers and greenhouse gas verification professionals.",
+    "Our work spans industrial energy audits, hospital and bank electrical safety audits, power quality studies and investment-grade energy audits for railway buildings. We have studied distribution transformer efficiency for BEE, assessed energy performance and rooftop solar potential in local government buildings across Kerala, and supported energy and emissions reporting under PAT and CCTS.",
+    "We use on-site measurements and operating data to quantify savings, identify electrical risks and prioritise improvements by cost, safety and operational impact. We also help clients prepare technical documentation for BEE and EMC requirements, NABH, NAAC and NBA accreditation, ECSBC and ENS compliance, and IGBC, LEED and GRIHA certification.",
   ],
   quote:
     "An audit is only useful when the findings can be implemented. We measure on site, verify the numbers, and stay through implementation.",
@@ -130,9 +131,9 @@ export const ABOUT_TIMELINE: AboutTimelineItem[] = [
   },
   {
     year: "Today",
-    title: "Multi-state reach, 30 disciplines",
+    title: "Pan-India reach, 30 disciplines",
     description:
-      "GEDA, MEDA empanelments, 19 College MOUs, and 1,000+ audits delivered across energy, safety, power quality, and NAAC green audits.",
+      "Holding MOUs with 19 higher education institutions and delivering 1,000+ verified audits across energy, electrical safety, power quality, and NAAC green audits across India.",
   },
 ];
 
@@ -164,12 +165,21 @@ export const ABOUT_OUTREACH: AboutOutreach = {
       "Mentored more than 100 budding engineering and science scholars through hands-on industrial internship programs, including live plant field measurements, thermal imaging, and report preparation.",
   },
   resourcePersons: [
-    { name: "PCRA", fullName: "Petroleum Conservation Research Association (Govt. of India)" },
-    { name: "EMC", fullName: "Energy Management Centre (Govt. of Kerala)" },
-    { name: "SEEM", fullName: "Society of Energy Engineers and Managers" },
-    { name: "ECS", fullName: "Energy Conservation Society" },
-    { name: "ANERT", fullName: "Agency for New and Renewable Energy Research and Technology" },
-    { name: "KSPC", fullName: "Kerala State Productivity Council" },
+    {
+      name: "EMC",
+      fullName: "Energy Management Centre (Govt. of Kerala)",
+      url: "https://keralaenergy.gov.in/",
+    },
+    {
+      name: "SEEM",
+      fullName: "Society of Energy Engineers and Managers",
+      url: "https://seemindia.org/",
+    },
+    {
+      name: "ECS",
+      fullName: "Energy Conservation Society",
+      url: "https://ecsindia.org/",
+    },
   ],
 };
 
@@ -209,7 +219,5 @@ export const ABOUT_DISCIPLINES: AboutDiscipline[] = [
 export const ABOUT_EMPANELMENTS = [
   { mark: "BEE", label: "Bureau of Energy Efficiency" },
   { mark: "EMC", label: "Kerala State Designated Agency" },
-  { mark: "GEDA", label: "Gujarat Energy Development Agency" },
-  { mark: "MEDA", label: "Maharashtra Energy Development Agency" },
   { mark: "CEA", label: "Central Electricity Authority standards" },
 ];

@@ -448,11 +448,11 @@ async function BlogPostContent({ params }: Props) {
                     </Link>
 
                     <a
-                      href="tel:+917356111990"
+                      href="tel:+917356111994"
                       className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
                     >
                       <Phone className="h-3.5 w-3.5 text-emerald-600" />
-                      +91 73561 11990
+                      +91 73561 11994
                     </a>
                   </div>
 
