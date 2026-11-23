@@ -2,22 +2,22 @@ import Link from "next/link";
 
 const credentials = [
   {
-    label: "Statutory recognition & award",
-    title: "BEE, EMC Excellence Award (2020) & SDAs",
+    label: "Recognition & Award",
+    title: "EMC Excellence Award (2020)",
     description:
-      "Won the Certificate of Excellence from Energy Management Centre (EMC) Kerala in 2020. Empanelled with BEE, GEDA, and MEDA, with senior engineers acting as official resource persons for PCRA, EMC, ANERT, and SEEM.",
+      "Won the Certificate of Excellence from Energy Management Centre (EMC) Kerala in 2020. Empanelled with BEE, with senior engineers from various prestigious institutions acting as resource persons for Thermal power plant, Refinery, Building and DISCOM audits.",
   },
   {
     label: "Field experience since 2008",
     title: "Industrial, commercial and institutional sites",
     description:
-      "A Thrissur-based practice delivering over 1,000+ verified plant audits and holding MOUs with 19 higher education institutions across Kerala.",
+      "A Thrissur-based consultant, delivered over 1,000+ verified plant audits and holding MOUs with 19 higher education institutions across Kerala.",
   },
   {
     label: "Engineering depth",
     title: "From electrical safety to carbon reporting",
     description:
-      "Electrical safety, power quality and harmonics, thermal imaging, green and NAAC audits, environment and carbon studies.",
+      "Electrical safety, power quality and harmonics, thermal imaging, green, NABH, ECSBC, and NAAC audits, environment and carbon studies.",
   },
   {
     label: "Implementation focus",
@@ -74,12 +74,12 @@ export default function HomeCredentials() {
               id="credentials-heading"
               className="text-balance font-display text-[2rem] font-bold leading-[1.08] tracking-tight text-white sm:text-[2.5rem] lg:text-[3.25rem]"
             >
-              BEE-accredited energy audit consultants in Kerala since 2008
+              BEE-Empanelled Accredited energy audit consultants in Kerala since 2008
             </h2>
             <p className="mt-5 max-w-xl text-pretty text-[13px] leading-relaxed text-slate-300 sm:text-[15px] lg:text-base">
               Athul Energy Consultants is a Thrissur-based energy audit and
               electrical safety consultancy working with industrial, commercial
-              and institutional sites across Kerala. Since 2008, our energy
+              and institutional sites across India. Since 2008, our energy
               auditors in Kerala have supported statutory BEE and EMC Kerala
               compliance, power quality studies, thermal surveys and green
               audits.

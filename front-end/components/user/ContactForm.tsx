@@ -145,7 +145,7 @@ export default function ContactForm() {
               </button>
 
               <a
-                href={`https://wa.me/917356111990?text=${whatsappMessage}`}
+                href={`https://wa.me/917356111994?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] px-4 py-1.5 text-xs font-bold text-white shadow-sm transition-colors"
@@ -304,7 +304,7 @@ export default function ContactForm() {
               <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
               24h Response SLA
             </span>
-            <span>BEE AEA-0275 Lead Auditor</span>
+            <span>BEE Empanelled Accredited Firm / EmAEA 091 / AEA – 0275</span>
           </div>
         </form>
       )}

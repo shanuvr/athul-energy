@@ -616,7 +616,7 @@ export default function HomeCertifications() {
           {/* Subtitle description */}
           <p className="mx-auto mt-2.5 max-w-2xl text-pretty text-xs sm:text-sm text-slate-600 leading-relaxed">
             Empanelled and accredited by Energy Management Centre Kerala, Bureau of Energy
-            Efficiency, GEDA and MEDA for energy auditing and allied services.
+            Efficiency, Ministry of Power - Govt of India, for energy auditing and allied services.
           </p>
         </div>
 

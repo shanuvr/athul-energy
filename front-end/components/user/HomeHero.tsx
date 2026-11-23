@@ -64,7 +64,7 @@ export default function HomeHero() {
             <span className="hero-pulse absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
           </span>
-          EMC Kerala · BEE · GEDA · MEDA accredited
+          BEE, Ministry of Power · EMC, Govt. of Kerala
         </div>
       </div>
 
@@ -76,7 +76,7 @@ export default function HomeHero() {
               <span className="hero-pulse absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
             </span>
-            EMC Kerala · BEE · GEDA · MEDA accredited
+            BEE, Ministry of Power · EMC, Govt. of Kerala
           </div>
 
           <h1
@@ -89,10 +89,15 @@ export default function HomeHero() {
             </span>
           </h1>
 
-          <p className="hero-subhead hero-rise hero-delay-3 mt-3 max-w-md text-pretty text-[15px] leading-relaxed text-slate-200/90 sm:mt-6 sm:max-w-xl sm:text-lg sm:text-slate-300">
-            Based in Thrissur since 2008, helping industries, institutions and
-            commercial facilities across Kerala cut energy costs, verify CEA safety,
-            and achieve statutory BEE compliance.
+          <p className="hero-subhead hero-rise hero-delay-3 mt-3 max-w-md text-pretty text-[15px] leading-relaxed text-slate-200/90 sm:mt-6 sm:max-w-2xl sm:text-[16.5px] sm:text-slate-300">
+            Based in Thrissur since 2008, helping industries, institutions, and
+            commercial facilities across India, to reduce energy costs, verify
+            electrical safety against Central Electricity Authority (CEA)
+            regulations, and meet applicable Bureau of Energy Efficiency (BEE)
+            requirements. We also support energy and electrical safety
+            documentation for NABH, NAAC, and NBA accreditation, energy code
+            compliance under ECSBC and ENS, and green building certification
+            under IGBC and GRIHA.
           </p>
 
           <div className="hero-ctas hero-rise hero-delay-4 mt-5 flex flex-row items-center gap-2.5 sm:mt-9 sm:gap-3">

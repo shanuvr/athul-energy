@@ -12,7 +12,7 @@ const companyLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const empanelments = ["BEE AEA-0275", "EMC Kerala", "GEDA", "MEDA"];
+const empanelments = ["BEE EmAEA 0275", "EMC Kerala"];
 
 const copyrightYear = 2026;
 
@@ -61,9 +61,9 @@ export default function UserFooter() {
             </Link>
 
             <p className="mt-5 max-w-sm text-pretty text-[13px] leading-relaxed text-slate-400">
-              BEE accredited energy audit and electrical safety consultants
-              serving industrial, commercial and institutional sites across
-              Kerala since 2008.
+              BEE Empanelled Accredited energy audit and electrical safety
+              consultants serving industrial, commercial and institutional
+              sites across India since 2008.
             </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-slate-500">
@@ -145,11 +145,11 @@ export default function UserFooter() {
                 <p className="flex gap-2.5">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400/80" />
                   <span>
-                    Capital Legend Building,
+                    Fourth Floor, Capital Legend Building,
                     <br />
-                    Korappath Lane, Thrissur North,
+                    Korappath Ln, Round North,
                     <br />
-                    Kerala 680020
+                    Thrissur, Kerala 680020
                   </span>
                 </p>
                 <p>
@@ -183,15 +183,19 @@ export default function UserFooter() {
             <span>·</span>
             <span>Kochi / Ernakulam</span>
             <span>·</span>
-            <span>Palakkad (KINFRA)</span>
-            <span>·</span>
-            <span>Kozhikode</span>
+            <span>Palakkad</span>
             <span>·</span>
             <span>Trivandrum</span>
             <span>·</span>
-            <span>Pan-India SDAs</span>
+            <span>Tamil Nadu</span>
+            <span>·</span>
+            <span>Maharashtra</span>
+            <span>·</span>
+            <span>North India</span>
           </div>
-          <span className="text-emerald-400/80 font-medium">BEE AEA-0275 · CEA 2010 · ISO 50001</span>
+          <span className="text-emerald-400/80 font-medium">
+            BEE EmAEA 091 / AEA-0275 / ISO 50001 / ISO 14064 / Certified Water Auditor / IGBC AP / ECSBC Master Trainer
+          </span>
         </div>
 
         {/* Bottom bar */}
@@ -202,7 +206,7 @@ export default function UserFooter() {
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
             <span className="uppercase tracking-[0.14em]">
-              BEE accredited · Est. 2008
+              BEE Empanelled · Est. 2008
             </span>
             <Link prefetch={false}
               href="/contact"

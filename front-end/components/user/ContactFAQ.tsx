@@ -12,7 +12,7 @@ const FAQS: FAQItem[] = [
   {
     question: "How quickly can Athul Energy mobilize an audit team to our plant?",
     answer:
-      "For urgent statutory deadlines, CEA electrical safety notices, or insurance compliance inspections, we can deploy an accredited engineering team within 48 to 72 hours across Kerala, Tamil Nadu, and Karnataka. Standard comprehensive energy audits are scheduled within 5 to 7 business days following preliminary questionnaire submission.",
+      "Standard comprehensive energy, safety and compliance audits are scheduled within 7 to 10 business days following preliminary questionnaire submission and purchase order.",
   },
   {
     question: "What preliminary documents are needed to prepare a formal technical & commercial proposal?",
@@ -22,12 +22,12 @@ const FAQS: FAQItem[] = [
   {
     question: "Are your audit reports recognized by BEE and State Designated Agencies (EMC Kerala)?",
     answer:
-      "Yes, 100%. Athul Energy Consultants Pvt. Ltd. is an approved energy auditing firm empanelled with Energy Management Centre (EMC) Kerala, Gujarat Energy Development Agency (GEDA), and Maharashtra Energy Development Agency (MEDA). Our lead auditor holds Bureau of Energy Efficiency Accredited Energy Auditor credential (AEA-0275).",
+      "Yes, 100%. Athul Energy Consultants Pvt. Ltd. is an approved energy auditing firm empanelled with Energy Management Centre (EMC) Kerala & Bureau of Energy Efficiency (BEE), Ministry of Power, Govt. of India (EmAEA 091). Our lead auditor also holds Bureau of Energy Efficiency Accredited Energy Auditor credential (AEA-0275) along with 3 BEE Certified Energy Auditors and 3 Certified Energy Managers.",
   },
   {
     question: "Do you supply measurement equipment, or does the plant need to provide meters?",
     answer:
-      "Our engineers bring our own calibrated, high-precision test instrumentation including Class-A power quality analyzers (Fluke / Hioki), FLIR Level-II infrared thermal imagers, ultrasonic non-invasive flow meters, digital manometers, pitot tubes, flue gas analyzers, and calibrated earth resistance testers.",
+      "Our engineers bring our own calibrated, high-precision test instrumentation including Class-A power quality analyzers (Chauvin Arnoux, Krykard), FLIR Level-II infrared thermal imagers, ultrasonic non-invasive flow meters (Flexim), digital manometers, pitot tubes (Testo), flue gas analyzers (Testo), multi-function testers (Kyoritsu), and calibrated earth resistance testers (Kyoritsu).",
   },
   {
     question: "How does Athul Energy handle intellectual property & plant data confidentiality?",

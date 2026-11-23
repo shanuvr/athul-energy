@@ -306,8 +306,8 @@ export default function HomeServices() {
               </h2>
               <p className="mt-5 max-w-md text-pretty text-base leading-relaxed text-slate-600">
                 Practical audits and engineering studies for industrial,
-                institutional and commercial sites — from statutory BEE and EMC
-                work to power quality and green certification.
+                institutional and commercial sites — from statutory BEE, ECSBC,
+                ENS and EMC work to power quality and green certification.
               </p>
               <Link
                 href="/services"

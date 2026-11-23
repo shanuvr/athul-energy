@@ -662,7 +662,7 @@ export default function DownloadsPageClient() {
 
             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-400">
 
-              Statutory Advisory Notice
+              Advisory Notice
 
             </span>
 
@@ -674,11 +674,11 @@ export default function DownloadsPageClient() {
 
             <p className="mt-1.5 text-xs text-slate-300 leading-relaxed">
 
-              Our BEE Accredited Energy Auditors and CEA Safety Specialists
+              Our BEE Empanelled Accredited Energy Auditors and CEA Safety Specialists
 
-              conduct statutory audits, PAT cycle verifications, and K-ECBC
+              conduct statutory audits, PAT cycle verifications for designated consumers
 
-              compliance for designated consumers across Kerala and South India.
+              and ECSBC compliance across India.
 
             </p>
 

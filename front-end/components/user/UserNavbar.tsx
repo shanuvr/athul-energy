@@ -163,14 +163,13 @@ export default function UserNavbar() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7 3v5.4c0 4.3-2.9 7.6-7 9.6-4.1-2-7-5.3-7-9.6V6l7-3z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.25 12l1.9 1.9 3.6-3.8" />
               </svg>
-              Govt. accredited
+              Govt. Empanelled &amp; Accredited
             </span>
 
             <span className="h-3.5 w-px bg-white/10" aria-hidden="true" />
 
             <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.02em] text-white">
-              EMC Kerala <span className="px-0.5 text-white/40">/</span> BEE{" "}
-              <span className="px-0.5 text-white/40">/</span> GEDA
+              EMC Kerala <span className="px-0.5 text-white/40">/</span> BEE, Ministry of Power
             </span>
 
             <span className="hidden h-3.5 w-px bg-white/10 xl:block" aria-hidden="true" />
@@ -192,7 +191,7 @@ export default function UserNavbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 5.5A2.5 2.5 0 015.5 3h1.6c.5 0 .9.3 1 .8l.9 3a1 1 0 01-.3 1L7.5 9a12 12 0 007.5 7.5l1.2-1.2a1 1 0 011-.3l3 .9c.5.1.8.5.8 1v1.6a2.5 2.5 0 01-2.5 2.5C10.6 21 3 13.4 3 5.5z" />
                 </svg>
               </span>
-              +91 73561 11990
+              +91 7356111990/91
             </a>
 
             <span className="h-4 w-px bg-white/10" aria-hidden="true" />

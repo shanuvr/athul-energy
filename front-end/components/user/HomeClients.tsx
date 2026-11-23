@@ -40,9 +40,8 @@ function LogoMarqueeRow({
   return (
     <div className="relative overflow-hidden w-full group/marquee">
       <div
-        className={`flex w-max items-center gap-4 sm:gap-6 group-hover/marquee:[animation-play-state:paused] ${
-          direction === "left" ? "animate-clients-left" : "animate-clients-right"
-        }`}
+        className={`flex w-max items-center gap-4 sm:gap-6 group-hover/marquee:[animation-play-state:paused] ${direction === "left" ? "animate-clients-left" : "animate-clients-right"
+          }`}
       >
         {items.map((client, index) => {
           const isDuplicate = index >= logos.length;
@@ -136,7 +135,7 @@ export default function HomeClients() {
 
           {/* Subtitle */}
           <p className="mx-auto mt-2 max-w-2xl text-pretty text-xs sm:text-sm text-slate-600 leading-relaxed">
-            We are proud to serve a diverse range of industries across Kerala and beyond with
+            We are proud to serve a diverse range of industries across India and beyond with
             reliable energy audit and compliance solutions.
           </p>
         </div>

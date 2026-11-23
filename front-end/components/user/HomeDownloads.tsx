@@ -54,8 +54,8 @@ export default function HomeDownloads() {
             Important Documents
           </h2>
           <p className="mx-auto mt-1 max-w-xl text-pretty text-xs leading-relaxed text-emerald-100/75 sm:text-sm">
-            Access our key documents including company profile, project details,
-            policies and certifications.
+            Access key documents related to audits, its policies, government
+            orders and recent advancements.
           </p>
         </div>
 
