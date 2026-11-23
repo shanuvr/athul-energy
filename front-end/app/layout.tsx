@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -15,6 +15,11 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#002425",
+  colorScheme: "light",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.athulenergy.com"),
   title: {
@@ -22,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s | Athul Energy Consultants",
   },
   description:
-    "BEE, EMC Kerala, GEDA & MEDA accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008. Accredited Energy Auditor AEA-0275.",
+    "BEE and EMC Kerala accredited energy audit and electrical safety consultants based in Thrissur, Kerala, since 2008. Accredited Energy Auditor AEA-0275 / EmAEA 091.",
   applicationName: "Athul Energy Consultants",
   authors: [{ name: "Athul Energy Consultants Pvt. Ltd.", url: "https://www.athulenergy.com" }],
   creator: "Athul Energy Consultants Pvt. Ltd.",
@@ -35,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "Athul Energy Consultants",
     title: "Athul Energy Consultants | BEE Accredited Energy & Safety Audits",
     description:
-      "BEE Accredited Energy Auditor (AEA-0275), EMC Kerala, GEDA & MEDA empanelled consultants. Comprehensive industrial energy audits, electrical safety, harmonics, and NAAC green audits since 2008.",
+      "BEE Accredited Energy Auditor (AEA-0275), EmAEA 091, EMC Kerala empanelled consultants. Comprehensive industrial energy audits, electrical safety, harmonics, and NAAC green audits since 2008.",
     locale: "en_IN",
     url: "https://www.athulenergy.com",
     images: [
@@ -51,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Athul Energy Consultants | BEE Accredited Energy & Safety Audits",
     description:
-      "BEE Accredited Energy Auditor (AEA-0275), EMC Kerala, GEDA & MEDA empanelled engineering consultancy in Kerala.",
+      "BEE Accredited Energy Auditor (AEA-0275), EMC Kerala empanelled engineering consultancy in Kerala.",
     images: ["/hero-desk.webp"],
   },
   robots: {
@@ -166,9 +171,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      style={{ colorScheme: "light" }}
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <head>
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
         <Script
           id="global-schema-ld"
           type="application/ld+json"

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
   --background: #ffffff;
   --foreground: #171717;
   --header-h: 4.125rem;
@@ -19,6 +20,11 @@
   --font-display: var(--font-space-grotesk);
 }
 
+html {
+  color-scheme: light !important;
+  forced-color-adjust: none;
+}
+
 html,
 body {
   max-width: 100%;
@@ -29,6 +35,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  color-scheme: light;
 }
 
 /* Hero entrance + ambient animations (CSS only, SSR-safe) */
