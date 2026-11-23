@@ -159,7 +159,18 @@ export default function AdminGalleryPage() {
       await api.delete(`/gallery/${id}`);
       setImages((prev) => prev.filter((img) => img.id !== id));
     } catch (err: unknown) {
-      alert("Failed to delete image. Please check server connection.");
+      const error = err as {
+        response?: { data?: { message?: string }; status?: number };
+        message?: string;
+      };
+      const msg =
+        error.response?.data?.message ||
+        (error.response?.status
+          ? `Server returned HTTP ${error.response.status}: Failed to delete image.`
+          : null) ||
+        error.message ||
+        "Failed to delete image. Please check server connection.";
+      alert(msg);
     }
   };
 

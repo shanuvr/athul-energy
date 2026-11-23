@@ -6,6 +6,11 @@
 Options -Indexes +FollowSymLinks
 DirectoryIndex index.html index.htm
 
+# Allow standard HTTP REST methods
+<Limit GET POST PUT DELETE OPTIONS>
+  Require all granted
+</Limit>
+
 # 2. ENABLE GZIP / BROTLI COMPRESSION (mod_deflate)
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/plain
