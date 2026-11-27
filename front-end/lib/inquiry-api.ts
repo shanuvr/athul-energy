@@ -1,11 +1,6 @@
 import api from "./api";
 
-export type InquiryStatus =
-  | "Review Pending"
-  | "Proposal Sent"
-  | "Scheduled"
-  | "Completed"
-  | "Archived";
+export type InquiryStatus = "Review Pending" | "Responded";
 
 export interface Inquiry {
   id: number;
@@ -40,9 +35,7 @@ export interface CreateInquiryInput {
 export interface InquiryStats {
   total: number;
   pending: number;
-  proposalSent: number;
-  scheduled: number;
-  completed: number;
+  responded: number;
 }
 
 /**

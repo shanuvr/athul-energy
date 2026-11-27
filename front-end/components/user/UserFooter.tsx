@@ -12,7 +12,7 @@ const companyLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const empanelments = ["BEE EmAEA 0275", "EMC Kerala"];
+const empanelments = ["EmAEA 091", "AEA 0275", "EMC Kerala"];
 
 const copyrightYear = 2026;
 

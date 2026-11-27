@@ -114,10 +114,10 @@ const contactJsonLd = {
 };
 
 const mapQuery = encodeURIComponent(
-  "Capital Legend Building, Korappath Ln, Round North, Thrissur, Kerala 680020"
+  "Athul Energy Consultants Pvt. Ltd., Capital Legend Building, Korappath Ln, Round North, Thrissur, Kerala 680020"
 );
 const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+const mapLink = "https://maps.app.goo.gl/qWaX3jAAc5vfhbKu8?g_st=awb";
 
 const channels = [
   {
@@ -143,7 +143,7 @@ const channels = [
   },
   {
     label: "Head office",
-    value: "Capital Legend Building, Thrissur",
+    value: "Athul Energy Consultants Pvt. Ltd.",
     href: mapLink,
     icon: MapPin,
     external: true,
@@ -277,7 +277,7 @@ export default function ContactPage() {
                   <div className="flex items-center gap-2">
                     <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span className="text-[10.5px] font-bold uppercase tracking-wider text-slate-700">
-                      Capital Legend Building
+                      Athul Energy Consultants Pvt. Ltd.
                     </span>
                   </div>
                   <a

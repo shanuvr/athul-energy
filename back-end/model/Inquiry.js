@@ -53,13 +53,7 @@ export const Inquiry = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM(
-        "Review Pending",
-        "Proposal Sent",
-        "Scheduled",
-        "Completed",
-        "Archived"
-      ),
+      type: DataTypes.ENUM("Review Pending", "Responded"),
       defaultValue: "Review Pending",
     },
     notes: {

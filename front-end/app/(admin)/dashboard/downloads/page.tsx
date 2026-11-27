@@ -55,6 +55,7 @@ import {
 
 
 import api, { getMediaUrl } from "@/lib/api";
+import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal";
 
 
 
@@ -159,6 +160,7 @@ export default function AdminDownloadsPage() {
 
 
   const [deletingId, setDeletingId] = useState<number | string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: number | string; title: string } | null>(null);
 
 
 
@@ -362,86 +364,31 @@ export default function AdminDownloadsPage() {
 
 
 
-  const handleDelete = async (id: number | string, title: string) => {
-
-
-
-    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
-
-
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const { id, title } = deleteTarget;
 
     try {
-
-
-
       setDeletingId(id);
-
-
-
       try {
-
-
-
         await api.delete(`/downloads/${id}`);
-
-
-
       } catch {}
 
-
-
       setDocs((prev) => {
-
-
-
         const updated = prev.filter((d) => d.id !== id);
-
-
-
         try {
-
-
-
           localStorage.setItem("athul_admin_downloads", JSON.stringify(updated));
-
-
-
           localStorage.setItem("athul_downloads_cache", JSON.stringify(updated));
-
-
-
         } catch {}
-
-
-
         return updated;
-
-
-
       });
 
-
-
+      setDeleteTarget(null);
       setSuccessMsg(`Deleted "${title}" successfully.`);
-
-
-
       setTimeout(() => setSuccessMsg(null), 3000);
-
-
-
     } finally {
-
-
-
       setDeletingId(null);
-
-
-
     }
-
-
-
   };
 
 
@@ -1550,7 +1497,7 @@ export default function AdminDownloadsPage() {
 
 
 
-                          onClick={() => handleDelete(doc.id, doc.title)}
+                          onClick={() => setDeleteTarget({ id: doc.id, title: doc.title })}
 
 
 
@@ -2256,7 +2203,14 @@ export default function AdminDownloadsPage() {
 
       )}
 
-
+      <ConfirmDeleteModal
+        open={deleteTarget !== null}
+        title="Delete Resource"
+        description={`Are you sure you want to delete "${deleteTarget?.title || "this resource"}"? This action cannot be undone.`}
+        loading={deletingId !== null}
+        onCancel={() => setDeleteTarget(null)}
+        onConfirm={handleConfirmDelete}
+      />
 
     </div>
 

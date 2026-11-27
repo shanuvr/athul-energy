@@ -13,6 +13,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { api, getMediaUrl } from "@/lib/api";
+import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal";
 
 export interface GalleryItem {
   id: number;
@@ -38,6 +39,9 @@ export default function AdminGalleryPage() {
   const [images, setImages] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: number; caption: string } | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   // Filter & Search
   const [search, setSearch] = useState("");
@@ -150,14 +154,16 @@ export default function AdminGalleryPage() {
   };
 
   // Handle Delete
-  const handleDelete = async (id: number) => {
-    if (!confirm("Are you sure you want to delete this photo from the gallery?")) {
-      return;
-    }
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const { id } = deleteTarget;
 
     try {
+      setDeleting(true);
+      setDeleteError(null);
       await api.delete(`/gallery/${id}`);
       setImages((prev) => prev.filter((img) => img.id !== id));
+      setDeleteTarget(null);
     } catch (err: unknown) {
       const error = err as {
         response?: { data?: { message?: string }; status?: number };
@@ -170,7 +176,10 @@ export default function AdminGalleryPage() {
           : null) ||
         error.message ||
         "Failed to delete image. Please check server connection.";
-      alert(msg);
+      setDeleteError(msg);
+      setDeleteTarget(null);
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -201,6 +210,23 @@ export default function AdminGalleryPage() {
           <span>Add Gallery Photo</span>
         </button>
       </div>
+
+      {/* Delete Error Banner */}
+      {deleteError && (
+        <div className="flex items-center justify-between gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs sm:text-sm text-red-800">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 text-red-600 shrink-0" />
+            <span>{deleteError}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setDeleteError(null)}
+            className="text-red-600 hover:text-red-900 cursor-pointer"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
 
       {/* Filter / Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xs">
@@ -317,7 +343,7 @@ export default function AdminGalleryPage() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => handleDelete(img.id)}
+                  onClick={() => setDeleteTarget({ id: img.id, caption: img.caption })}
                   className="font-semibold text-slate-400 hover:text-red-600 transition-colors cursor-pointer inline-flex items-center gap-1"
                   title="Remove photo"
                 >
@@ -464,6 +490,15 @@ export default function AdminGalleryPage() {
           </div>
         </div>
       )}
+
+      <ConfirmDeleteModal
+        open={deleteTarget !== null}
+        title="Delete Gallery Photo"
+        description={`Are you sure you want to delete "${deleteTarget?.caption || "this photo"}" from the gallery? This action cannot be undone.`}
+        loading={deleting}
+        onCancel={() => setDeleteTarget(null)}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

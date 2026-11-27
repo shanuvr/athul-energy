@@ -10,7 +10,6 @@ import {
   Trash2,
   Clock,
   CheckCircle2,
-  Send,
   AlertCircle,
   Copy,
   Check,
@@ -27,22 +26,14 @@ import {
   InquiryStats,
 } from "@/lib/inquiry-api";
 
-const STATUS_OPTIONS: InquiryStatus[] = [
-  "Review Pending",
-  "Proposal Sent",
-  "Scheduled",
-  "Completed",
-  "Archived",
-];
+const STATUS_OPTIONS: InquiryStatus[] = ["Review Pending", "Responded"];
 
 export default function AdminInquiriesPage() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [stats, setStats] = useState<InquiryStats>({
     total: 0,
     pending: 0,
-    proposalSent: 0,
-    scheduled: 0,
-    completed: 0,
+    responded: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,9 +42,6 @@ export default function AdminInquiriesPage() {
   const [statusFilter, setStatusFilter] = useState<string>("All");
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
 
-  // Notes editing state in modal
-  const [editingNotes, setEditingNotes] = useState("");
-  const [savingNotes, setSavingNotes] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -91,24 +79,9 @@ export default function AdminInquiriesPage() {
     loadData();
   }, [loadData]);
 
-  // When an inquiry is opened in modal, sync its internal notes
-  useEffect(() => {
-    if (selectedInquiry) {
-      setEditingNotes(selectedInquiry.notes || "");
-    }
-  }, [selectedInquiry]);
-
-  const handleStatusChange = async (
-    id: number,
-    newStatus: InquiryStatus,
-    notesToSave?: string
-  ) => {
+  const handleStatusChange = async (id: number, newStatus: InquiryStatus) => {
     try {
-      const res = await updateInquiryStatus(
-        id,
-        newStatus,
-        notesToSave !== undefined ? notesToSave : selectedInquiry?.notes || undefined
-      );
+      const res = await updateInquiryStatus(id, newStatus);
       if (res.success && res.data) {
         setInquiries((prev) =>
           prev.map((item) => (item.id === id ? { ...item, ...res.data } : item))
@@ -120,31 +93,7 @@ export default function AdminInquiriesPage() {
       }
     } catch (err: any) {
       console.error("Failed to update status:", err);
-      alert(err.response?.data?.message || "Failed to update inquiry status");
-    }
-  };
-
-  const handleSaveNotes = async () => {
-    if (!selectedInquiry) return;
-    setSavingNotes(true);
-    try {
-      const res = await updateInquiryStatus(
-        selectedInquiry.id,
-        selectedInquiry.status,
-        editingNotes
-      );
-      if (res.success) {
-        setSelectedInquiry((prev) => (prev ? { ...prev, notes: editingNotes } : null));
-        setInquiries((prev) =>
-          prev.map((item) =>
-            item.id === selectedInquiry.id ? { ...item, notes: editingNotes } : item
-          )
-        );
-      }
-    } catch (err) {
-      console.error("Failed to save notes:", err);
-    } finally {
-      setSavingNotes(false);
+      setError(err.response?.data?.message || "Failed to update inquiry status");
     }
   };
 
@@ -161,7 +110,8 @@ export default function AdminInquiriesPage() {
       }
     } catch (err: any) {
       console.error("Failed to delete inquiry:", err);
-      alert(err.response?.data?.message || "Failed to delete inquiry");
+      setError(err.response?.data?.message || "Failed to delete inquiry");
+      setDeleteConfirmId(null);
     }
   };
 
@@ -187,20 +137,14 @@ export default function AdminInquiriesPage() {
     }
   };
 
-  const getStatusBadgeClass = (status: InquiryStatus) => {
+  const getStatusBadgeClass = (status: InquiryStatus | string) => {
     switch (status) {
       case "Review Pending":
         return "bg-amber-50 text-amber-800 border-amber-200";
-      case "Proposal Sent":
-        return "bg-blue-50 text-blue-800 border-blue-200";
-      case "Scheduled":
-        return "bg-purple-50 text-purple-800 border-purple-200";
-      case "Completed":
+      case "Responded":
         return "bg-emerald-50 text-emerald-800 border-emerald-200";
-      case "Archived":
-        return "bg-slate-100 text-slate-600 border-slate-200";
       default:
-        return "bg-slate-50 text-slate-700 border-slate-200";
+        return "bg-emerald-50 text-emerald-800 border-emerald-200";
     }
   };
 
@@ -236,7 +180,7 @@ export default function AdminInquiriesPage() {
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
         <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs">
           <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
             <span>Total Inquiries</span>
@@ -259,26 +203,15 @@ export default function AdminInquiriesPage() {
           <span className="text-[10.5px] text-amber-700 font-medium">Requires review</span>
         </div>
 
-        <div className="rounded-2xl border border-blue-200/80 bg-blue-50/50 p-4 shadow-2xs">
-          <div className="flex items-center justify-between text-blue-800 text-xs font-bold">
-            <span>Proposals Sent</span>
-            <Send className="h-4 w-4 text-blue-600" />
-          </div>
-          <p className="mt-2 text-2xl font-black text-blue-900 font-display">
-            {stats.proposalSent}
-          </p>
-          <span className="text-[10.5px] text-blue-700 font-medium">Responded</span>
-        </div>
-
         <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/50 p-4 shadow-2xs">
           <div className="flex items-center justify-between text-emerald-800 text-xs font-bold">
-            <span>Completed</span>
+            <span>Responded</span>
             <CheckCircle2 className="h-4 w-4 text-emerald-600" />
           </div>
           <p className="mt-2 text-2xl font-black text-emerald-900 font-display">
-            {stats.scheduled + stats.completed}
+            {stats.responded}
           </p>
-          <span className="text-[10.5px] text-emerald-700 font-medium">Finished / Scheduled</span>
+          <span className="text-[10.5px] text-emerald-700 font-medium">Replied / Contacted</span>
         </div>
       </div>
 
@@ -331,18 +264,18 @@ export default function AdminInquiriesPage() {
 
       {/* Inquiries Table Card */}
       <div className="rounded-2xl border border-slate-200 bg-white shadow-xs overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+        <div className="overflow-x-auto lg:overflow-x-visible">
+          <table className="w-full min-w-[820px] lg:min-w-0 lg:table-fixed text-left text-xs">
             <thead className="border-b border-slate-200 bg-slate-50/80 text-[10.5px] uppercase font-bold text-slate-500 tracking-wider">
               <tr>
-                <th className="py-3 px-4">Ticket</th>
-                <th className="py-3 px-4">Name</th>
-                <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Phone</th>
-                <th className="py-3 px-4">Message</th>
-                <th className="py-3 px-4">Received</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4 text-right">Action</th>
+                <th className="py-3 pl-4 pr-2.5 lg:w-[116px]">Ticket</th>
+                <th className="py-3 px-2.5 lg:w-[13%]">Name</th>
+                <th className="py-3 px-2.5 lg:w-[17%]">Email</th>
+                <th className="py-3 px-2.5 lg:w-[104px]">Phone</th>
+                <th className="py-3 px-2.5">Message</th>
+                <th className="py-3 px-2.5 lg:w-[124px]">Received</th>
+                <th className="py-3 px-2.5 lg:w-[110px]">Status</th>
+                <th className="py-3 pl-2 pr-4 lg:w-[116px] text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -371,16 +304,23 @@ export default function AdminInquiriesPage() {
                 </tr>
               ) : (
                 inquiries.map((inq) => (
-                  <tr key={inq.id} className="hover:bg-slate-50/70 transition-colors">
+                  <tr
+                    key={inq.id}
+                    onClick={() => setSelectedInquiry(inq)}
+                    className="hover:bg-slate-50/80 transition-colors cursor-pointer"
+                  >
                     {/* Ticket */}
-                    <td className="py-3.5 px-4 whitespace-nowrap">
-                      <div className="flex items-center gap-1.5 font-mono font-bold text-emerald-700">
-                        <span>{inq.ticketId}</span>
+                    <td className="py-3 pl-4 pr-2.5 whitespace-nowrap">
+                      <div className="flex items-center gap-1 font-mono font-bold text-emerald-700 text-[11px]">
+                        <span className="truncate">{inq.ticketId}</span>
                         <button
                           type="button"
-                          onClick={() => copyTicket(inq.ticketId)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            copyTicket(inq.ticketId);
+                          }}
                           title="Copy Ticket ID"
-                          className="text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+                          className="text-slate-400 hover:text-slate-700 transition-colors cursor-pointer shrink-0"
                         >
                           {copiedId === inq.ticketId ? (
                             <Check className="h-3 w-3 text-emerald-600" />
@@ -392,52 +332,65 @@ export default function AdminInquiriesPage() {
                     </td>
 
                     {/* Name */}
-                    <td className="py-3.5 px-4 font-bold text-slate-900 whitespace-nowrap">
-                      {inq.name}
+                    <td className="py-3 px-2.5 font-bold text-slate-900">
+                      <p className="truncate" title={inq.name}>
+                        {inq.name}
+                      </p>
                     </td>
 
                     {/* Email */}
-                    <td className="py-3.5 px-4 whitespace-nowrap">
+                    <td className="py-3 px-2.5">
                       <a
                         href={`mailto:${inq.email}`}
-                        className="text-slate-600 hover:text-emerald-700 hover:underline flex items-center gap-1.5"
+                        onClick={(e) => e.stopPropagation()}
+                        title={inq.email}
+                        className="text-slate-600 hover:text-emerald-700 hover:underline flex items-center gap-1 min-w-0"
                       >
                         <Mail className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                        <span>{inq.email}</span>
+                        <span className="truncate">{inq.email}</span>
                       </a>
                     </td>
 
                     {/* Phone */}
-                    <td className="py-3.5 px-4 whitespace-nowrap">
+                    <td className="py-3 px-2.5 whitespace-nowrap">
                       {inq.phone ? (
                         <a
                           href={`tel:${inq.phone}`}
-                          className="text-slate-600 hover:text-emerald-700 hover:underline flex items-center gap-1.5"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-slate-600 hover:text-emerald-700 hover:underline flex items-center gap-1 text-[11.5px]"
                         >
-                          <Phone className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                          <span>{inq.phone}</span>
+                          <Phone className="h-3 w-3 text-slate-400 shrink-0" />
+                          <span className="truncate">{inq.phone}</span>
                         </a>
                       ) : (
                         <span className="text-slate-400">—</span>
                       )}
                     </td>
 
-                    {/* Message Preview */}
-                    <td className="py-3.5 px-4 max-w-xs">
-                      <p className="truncate text-slate-600" title={inq.message}>
+                    {/* Message Preview (Click to view full message) */}
+                    <td className="py-3 px-2.5">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedInquiry(inq);
+                        }}
+                        title="Click to read full message"
+                        className="w-full text-left text-slate-600 hover:text-emerald-700 hover:underline truncate block cursor-pointer"
+                      >
                         {inq.message}
-                      </p>
+                      </button>
                     </td>
 
                     {/* Received Date */}
-                    <td className="py-3.5 px-4 text-slate-400 whitespace-nowrap text-[11px]">
+                    <td className="py-3 px-2.5 text-slate-400 whitespace-nowrap text-[11px]">
                       {formatDate(inq.createdAt)}
                     </td>
 
                     {/* Status Badge */}
-                    <td className="py-3.5 px-4 whitespace-nowrap">
+                    <td className="py-3 px-2.5 whitespace-nowrap">
                       <span
-                        className={`inline-flex px-2.5 py-0.5 rounded-full text-[10.5px] font-bold border ${getStatusBadgeClass(
+                        className={`inline-flex px-2 py-0.5 rounded-full text-[10.5px] font-bold border ${getStatusBadgeClass(
                           inq.status
                         )}`}
                       >
@@ -446,20 +399,30 @@ export default function AdminInquiriesPage() {
                     </td>
 
                     {/* Actions */}
-                    <td className="py-3.5 px-4 text-right whitespace-nowrap space-x-1.5">
-                      <button
-                        onClick={() => setSelectedInquiry(inq)}
-                        className="rounded-lg bg-slate-100 hover:bg-[#053824] hover:text-white px-2.5 py-1 text-[11px] font-bold text-slate-700 transition-colors cursor-pointer"
-                      >
-                        Review
-                      </button>
-                      <button
-                        onClick={() => setDeleteConfirmId(inq.id)}
-                        className="rounded-lg p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-                        title="Delete Inquiry"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
+                    <td className="py-3 pl-2 pr-4 text-right whitespace-nowrap">
+                      <div className="inline-flex items-center justify-end gap-1.5">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedInquiry(inq);
+                          }}
+                          className="rounded-lg bg-slate-100 hover:bg-[#053824] hover:text-white px-2.5 py-1 text-[11px] font-bold text-slate-700 transition-colors cursor-pointer"
+                        >
+                          Review
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDeleteConfirmId(inq.id);
+                          }}
+                          className="rounded-lg p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                          title="Delete Inquiry"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -533,36 +496,13 @@ export default function AdminInquiriesPage() {
             </div>
 
             {/* Client Message */}
-            <div className="rounded-xl bg-slate-50 p-4 border border-slate-100 mb-4">
+            <div className="rounded-xl bg-slate-50 p-4 border border-slate-100 mb-5">
               <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">
                 Client Message
               </span>
               <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-line">
                 {selectedInquiry.message}
               </p>
-            </div>
-
-            {/* Internal Auditor Notes */}
-            <div className="rounded-xl border border-slate-200 p-3.5 mb-5 space-y-2">
-              <div className="flex items-center justify-between">
-                <label htmlFor="auditorNotes" className="text-[10.5px] uppercase font-bold text-slate-500">
-                  Internal Notes / Follow-up Reference
-                </label>
-                {savingNotes && (
-                  <span className="text-[10.5px] text-emerald-600 font-semibold flex items-center gap-1">
-                    <RefreshCw className="h-3 w-3 animate-spin" /> Saving...
-                  </span>
-                )}
-              </div>
-              <textarea
-                id="auditorNotes"
-                value={editingNotes}
-                onChange={(e) => setEditingNotes(e.target.value)}
-                onBlur={handleSaveNotes}
-                rows={2}
-                placeholder="Add private notes or quotation reference..."
-                className="w-full text-xs rounded-lg border border-slate-200 p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
-              />
             </div>
 
             {/* Footer Status & Actions */}
@@ -572,11 +512,7 @@ export default function AdminInquiriesPage() {
                 <select
                   value={selectedInquiry.status}
                   onChange={(e) =>
-                    handleStatusChange(
-                      selectedInquiry.id,
-                      e.target.value as InquiryStatus,
-                      editingNotes
-                    )
+                    handleStatusChange(selectedInquiry.id, e.target.value as InquiryStatus)
                   }
                   className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
                 >

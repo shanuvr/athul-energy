@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import { Inquiry } from "../model/Inquiry.js";
+import { sendInquiryEmail } from "../utils/mailer.js";
 
 /**
  * Helper to generate a unique professional Ticket ID
@@ -103,6 +104,16 @@ export async function createInquiry(req, res) {
       `[Inquiry] New lead received: ${ticketId} from ${newInquiry.name} (${newInquiry.company})`
     );
 
+    let emailSent = false;
+    try {
+      emailSent = await sendInquiryEmail(newInquiry);
+    } catch (mailError) {
+      console.error(
+        `[Inquiry] Failed to send email notification for ${ticketId}:`,
+        mailError.message
+      );
+    }
+
     return res.status(201).json({
       success: true,
       message: "Your audit inquiry has been received. Our lead engineer will review and contact you shortly.",
@@ -114,6 +125,7 @@ export async function createInquiry(req, res) {
         email: newInquiry.email,
         service: newInquiry.service,
         status: newInquiry.status,
+        emailSent,
         createdAt: newInquiry.createdAt,
       },
     });
@@ -191,18 +203,14 @@ export async function getInquiryStats(req, res) {
   try {
     const total = await Inquiry.count();
     const pending = await Inquiry.count({ where: { status: "Review Pending" } });
-    const proposalSent = await Inquiry.count({ where: { status: "Proposal Sent" } });
-    const scheduled = await Inquiry.count({ where: { status: "Scheduled" } });
-    const completed = await Inquiry.count({ where: { status: "Completed" } });
+    const responded = await Inquiry.count({ where: { status: "Responded" } });
 
     return res.status(200).json({
       success: true,
       data: {
         total,
         pending,
-        proposalSent,
-        scheduled,
-        completed,
+        responded,
       },
     });
   } catch (error) {
@@ -256,13 +264,7 @@ export async function updateInquiryStatus(req, res) {
     const { id } = req.params;
     const { status, notes } = req.body;
 
-    const validStatuses = [
-      "Review Pending",
-      "Proposal Sent",
-      "Scheduled",
-      "Completed",
-      "Archived",
-    ];
+    const validStatuses = ["Review Pending", "Responded"];
 
     const inquiry = await Inquiry.findByPk(id);
 

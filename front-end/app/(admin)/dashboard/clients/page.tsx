@@ -11,8 +11,17 @@ import {
   AlertCircle,
   Loader2,
   Building2,
+  Info,
 } from "lucide-react";
 import api, { getMediaUrl } from "@/lib/api";
+import ClientLogoCropper, {
+  DEFAULT_CROP_SETTINGS,
+  type LogoCropSettings,
+  renderCroppedLogoFile,
+  TARGET_LOGO_HEIGHT,
+  TARGET_LOGO_WIDTH,
+} from "@/components/admin/ClientLogoCropper";
+import ConfirmDeleteModal from "@/components/admin/ConfirmDeleteModal";
 
 interface ClientItem {
   id: number | string;
@@ -30,10 +39,12 @@ export default function AdminClientsPage() {
   const [newClientName, setNewClientName] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [cropSettings, setCropSettings] = useState<LogoCropSettings>(DEFAULT_CROP_SETTINGS);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<number | string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: number | string; name: string } | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -73,6 +84,14 @@ export default function AdminClientsPage() {
     }
 
     setErrorMsg(null);
+    if (filePreview) {
+      URL.revokeObjectURL(filePreview);
+    }
+    const isJpeg = file.type === "image/jpeg" || file.type === "image/jpg";
+    setCropSettings({
+      ...DEFAULT_CROP_SETTINGS,
+      bgMode: isJpeg ? "white" : "transparent",
+    });
     setSelectedFile(file);
     setFilePreview(URL.createObjectURL(file));
   };
@@ -81,6 +100,7 @@ export default function AdminClientsPage() {
     setShowAddModal(false);
     setNewClientName("");
     setSelectedFile(null);
+    setCropSettings(DEFAULT_CROP_SETTINGS);
     if (filePreview) {
       URL.revokeObjectURL(filePreview);
       setFilePreview(null);
@@ -94,7 +114,7 @@ export default function AdminClientsPage() {
       setErrorMsg("Please enter the client company name.");
       return;
     }
-    if (!selectedFile) {
+    if (!selectedFile || !filePreview) {
       setErrorMsg("Please upload a logo image file.");
       return;
     }
@@ -103,9 +123,16 @@ export default function AdminClientsPage() {
       setSubmitting(true);
       setErrorMsg(null);
 
+      const processedLogo = await renderCroppedLogoFile(
+        selectedFile,
+        filePreview,
+        cropSettings,
+        newClientName.trim()
+      );
+
       const formData = new FormData();
       formData.append("name", newClientName.trim());
-      formData.append("logo", selectedFile);
+      formData.append("logo", processedLogo);
 
       const res = await api.post("/clients", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -129,24 +156,26 @@ export default function AdminClientsPage() {
     }
   };
 
-  const handleDelete = async (id: number | string, name: string) => {
-    if (!window.confirm(`Are you sure you want to delete the logo for "${name}"?`)) {
-      return;
-    }
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const { id, name } = deleteTarget;
 
     try {
       setDeletingId(id);
+      setErrorMsg(null);
       await api.delete(`/clients/${id}`);
       setClients((prev) => prev.filter((c) => c.id !== id));
+      setDeleteTarget(null);
       setSuccessMsg(`Logo for "${name}" removed successfully.`);
       setTimeout(() => setSuccessMsg(null), 3000);
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } }; message?: string };
-      alert(
+      setErrorMsg(
         error.response?.data?.message ||
           error.message ||
           "Failed to remove client logo."
       );
+      setDeleteTarget(null);
     } finally {
       setDeletingId(null);
     }
@@ -205,6 +234,21 @@ export default function AdminClientsPage() {
           </button>
         </div>
       )}
+
+      {/* Logo Dimension Guideline Banner */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-emerald-200/80 bg-emerald-50/70 px-4 py-3 text-xs text-emerald-950">
+        <div className="flex items-start sm:items-center gap-2.5">
+          <Info className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5 sm:mt-0" />
+          <span>
+            <strong>Recommended Logo Size:</strong>{" "}
+            <span className="font-mono font-bold">
+              {TARGET_LOGO_WIDTH} × {TARGET_LOGO_HEIGHT} px
+            </span>{" "}
+            (5:2 horizontal · transparent PNG, WebP, or SVG). Any uploaded image can be cropped
+            &amp; auto-fitted before saving so the homepage marquee never breaks.
+          </span>
+        </div>
+      </div>
 
       {/* Filter / Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xs">
@@ -274,7 +318,7 @@ export default function AdminClientsPage() {
                   <button
                     type="button"
                     disabled={isDeleting}
-                    onClick={() => handleDelete(c.id, c.name)}
+                    onClick={() => setDeleteTarget({ id: c.id, name: c.name })}
                     className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 hover:text-red-600 transition-colors cursor-pointer disabled:opacity-50"
                     title="Remove client logo"
                   >
@@ -295,7 +339,7 @@ export default function AdminClientsPage() {
       {/* Add Client Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 animate-in fade-in">
-          <div className="relative w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-2xl text-slate-900 animate-in zoom-in-95">
+          <div className="relative w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-2xl text-slate-900 animate-in zoom-in-95">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">Add Client Logo</h3>
@@ -336,39 +380,29 @@ export default function AdminClientsPage() {
 
               {/* Logo File Uploader */}
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
-                  Logo Image (PNG, WEBP, SVG, JPG) *
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700">
+                    Logo Image *
+                  </label>
+                  <span className="text-[10.5px] font-semibold text-emerald-700">
+                    Target: {TARGET_LOGO_WIDTH} × {TARGET_LOGO_HEIGHT} px (5:2)
+                  </span>
+                </div>
 
-                {filePreview ? (
-                  <div className="relative rounded-2xl border border-emerald-300 bg-emerald-50/30 p-4 flex flex-col items-center justify-center">
-                    <div className="relative h-24 w-full flex items-center justify-center">
-                      <Image
-                        src={filePreview}
-                        alt="Logo preview"
-                        width={200}
-                        height={80}
-                        unoptimized
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-                    <p className="mt-2 text-[11px] font-medium text-slate-600 truncate max-w-full">
-                      {selectedFile?.name} ({(selectedFile ? selectedFile.size / 1024 : 0).toFixed(1)} KB)
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedFile(null);
-                        URL.revokeObjectURL(filePreview);
-                        setFilePreview(null);
-                        if (fileInputRef.current) fileInputRef.current.value = "";
-                      }}
-                      className="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                      <span>Remove &amp; Choose Another</span>
-                    </button>
-                  </div>
+                {selectedFile && filePreview ? (
+                  <ClientLogoCropper
+                    file={selectedFile}
+                    previewUrl={filePreview}
+                    settings={cropSettings}
+                    onChange={setCropSettings}
+                    onRemove={() => {
+                      setSelectedFile(null);
+                      setCropSettings(DEFAULT_CROP_SETTINGS);
+                      URL.revokeObjectURL(filePreview);
+                      setFilePreview(null);
+                      if (fileInputRef.current) fileInputRef.current.value = "";
+                    }}
+                  />
                 ) : (
                   <div
                     onClick={() => fileInputRef.current?.click()}
@@ -378,8 +412,11 @@ export default function AdminClientsPage() {
                     <span className="text-xs font-semibold text-emerald-800">
                       Click to upload logo file
                     </span>
-                    <p className="text-[11px] text-slate-400 mt-1">
-                      PNG, WEBP, SVG, JPG up to 10MB
+                    <p className="text-[11px] text-slate-500 mt-1">
+                      Ideal: <strong className="text-slate-700">600 × 240 px</strong> (PNG, WEBP, SVG, JPG · max 10MB)
+                    </p>
+                    <p className="text-[10.5px] text-slate-400 mt-0.5">
+                      Includes live card preview &amp; interactive fit/crop tool
                     </p>
                   </div>
                 )}
@@ -422,6 +459,16 @@ export default function AdminClientsPage() {
           </div>
         </div>
       )}
+
+      <ConfirmDeleteModal
+        open={deleteTarget !== null}
+        title="Remove Client Logo"
+        description={`Are you sure you want to delete the logo for "${deleteTarget?.name || ""}"? This will immediately remove it from the homepage marquee.`}
+        confirmLabel="Yes, Remove"
+        loading={deletingId !== null}
+        onCancel={() => setDeleteTarget(null)}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

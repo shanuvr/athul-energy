@@ -24,9 +24,9 @@ const ACCREDITATIONS: AccreditationItem[] = [
     status: "ACCREDITED",
     certTitle: "Accreditation Certificate",
     colorTheme: "green",
-    certNumber: "EMC/EA/2023/KL-042",
-    validThrough: "2027",
-    scope: "Energy Auditing & Conservation Studies in Kerala",
+    certNumber: "EMCEEA-0811F-4",
+    validThrough: "31/01/2027",
+    scope: "Building, Industry - Electrical & Industry - Thermal Audits in Kerala",
     certificateImage: "/certificates/emc-certificate.jpg",
   },
   {
@@ -36,46 +36,34 @@ const ACCREDITATIONS: AccreditationItem[] = [
     status: "ACCREDITED",
     certTitle: "Empanelment Certificate",
     colorTheme: "blue",
-    certNumber: "BEE/AEA/2022/IND-108",
-    validThrough: "2026",
-    scope: "Accredited Energy Auditor (AEA) - Grade A",
+    certNumber: "AEA-0275 / EmAEA-091",
+    validThrough: "Active",
+    scope: "Accredited Energy Auditor (AEA-0275) & Empanelled Audit Firm (EmAEA-091)",
     certificateImage: "/certificates/bee-certificate.jpg",
   },
   {
-    id: "geda",
-    name: "GEDA (Gujarat)",
-    fullName: "Gujarat Energy Development Agency (SDA Empanelled)",
+    id: "rco",
+    name: "RCO",
+    fullName: "National RCO Portal (BEE / MoP)",
     status: "EMPANELLED",
     certTitle: "Empanelment Certificate",
     colorTheme: "gold",
-    certNumber: "GEDA/EA/EMPANEL/2023-45",
-    validThrough: "2026",
-    scope: "Pan-India Mandatory Energy Audit & Compliance",
-    certificateImage: "/certificates/geda-energy-auditor-certificate.jpg",
+    certNumber: "RCO-KL-NOBE-FIRM-482",
+    validThrough: "Active",
+    scope: "Empaneled Auditing Firm (NOBE) for Renewable Consumption Obligation",
+    certificateImage: "/certificates/Empaneled%20audit%20firm%20RCO.pdf",
   },
   {
-    id: "meda",
-    name: "MEDA (Maharashtra)",
-    fullName: "Maharashtra Energy Development Agency (SDA Empanelled)",
-    status: "ACCREDITED",
-    certTitle: "Accreditation Certificate",
-    colorTheme: "blue",
-    certNumber: "MEDA/EC/EA-P/2023/88",
-    validThrough: "2026",
-    scope: "Class-A Energy Auditor for Industrial Sectors (Pan-India)",
-    certificateImage: "/certificates/maharashtra-energy-development.jpg",
-  },
-  {
-    id: "govt",
-    name: "Government Approved",
-    fullName: "Empanelled by Government Bodies",
-    status: "APPROVED",
-    certTitle: "Recognition Certificate",
+    id: "adeetie",
+    name: "ADEETIE",
+    fullName: "BEE ADEETIE Scheme (Ministry of Power)",
+    status: "EMPANELLED",
+    certTitle: "Empanelment Certificate",
     colorTheme: "green",
-    certNumber: "GOI/MNRE/EC-AUTH/991",
-    validThrough: "2028",
-    scope: "Statutory Energy & Safety Audits across India",
-    certificateImage: "/certificates/india-sme-certificate.jpg",
+    certNumber: "ADT/EA-00197",
+    validThrough: "FY 2027-28",
+    scope: "IGEA, DPRs, Technology Deployment & M&V for MSMEs under BEE ADEETIE",
+    certificateImage: "/certificates/auditor_empanelment_letter_1779905184495.pdf",
   },
 ];
 
@@ -176,41 +164,8 @@ function OrgLogo({ id }: { id: string }) {
     );
   }
 
-  if (id === "geda") {
-    // Green leaf swirl logo for GEDA
-    return (
-      <div className="flex items-center justify-center gap-1.5 h-8">
-        <svg
-          viewBox="0 0 36 32"
-          className="h-7 w-auto"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          {/* Green leaf body */}
-          <path
-            d="M6 24C4 16 12 7 28 6C27 15 20 25 6 24Z"
-            fill="#16A34A"
-          />
-          {/* Inner swirl leaf */}
-          <path
-            d="M8 22C11 14 18 10 26 8C22 15 16 21 8 22Z"
-            fill="#22C55E"
-          />
-          {/* Leaf vein */}
-          <path
-            d="M7 23C13 18 19 13 27 7"
-            stroke="#FFFFFF"
-            strokeWidth="1.25"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
-    );
-  }
-
-  if (id === "meda") {
-    // Orange sunburst / energy wheel emblem for MEDA
+  if (id === "rco") {
+    // Renewable sun & wind/green-energy globe emblem for National RCO Portal
     return (
       <div className="flex items-center justify-center gap-1.5 h-8">
         <svg
@@ -220,53 +175,43 @@ function OrgLogo({ id }: { id: string }) {
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <circle cx="16" cy="16" r="5" fill="#F97316" />
-          {/* Radiating sun gear teeth / petals */}
-          {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(
-            (deg, i) => (
-              <rect
-                key={i}
-                x="14.5"
-                y="3"
-                width="3"
-                height="5"
-                rx="1.5"
-                fill="#EA580C"
-                transform={`rotate(${deg} 16 16)`}
-              />
-            )
-          )}
-          <circle cx="16" cy="16" r="2.5" fill="#FFFFFF" />
+          <circle cx="16" cy="16" r="13.5" fill="#ECFDF5" stroke="#15803D" strokeWidth="1.6" />
+          {/* Sun / solar rays */}
+          <circle cx="12" cy="12" r="3.5" fill="#F59E0B" />
+          <path
+            d="M12 6.5V7.8M12 16.2V17.5M6.5 12H7.8M16.2 12H17.5M8.2 8.2L9.1 9.1M14.9 14.9L15.8 15.8M15.8 8.2L14.9 9.1M9.1 14.9L8.2 15.8"
+            stroke="#D97706"
+            strokeWidth="1.3"
+            strokeLinecap="round"
+          />
+          {/* Renewable green curve / wave */}
+          <path
+            d="M5.5 21C9.5 17.5 14 18.5 18 20.5C21.5 22.2 24.5 21 27 18.5C25.5 24.5 21 28 16 28C11 28 7 25 5.5 21Z"
+            fill="#16A34A"
+          />
         </svg>
       </div>
     );
   }
 
-  // Government Approved - Ashoka Lion Emblem silhouette
+  // ADEETIE - Industrial efficiency gear & leaf/bolt emblem
   return (
     <div className="flex items-center justify-center gap-1.5 h-8">
       <svg
-        viewBox="0 0 32 36"
-        className="h-7 w-auto"
+        viewBox="0 0 32 32"
+        className="h-7 w-7"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Ashoka Capital Emblem representation in green */}
+        <circle cx="16" cy="16" r="13.5" fill="#F0FDF4" stroke="#0B5126" strokeWidth="1.6" />
+        {/* Gear ring */}
+        <circle cx="16" cy="16" r="7.5" stroke="#15803D" strokeWidth="2.2" strokeDasharray="3.2 2.2" />
+        {/* Energy efficiency bolt */}
         <path
-          d="M16 3C14 3 13 4.5 13 6C13 7.5 14 8 16 8C18 8 19 7.5 19 6C19 4.5 18 3 16 3Z"
-          fill="#15803D"
+          d="M17.2 8.5L11.5 16.8H15.8L14.6 23.5L20.5 15.2H16.2L17.2 8.5Z"
+          fill="#16A34A"
         />
-        {/* Three lions crown profile */}
-        <path
-          d="M9 8C7 8 6 9.5 6 12C6 15 9 17 11 18L10 24H22L21 18C23 17 26 15 26 12C26 9.5 25 8 23 8C21 8 20 9.5 20 11C20 11 18 9 16 9C14 9 12 11 12 11C12 9.5 11 8 9 8Z"
-          fill="#15803D"
-        />
-        {/* Abacus platform */}
-        <rect x="7" y="24" width="18" height="3" rx="0.5" fill="#166534" />
-        <circle cx="16" cy="25.5" r="1.2" fill="#FFFFFF" />
-        {/* Base pedestal */}
-        <path d="M9 27L6 33H26L23 27H9Z" fill="#15803D" />
       </svg>
     </div>
   );
@@ -462,7 +407,7 @@ function CertificateMiniature({
 
 /* ─── Main Section Component ─── */
 export default function HomeCertifications() {
-  const [activeId, setActiveId] = useState<string>("geda"); // GEDA is featured by default
+  const [activeId, setActiveId] = useState<string>("bee"); // BEE is featured by default
   const [modalCert, setModalCert] = useState<AccreditationItem | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -620,13 +565,13 @@ export default function HomeCertifications() {
           </p>
         </div>
 
-        {/* 5 Accreditation Cards Row / Carousel */}
-        <div className="mt-8 sm:mt-10">
-          {/* Horizontally scrollable on mobile/tablet, 5-col grid on desktop */}
+        {/* 4 Accreditation Cards Row / Carousel */}
+        <div className="mt-8 sm:mt-10 lg:max-w-5xl lg:mx-auto">
+          {/* Horizontally scrollable on mobile/tablet, 4-col grid on desktop */}
           <div
             ref={scrollContainerRef}
             onScroll={handleScroll}
-            className="flex lg:grid lg:grid-cols-5 gap-3.5 sm:gap-4 items-stretch overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none scroll-smooth pt-4 sm:pt-5 pb-5 lg:pt-0 lg:pb-0 px-4 sm:px-6 lg:px-0 -mx-4 sm:-mx-6 lg:mx-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex lg:grid lg:grid-cols-4 gap-3.5 sm:gap-4 items-stretch overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none scroll-smooth pt-4 sm:pt-5 pb-5 lg:pt-0 lg:pb-0 px-4 sm:px-6 lg:px-0 -mx-4 sm:-mx-6 lg:mx-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {ACCREDITATIONS.map((item, index) => {
               const isActive = activeId === item.id;
@@ -638,7 +583,7 @@ export default function HomeCertifications() {
                     cardRefs.current[index] = el;
                   }}
                   onClick={() => handleSelect(index)}
-                  className={`group relative flex flex-col justify-between rounded-2xl bg-white p-4 transition-all duration-300 cursor-pointer w-[270px] xs:w-[290px] sm:w-[320px] lg:w-auto shrink-0 lg:shrink snap-center lg:snap-align-none select-none ${
+                  className={`group relative flex flex-col justify-between rounded-2xl bg-white p-4 transition-all duration-300 cursor-pointer w-[245px] xs:w-[260px] sm:w-[275px] lg:w-auto shrink-0 lg:shrink snap-center lg:snap-align-none select-none ${
                     isActive
                       ? "border-2 border-emerald-500 shadow-xl shadow-emerald-600/10 ring-4 ring-emerald-500/10 -translate-y-1"
                       : "border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5"

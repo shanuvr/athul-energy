@@ -93,8 +93,8 @@ export default function HomeClients() {
       .get("/clients")
       .then((res) => {
         if (!isMounted) return;
-        const data = res.data?.data || (Array.isArray(res.data) ? res.data : null);
-        if (Array.isArray(data) && data.length > 0) {
+        const data = res.data?.data ?? (Array.isArray(res.data) ? res.data : null);
+        if (Array.isArray(data)) {
           const mapped: ClientLogo[] = data.map((item: { id: number | string; name: string; logoUrl: string }) => ({
             id: item.id,
             name: item.name,
@@ -153,10 +153,12 @@ export default function HomeClients() {
         </div>
 
         {/* 2-Row Animated Logo Marquee */}
-        <div className="mt-8 sm:mt-10 flex flex-col gap-4 sm:gap-5">
-          <LogoMarqueeRow logos={rowOne.length > 0 ? rowOne : clients} direction="left" />
-          <LogoMarqueeRow logos={rowTwo.length > 0 ? rowTwo : clients} direction="right" />
-        </div>
+        {clients.length > 0 && (
+          <div className="mt-8 sm:mt-10 flex flex-col gap-4 sm:gap-5">
+            <LogoMarqueeRow logos={rowOne.length > 0 ? rowOne : clients} direction="left" />
+            <LogoMarqueeRow logos={rowTwo} direction="right" />
+          </div>
+        )}
 
         {/* 3 Metric Stat Pillars */}
         <div className="mt-12 sm:mt-14 flex flex-wrap items-center justify-center gap-8 sm:gap-14 lg:gap-20">
@@ -180,7 +182,7 @@ export default function HomeClients() {
             </div>
             <div>
               <p className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-none">
-                100+
+                500+
               </p>
               <p className="text-xs sm:text-[13px] font-medium text-slate-500 mt-1">
                 Industries Served
